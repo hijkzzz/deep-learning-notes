@@ -2,11 +2,11 @@
 
 * [介绍](README.md)
 
-## 优化
+## 训练/优化
 
 * [正则化](you-hua/zheng-ze-hua.md)
 * [学习速率](you-hua/xue-xi-su-lv.md)
-* [梯度](you-hua/ti-du.md)
+* [梯度/非梯度](you-hua/ti-du.md)
 
 ## 卷积网络
 
@@ -22,4 +22,8 @@
 ## 深度生成模型
 
 * [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo.md)
+
+## 深入理解
+
+* [卷积网络](shen-ru-li-jie/juan-ji-wang-luo.md)
 
