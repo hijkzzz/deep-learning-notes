@@ -16,6 +16,7 @@
 
 ## 循环和递归网络
 
+* [词向量](xun-huan-he-di-gui-wang-luo/ci-xiang-liang.md)
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi.md)
 
 ## 深度生成模型
