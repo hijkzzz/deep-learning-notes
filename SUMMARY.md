@@ -4,10 +4,10 @@
 
 ## 训练/优化
 
-* [正则化](xun-lian-you-hua/zheng-ze-hua/README.md)
+* [正则化/标准化](xun-lian-you-hua/zheng-ze-hua/README.md)
   * [Batch Normalization](xun-lian-you-hua/zheng-ze-hua/batch-normalization.md)
 * [学习速率](xun-lian-you-hua/xue-xi-su-lv.md)
-* [梯度/非梯度](xun-lian-you-hua/ti-du.md)
+* [学习方法](xun-lian-you-hua/xue-xi-fang-fa.md)
 
 ## 卷积网络
 
@@ -26,5 +26,6 @@
 
 ## 深入理解
 
-* [卷积网络](shen-ru-li-jie/juan-ji-wang-luo.md)
+* [卷积网络](shen-ru-li-jie/juan-ji-wang-luo/README.md)
+  * [Visualizing and Understanding Convolutional Networks](shen-ru-li-jie/juan-ji-wang-luo/visualizing-and-understanding-convolutional-networks.md)
 
