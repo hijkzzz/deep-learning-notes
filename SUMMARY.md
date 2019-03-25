@@ -4,9 +4,10 @@
 
 ## 训练/优化
 
-* [正则化](you-hua/zheng-ze-hua.md)
-* [学习速率](you-hua/xue-xi-su-lv.md)
-* [梯度/非梯度](you-hua/ti-du.md)
+* [正则化](xun-lian-you-hua/zheng-ze-hua/README.md)
+  * [Batch Normalization](xun-lian-you-hua/zheng-ze-hua/batch-normalization.md)
+* [学习速率](xun-lian-you-hua/xue-xi-su-lv.md)
+* [梯度/非梯度](xun-lian-you-hua/ti-du.md)
 
 ## 卷积网络
 
