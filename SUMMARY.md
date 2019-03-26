@@ -4,10 +4,10 @@
 
 ## 训练/优化
 
+* [学习方法](xun-lian-you-hua/xue-xi-fang-fa.md)
+* [学习速率](xun-lian-you-hua/xue-xi-su-lv.md)
 * [正则化/标准化](xun-lian-you-hua/zheng-ze-hua/README.md)
   * [Batch Normalization](xun-lian-you-hua/zheng-ze-hua/batch-normalization.md)
-* [学习速率](xun-lian-you-hua/xue-xi-su-lv.md)
-* [学习方法](xun-lian-you-hua/xue-xi-fang-fa.md)
 
 ## 卷积网络
 
