@@ -15,7 +15,6 @@
 * [目标检测](juan-ji-wang-luo/mu-biao-jian-ce.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
-* [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
 
 ## 循环和递归网络
 
@@ -23,9 +22,8 @@
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi.md)
 * [情感分析](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi.md)
-* [语音识别](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie.md)
 
-## 深度生成模型
+## 生成模型
 
 * [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo.md)
 
@@ -37,5 +35,10 @@
 
 ## 自动机器学习
 
+* [参数搜索](zi-dong-ji-qi-xue-xi/can-shu-sou-suo.md)
 * [架构搜索](zi-dong-ji-qi-xue-xi/jia-gou-sou-suo.md)
+
+## 硬件
+
+* [矩阵乘法](ying-jian/ju-zhen-cheng-fa.md)
 
