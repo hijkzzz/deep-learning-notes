@@ -25,22 +25,21 @@
 * [语音识别](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi.md)
 
-## 生成模型
+## 生成模型/无监督
 
-* [密度模型](shen-du-sheng-cheng-mo-xing/mi-du-mo-xing/README.md)
-  * [PixelCNN](shen-du-sheng-cheng-mo-xing/mi-du-mo-xing/pixelcnn.md)
 * [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo.md)
+* [自编码器](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi.md)
+
+## 自动机器学习
+
+* [参数搜索](zi-dong-ji-qi-xue-xi/can-shu-sou-suo.md)
+* [架构搜索](zi-dong-ji-qi-xue-xi/jia-gou-sou-suo.md)
 
 ## 深入理解
 
 * [卷积网络](shen-ru-li-jie/juan-ji-wang-luo/README.md)
   * [Visualizing and Understanding Convolutional Networks](shen-ru-li-jie/juan-ji-wang-luo/visualizing-and-understanding-convolutional-networks.md)
 * [知识蒸馏](shen-ru-li-jie/zhi-shi-zheng-liu.md)
-
-## 自动机器学习
-
-* [参数搜索](zi-dong-ji-qi-xue-xi/can-shu-sou-suo.md)
-* [架构搜索](zi-dong-ji-qi-xue-xi/jia-gou-sou-suo.md)
 
 ## 硬件
 
