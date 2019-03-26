@@ -14,6 +14,7 @@
 * [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou.md)
 * [目标检测](juan-ji-wang-luo/mu-biao-jian-ce.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge.md)
+* [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
 
 ## 循环和递归网络
@@ -21,6 +22,7 @@
 * [词向量](xun-huan-he-di-gui-wang-luo/ci-xiang-liang.md)
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi.md)
 * [情感分析](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi.md)
+* [语音识别](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi.md)
 
 ## 生成模型
