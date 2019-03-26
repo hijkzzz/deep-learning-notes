@@ -11,6 +11,7 @@
 
 ## 卷积网络
 
+* [图像识别](juan-ji-wang-luo/tu-xiang-shi-bie.md)
 * [目标检测](juan-ji-wang-luo/mu-biao-jian-ce.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge.md)
 * [轻量化卷积网络](juan-ji-wang-luo/qing-liang-hua-juan-ji-wang-luo.md)
