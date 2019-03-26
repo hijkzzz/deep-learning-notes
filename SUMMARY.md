@@ -27,6 +27,8 @@
 
 ## 生成模型
 
+* [密度模型](shen-du-sheng-cheng-mo-xing/mi-du-mo-xing/README.md)
+  * [PixelCNN](shen-du-sheng-cheng-mo-xing/mi-du-mo-xing/pixelcnn.md)
 * [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo.md)
 
 ## 深入理解
