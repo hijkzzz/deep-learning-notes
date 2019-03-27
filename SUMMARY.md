@@ -4,7 +4,8 @@
 
 ## 训练/优化
 
-* [梯度](xun-lian-you-hua/xue-xi-fang-fa.md)
+* [学习方法](xun-lian-you-hua/xue-xi-fang-fa/README.md)
+  * [使用Numpy实现卷积神经网络（推导前馈和反向传播）](xun-lian-you-hua/xue-xi-fang-fa/shi-yong-numpy-shi-xian-juan-ji-shen-jing-wang-luo-tui-dao-qian-he-fan-xiang-chuan-bo.md)
 * [学习速率](xun-lian-you-hua/xue-xi-su-lv.md)
 * [正则化/标准化](xun-lian-you-hua/zheng-ze-hua/README.md)
   * [Batch Normalization](xun-lian-you-hua/zheng-ze-hua/batch-normalization.md)
