@@ -10,15 +10,15 @@
 
 批标准化公式，其中scale/shift变换系数是可训练的
 
-![](../../.gitbook/assets/image%20%284%29.png)
+![](../../.gitbook/assets/image%20%2810%29.png)
 
 参数的反向传播公式
 
-![](../../.gitbook/assets/image%20%288%29.png)
+![](../../.gitbook/assets/image%20%2814%29.png)
 
 训练算法
 
-![](../../.gitbook/assets/image%20%289%29.png)
+![](../../.gitbook/assets/image%20%2815%29.png)
 
 需要注意的是训练的时候使用批次样本的均值与方差，预测的时候使用所有训练样本的均值与方差。
 
@@ -34,7 +34,7 @@
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%2810%29.png)
+![](../../.gitbook/assets/image%20%2816%29.png)
 
 
 
