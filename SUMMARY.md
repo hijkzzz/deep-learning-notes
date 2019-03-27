@@ -12,7 +12,8 @@
 
 ## 卷积网络
 
-* [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou.md)
+* [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/README.md)
+  * [ResNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/resnet.md)
 * [目标检测](juan-ji-wang-luo/mu-biao-jian-ce/README.md)
   * [YOLOv3](juan-ji-wang-luo/mu-biao-jian-ce/yolov3.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge.md)
