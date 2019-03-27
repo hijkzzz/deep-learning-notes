@@ -13,7 +13,8 @@
 ## 卷积网络
 
 * [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou.md)
-* [目标检测](juan-ji-wang-luo/mu-biao-jian-ce.md)
+* [目标检测](juan-ji-wang-luo/mu-biao-jian-ce/README.md)
+  * [YOLOv3](juan-ji-wang-luo/mu-biao-jian-ce/yolov3.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge.md)
 * [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
