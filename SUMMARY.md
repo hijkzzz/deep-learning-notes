@@ -17,16 +17,17 @@
 * [目标检测](juan-ji-wang-luo/mu-biao-jian-ce/README.md)
   * [YOLOv3](juan-ji-wang-luo/mu-biao-jian-ce/yolov3.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge.md)
-* [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
+* [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
 
 ## 循环和递归网络
 
 * [词向量](xun-huan-he-di-gui-wang-luo/ci-xiang-liang.md)
-* [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi.md)
+* [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/README.md)
+  * [Transformer](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/transformer.md)
+* [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi.md)
 * [情感分析](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi.md)
 * [语音识别](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie.md)
-* [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi.md)
 
 ## 生成模型/无监督
 
