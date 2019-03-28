@@ -30,7 +30,9 @@
 
 ## 生成模型/无监督
 
-* [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo.md)
+* [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/README.md)
+  * [Conditional Generative Adversarial Nets](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/conditional-generative-adversarial-nets.md)
+  * [DCGAN](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/dcgan.md)
 * [自编码器](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi.md)
 
 ## 自动机器学习
