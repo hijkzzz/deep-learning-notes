@@ -68,7 +68,29 @@ $$
 
 ### Mean-only Batch Normalization
 
+如前文所述，权重归一化使得神经元激活的scale大致不依赖于参数 $$v$$ 。 然而，与批量标准化不同，神经元活化的均值仍然依赖于$$v$$ 。 因此，我们还探索了将权重规范化与批量规范化的特殊版本相结合的想法，我们称之为mean-only batch normalization：
 
+$$
+t=\mathbf{w} \cdot \mathbf{x}, \quad \tilde{t}=t-\mu[t]+b, \quad y=\phi(\tilde{t})
+$$
+
+相对于预激活 $$t$$ 的损失梯度计算为
+
+$$
+\nabla_{t} L=\nabla_{\tilde{t}} L-\mu\left[\nabla_{\tilde{t}} L\right]
+$$
+
+## 测试
+
+### 分类
+
+![](../../.gitbook/assets/image%20%2826%29.png)
+
+### 强化学习
+
+接下来，我们将权重归一化应用于在Atari学习环境中玩游戏的强化学习问题\[2\]。 我们使用的方法是\[21\]提出的深度Q网络（DQN）。 这是一种批量标准化不适合的应用程序：通过估计小批量统计数据引入的噪声会破坏学习过程的稳定性。
+
+![](../../.gitbook/assets/image%20%2827%29.png)
 
 
 
