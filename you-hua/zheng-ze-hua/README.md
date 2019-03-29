@@ -2,7 +2,7 @@
 
 ### 正则化
 
-正则化的用于防止神经网络网络在小训练集上过拟合，主要方法有：
+正则化的用于防止神经网络网络在小训练集上过拟合，主要的正则化方法有：
 
 * L1让权重趋向于稀疏解，可用于压缩模型大小
 * L2让权重趋向于较小的值，比L1更容易求解
@@ -11,16 +11,9 @@
 
 ### 归一化
 
-归一化层用于加速深层神经网络的训练，目前主要有这几个方法：
+归一化层用于加速深层神经网络的训练，主要的归一化方法有：
 
-* Batch Normalization（2015年）
-* Layer Normalization（2016年）
-* Weight Normalization（2016年）
-* Instance Normalization（2017年）
-* Group Normalization（2018年）
-* Switchable Normalization（2018年）
-
-将输入的图像张量形状记为 $$[N, C, H, W]$$ （依次为样本、通道、高、宽），这几个方法主要的区别就是在：
+将输入的图像张量形状记为 $$[N, C, H, W]$$ （依次为样本、通道、高、宽）
 
 * BatchNormalization在维度$$[N,H,W]$$ 上对每个输出特征图进行归一化，小的BatchSize效果不好
 * LayerNormalization不涉及多个样本，在维度 $$[C, H, W]$$ 上对每一层的输出归一化，主要对RNN作用明显
