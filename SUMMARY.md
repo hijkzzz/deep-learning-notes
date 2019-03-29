@@ -10,6 +10,7 @@
 * [规范化/正则化](xun-lian-you-hua/zheng-ze-hua/README.md)
   * [Batch Normalization](xun-lian-you-hua/zheng-ze-hua/batch-normalization.md)
   * [Layer Normalization](xun-lian-you-hua/zheng-ze-hua/layer-normalization.md)
+  * [Weight Normalization](xun-lian-you-hua/zheng-ze-hua/weight-normalization.md)
 
 ## 卷积网络
 
