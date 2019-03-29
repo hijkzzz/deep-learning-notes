@@ -12,7 +12,7 @@
 
 ### 网络架构
 
-![](../../.gitbook/assets/image%20%2850%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 如上所述，我们有一个非常简单的网络结构
 
@@ -28,17 +28,17 @@
 
 ### 前馈
 
-![](../../.gitbook/assets/image%20%2858%29.png)
+![](../../.gitbook/assets/image%20%2859%29.png)
 
 当我们在线性行中写卷积运算时，我们可以像上面一样表达每个节点。但是请注意橙色方框，它将L1表示为\[ 1 \* 4 \]向量。另外，请查看下面红色方框中的每个变量代表什么。
 
-![](../../.gitbook/assets/image%20%2864%29.png)
+![](../../.gitbook/assets/image%20%2865%29.png)
 
 如上所示，每个节点表示卷积运算的结果图像。
 
 ###  **W2 的反向传播**
 
-![](../../.gitbook/assets/image%20%2855%29.png)
+![](../../.gitbook/assets/image%20%2856%29.png)
 
 \*\*\*\*
 
@@ -46,7 +46,7 @@
 
 ###  **W\(1,1\) 的反向传播**
 
-![](../../.gitbook/assets/image%20%2866%29.png)
+![](../../.gitbook/assets/image%20%2867%29.png)
 
 有很多事情要发生，我将从最简单的一个开始
 
@@ -54,13 +54,13 @@
 * 蓝色方框→同样没有足够的空间写下等式，无论向量之间的点积多么简单。
 * 绿色方框星python代码实现中关于W\(1，1 \)的导数的第一部分，如下所示。
 
-![](../../.gitbook/assets/image%20%2848%29.png)
+![](../../.gitbook/assets/image%20%2849%29.png)
 
 如上所示，我们转置W2，因此尺寸从（1,4）变为（4,1）。 我们将使用符号'g'来表示操作的结果。
 
 * 绿盒星2→变量g和导数D1数组之间的点积，因此维数保持为\( 1，4 \)。
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2862%29.png)
 
 ![](../../.gitbook/assets/image%20%287%29.png)
 
@@ -85,7 +85,7 @@
 
 让我们仔细看看核，如下所示
 
-![](../../.gitbook/assets/image%20%2863%29.png)
+![](../../.gitbook/assets/image%20%2864%29.png)
 
 如上所示，矩阵的形式如下：
 
@@ -123,7 +123,7 @@
 
 ![](../../.gitbook/assets/image%20%286%29.png)
 
-![](../../.gitbook/assets/image%20%2854%29.png)
+![](../../.gitbook/assets/image%20%2855%29.png)
 
 ### 实现
 

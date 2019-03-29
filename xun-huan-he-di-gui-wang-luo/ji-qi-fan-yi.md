@@ -20,7 +20,7 @@ BLEU\(Bilingual Evaluation understudy\)方法由IBM提出，这种方法认为�
 
 共现n元词的精度Pn定义为：
 
-![](../.gitbook/assets/image%20%2867%29.png)
+![](../.gitbook/assets/image%20%2868%29.png)
 
 BLEU 方法在得到上述结果之后，其评价分数可通过下式来计算
 
@@ -29,6 +29,8 @@ BLEU 方法在得到上述结果之后，其评价分数可通过下式来计算
 其中Wn表示共现n元词的权重，BP\(Brevity Penalty\)是惩罚因子：
 
 ![](../.gitbook/assets/image%20%2815%29.png)
+
+这里的c是机器译文的词数，r是参考译文的词数。
 
 ###  **NIST**
 
@@ -42,7 +44,7 @@ NIST\(National Institute of standards and Technology\)方法是在BLEU方法上�
 
 加权求平均得出最后的评分结果：
 
-![](../.gitbook/assets/image%20%2859%29.png)
+![](../.gitbook/assets/image%20%2860%29.png)
 
 NIST采用的是算术平均方式，Lsys是使系统译文的长度，而Lref是参考译文的平均长度，是一个经验阈值，它使整个惩罚值在系统译文的长度是参考译文长度的2/3时为0.5。
 
