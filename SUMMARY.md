@@ -2,15 +2,15 @@
 
 * [介绍](README.md)
 
-## 训练/优化
+## 优化
 
-* [学习方法](xun-lian-you-hua/xue-xi-fang-fa/README.md)
-  * [使用Numpy实现卷积神经网络（推导前馈和反向传播）](xun-lian-you-hua/xue-xi-fang-fa/shi-yong-numpy-shi-xian-juan-ji-shen-jing-wang-luo-tui-dao-qian-he-fan-xiang-chuan-bo.md)
-* [学习速率](xun-lian-you-hua/xue-xi-su-lv.md)
-* [归一化/正则化](xun-lian-you-hua/zheng-ze-hua/README.md)
-  * [Batch Normalization](xun-lian-you-hua/zheng-ze-hua/batch-normalization.md)
-  * [Layer Normalization](xun-lian-you-hua/zheng-ze-hua/layer-normalization.md)
-  * [Weight Normalization](xun-lian-you-hua/zheng-ze-hua/weight-normalization.md)
+* [反向传播](you-hua/fan-xiang-chuan-bo/README.md)
+  * [使用Numpy实现卷积神经网络（推导前馈和反向传播）](you-hua/fan-xiang-chuan-bo/shi-yong-numpy-shi-xian-juan-ji-shen-jing-wang-luo-tui-dao-qian-he-fan-xiang-chuan-bo.md)
+* [优化器](you-hua/optimizer.md)
+* [归一化/正则化](you-hua/zheng-ze-hua/README.md)
+  * [Batch Normalization](you-hua/zheng-ze-hua/batch-normalization.md)
+  * [Layer Normalization](you-hua/zheng-ze-hua/layer-normalization.md)
+  * [Weight Normalization](you-hua/zheng-ze-hua/weight-normalization.md)
 
 ## 卷积网络
 
