@@ -7,6 +7,7 @@
 * [反向传播](you-hua/fan-xiang-chuan-bo/README.md)
   * [使用Numpy实现卷积神经网络（推导前馈和反向传播）](you-hua/fan-xiang-chuan-bo/shi-yong-numpy-shi-xian-juan-ji-shen-jing-wang-luo-tui-dao-qian-he-fan-xiang-chuan-bo.md)
 * [优化器](you-hua/optimizer/README.md)
+  * [梯度下降](you-hua/optimizer/ti-du-xia-jiang.md)
   * [L-BFGS](you-hua/optimizer/l-bfgs.md)
 * [归一化/正则化](you-hua/zheng-ze-hua/README.md)
   * [Batch Normalization](you-hua/zheng-ze-hua/batch-normalization.md)
