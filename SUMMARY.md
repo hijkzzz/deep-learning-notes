@@ -9,7 +9,7 @@
 * [优化器](you-hua/optimizer/README.md)
   * [梯度下降](you-hua/optimizer/ti-du-xia-jiang.md)
   * [L-BFGS](you-hua/optimizer/l-bfgs.md)
-* [归一化/正则化](you-hua/zheng-ze-hua/README.md)
+* [正则化/归一化](you-hua/zheng-ze-hua/README.md)
   * [Batch Normalization](you-hua/zheng-ze-hua/batch-normalization.md)
   * [Layer Normalization](you-hua/zheng-ze-hua/layer-normalization.md)
   * [Weight Normalization](you-hua/zheng-ze-hua/weight-normalization.md)
