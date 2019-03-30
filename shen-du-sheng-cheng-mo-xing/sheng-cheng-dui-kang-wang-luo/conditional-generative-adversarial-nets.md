@@ -1,4 +1,4 @@
-# Conditional Generative Adversarial Nets
+# CGAN
 
 ## 介绍
 
