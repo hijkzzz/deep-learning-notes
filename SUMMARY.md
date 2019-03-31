@@ -23,7 +23,7 @@
   * [Faster R-CNN](juan-ji-wang-luo/mu-biao-jian-ce/faster-r-cnn.md)
   * [YOLOv3](juan-ji-wang-luo/mu-biao-jian-ce/yolov3.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge/README.md)
-  * [DeepLab V3](juan-ji-wang-luo/yu-yi-fen-ge/deeplab-v3.md)
+  * [DeepLab V3+](juan-ji-wang-luo/yu-yi-fen-ge/deeplab-v3.md)
   * [Mask R-CNN](juan-ji-wang-luo/yu-yi-fen-ge/mask-r-cnn.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
 * [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
