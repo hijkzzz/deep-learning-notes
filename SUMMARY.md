@@ -18,6 +18,7 @@
 
 * [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/README.md)
   * [ResNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/resnet.md)
+  * [Xception](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/xception.md)
   * [DenseNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/densenet.md)
 * [目标检测](juan-ji-wang-luo/mu-biao-jian-ce/README.md)
   * [Faster R-CNN](juan-ji-wang-luo/mu-biao-jian-ce/faster-r-cnn.md)
