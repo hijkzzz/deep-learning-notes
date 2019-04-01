@@ -27,7 +27,6 @@
   * [DeepLab V3+](juan-ji-wang-luo/yu-yi-fen-ge/deeplab-v3.md)
   * [Mask R-CNN](juan-ji-wang-luo/yu-yi-fen-ge/mask-r-cnn.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
-* [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie.md)
 
 ## 循环和递归网络
 
@@ -35,7 +34,6 @@
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/README.md)
   * [Transformer](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/transformer.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi.md)
-* [情感分析](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi.md)
 * [语音识别](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie.md)
 
 ## 生成模型/无监督
@@ -48,7 +46,6 @@
 ## 自动机器学习
 
 * [参数搜索](zi-dong-ji-qi-xue-xi/can-shu-sou-suo.md)
-* [架构搜索](zi-dong-ji-qi-xue-xi/jia-gou-sou-suo.md)
 
 ## 深入理解
 

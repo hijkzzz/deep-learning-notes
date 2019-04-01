@@ -6,7 +6,7 @@
 
 本文讨论CUDA实现高效的矩阵乘法。如图，对于普通的矩阵乘法，每次运算需要传递 $$2 * n$$个 $$tile$$ ，如果矩阵的规模非常大，这将会导致数据传递、内存开销很大。
 
-![](../../.gitbook/assets/image%20%2897%29.png)
+![](../../.gitbook/assets/image%20%28100%29.png)
 
 为了解决这个问题，我们需要调整矩阵乘法的计算顺序。如下
 
@@ -16,15 +16,15 @@
 
 每次只传输3个 $$tile$$ ，其中 $$c' = a * b + c$$ ，每个$$tile$$需与 $$n$$ 个 $$tile$$ 相乘：
 
-![](../../.gitbook/assets/image%20%28104%29.png)
+![](../../.gitbook/assets/image%20%28107%29.png)
 
-![](../../.gitbook/assets/image%20%2889%29.png)
+![](../../.gitbook/assets/image%20%2892%29.png)
 
-![](../../.gitbook/assets/image%20%2848%29.png)
+![](../../.gitbook/assets/image%20%2850%29.png)
 
 ### 循环顺序
 
-![](../../.gitbook/assets/image%20%2816%29.png)
+![](../../.gitbook/assets/image%20%2817%29.png)
 
 ### 实现
 
@@ -42,11 +42,11 @@
 
 我们可以用多个CUDA Streams同时计算多个 $$tile$$ 组：
 
-![](../../.gitbook/assets/image%20%2829%29.png)
+![](../../.gitbook/assets/image%20%2830%29.png)
 
 Steams的工作原理和CPU流水线类似
 
-![](../../.gitbook/assets/image%20%2813%29.png)
+![](../../.gitbook/assets/image%20%2814%29.png)
 
 
 
