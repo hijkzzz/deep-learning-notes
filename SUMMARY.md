@@ -47,7 +47,7 @@
 
 ## 自动机器学习
 
-* [参数搜索](zi-dong-ji-qi-xue-xi/can-shu-sou-suo.md)
+* [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo.md)
 
 ## 深入理解
 
