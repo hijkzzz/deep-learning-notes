@@ -28,7 +28,7 @@
   * [Mask R-CNN](juan-ji-wang-luo/yu-yi-fen-ge/mask-r-cnn.md)
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi/README.md)
   * [A Neural Algorithm of Artistic Style](juan-ji-wang-luo/feng-ge-qian-yi/a-neural-algorithm-of-artistic-style.md)
-* [Deep Photo Style Transfer](juan-ji-wang-luo/deep-photo-style-transfer.md)
+  * [Deep Photo Style Transfer](juan-ji-wang-luo/feng-ge-qian-yi/deep-photo-style-transfer.md)
 
 ## 循环和递归网络
 
