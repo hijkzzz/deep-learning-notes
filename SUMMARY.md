@@ -26,7 +26,8 @@
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge/README.md)
   * [DeepLab V3+](juan-ji-wang-luo/yu-yi-fen-ge/deeplab-v3.md)
   * [Mask R-CNN](juan-ji-wang-luo/yu-yi-fen-ge/mask-r-cnn.md)
-* [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi.md)
+* [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi/README.md)
+  * [A Neural Algorithm of Artistic Style](juan-ji-wang-luo/feng-ge-qian-yi/a-neural-algorithm-of-artistic-style.md)
 
 ## 循环和递归网络
 

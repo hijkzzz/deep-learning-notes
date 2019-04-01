@@ -42,7 +42,7 @@ YOLOv3预测3种不同尺度的方框。 我们的系统使用与金字塔网络
 
 ![](../../.gitbook/assets/image%20%2846%29.png)
 
-![](../../.gitbook/assets/image%20%2855%29.png)
+![](../../.gitbook/assets/image%20%2856%29.png)
 
 每个网络都使用相同的设置进行培训，并测试256×256，单一裁剪精度。 运行时间以Titan X在256×256处测量。 因此，Darknet-53有最先进的分类性能，但浮点运算更少，速度更快。 Darknet-53优于ResNet-101，速度提高1.5倍。 Darknet-53与ResNet-152具有相似的性能，速度快2倍。
 
@@ -50,13 +50,13 @@ YOLOv3预测3种不同尺度的方框。 我们的系统使用与金字塔网络
 
 ## 性能
 
-![](../../.gitbook/assets/image%20%28105%29.png)
+![](../../.gitbook/assets/image%20%28110%29.png)
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2864%29.png)
 
 ## 尝试了但是没有效果的方法
 
-![](../../.gitbook/assets/image%20%2869%29.png)
+![](../../.gitbook/assets/image%20%2873%29.png)
 
 
 
