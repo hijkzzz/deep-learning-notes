@@ -26,11 +26,11 @@ RoIPool 是用于从每个RoI提取小特征映射（例如，7×7）的标准�
 
 ### Network Architecture
 
-![](../../.gitbook/assets/image%20%2831%29.png)
+![](../../.gitbook/assets/image%20%2832%29.png)
 
 ## 测试
 
-![](../../.gitbook/assets/image%20%2875%29.png)
+![](../../.gitbook/assets/image%20%2879%29.png)
 
 
 
