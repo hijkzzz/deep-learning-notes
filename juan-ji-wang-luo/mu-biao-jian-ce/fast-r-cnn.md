@@ -8,17 +8,41 @@
 
 ## 方法
 
-![](../../.gitbook/assets/image%20%28121%29.png)
+![](../../.gitbook/assets/image%20%28127%29.png)
 
 ### The RoI pooling layer
 
+RoI池化层使用最大池化将任何有效感兴趣区域内的特征转换成固定空间范围为H×W的小特征图。其基本原理是对整张特征图采用多个尺度不同的池化，然后合并成一个向量。
+
+![](../../.gitbook/assets/image%20%2879%29.png)
+
+
+
 ### Initializing from pre-trained networks
+
+我们尝试了三个预先训练过的ImageNet \[4\]网络，每个网络有五个最大池层，五个和十三个转换层之间（参见第4.1节网络详细信息）。 当预训练的网络初始化快速R-CNN网络时，它会经历三次转换。
+
+首先，最后一个最大池层被一个RoIpooling层替换，RoIpooling层由H、W配置，使其与网络的第一个完全连接的层可兼容。
+
+第二，网络的最后一个完全连接层和软最大值\(针对1000向图像网分类进行了训练\)被前面描述的两个同级层\(完全连接层和软最大值overK+1cat-egories和特定于类别的边界框回归器\)代替。
+
+第三，修改网络以获取两个数据输入：图像列表和那些图像中的RoI列表。
 
 ### Fine-tuning for detection
 
-### Scale invariance
+损失函数由分类损失和box预测损失组成：
+
+![](../../.gitbook/assets/image%20%2853%29.png)
+
+![](../../.gitbook/assets/image%20%2888%29.png)
+
+RoI池化反向传播
+
+![](../../.gitbook/assets/image%20%2877%29.png)
+
+其中 $$i^{*}(r, j)=\operatorname{argmax}_{i^{\prime} \in \mathcal{R}(r, j)}$$ 是最大池化选择的像素，x为RoI层输入，y为RoI层输出。
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%2860%29.png)
+![](../../.gitbook/assets/image%20%2862%29.png)
 
