@@ -10,7 +10,7 @@
 
 ### VGG
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2862%29.png)
 
 ![](../../.gitbook/assets/image%20%2853%29.png)
 
@@ -74,7 +74,7 @@ $$
 
 ## 效果
 
-![](../../.gitbook/assets/image%20%2889%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 
 
