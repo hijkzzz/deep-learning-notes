@@ -16,7 +16,7 @@ $$
 \begin{aligned} b_{x} &=\sigma\left(t_{x}\right)+c_{x} \\ b_{y} &=\sigma\left(t_{y}\right)+c_{y} \\ b_{w} &=p_{w} e^{t_{w}} \\ b_{h} &=p_{h} e^{t_{h}} \end{aligned}
 $$
 
-![](../../.gitbook/assets/image%20%2852%29.png)
+![](../../.gitbook/assets/image%20%2853%29.png)
 
 在训练中，我们使用误差平方和损失。
 
@@ -40,9 +40,9 @@ YOLOv3预测3种不同尺度的方框。 我们的系统使用与金字塔网络
 
 我们使用一个新的网络进行特征提取。我们的新网络是YOLOv2，Darknet-19中使用的网络和新奇的遗留网络之间的混合方法。 我们的网络使用连续的3×3和1×1卷积层，但现在有一些快捷连接，并且显着更大。
 
-![](../../.gitbook/assets/image%20%2851%29.png)
+![](../../.gitbook/assets/image%20%2852%29.png)
 
-![](../../.gitbook/assets/image%20%2863%29.png)
+![](../../.gitbook/assets/image%20%2865%29.png)
 
 每个网络都使用相同的设置进行培训，并测试256×256，单一裁剪精度。 运行时间以Titan X在256×256处测量。 因此，Darknet-53有最先进的分类性能，但浮点运算更少，速度更快。 Darknet-53优于ResNet-101，速度提高1.5倍。 Darknet-53与ResNet-152具有相似的性能，速度快2倍。
 
@@ -50,13 +50,13 @@ YOLOv3预测3种不同尺度的方框。 我们的系统使用与金字塔网络
 
 ## 性能
 
-![](../../.gitbook/assets/image%20%28126%29.png)
+![](../../.gitbook/assets/image%20%28133%29.png)
 
-![](../../.gitbook/assets/image%20%2874%29.png)
+![](../../.gitbook/assets/image%20%2877%29.png)
 
 ## 尝试了但是没有效果的方法
 
-![](../../.gitbook/assets/image%20%2886%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 
 
