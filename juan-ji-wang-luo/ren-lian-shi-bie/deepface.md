@@ -4,5 +4,59 @@
 
 > [DeepFace: Closing the gap to human-level performance in face verification](http://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Taigman_DeepFace_Closing_the_2014_CVPR_paper.pdf)
 
+在现代人脸识别中，传统的流水线由四个阶段组成:检测、对齐、表示、分类。为了应用分段仿射变换，我们利用显式的三维人脸模型，重新研究了人脸的对齐步骤和表示步骤，并从一个九层的深度神经网络中得到了人脸的再现。这个深层网络涉及超过1.2亿个参数，使用几个本地连接的层，而不是标准的卷积层。因此，我们对迄今为止最大的面部数据集进行了训练，这是一个标识为400万个面部图像的数据集，属于4,000多个身份。将基于模型的精确比对与大型人脸数据库相结合的学习表征方法，可以很好地推广到无约束环境下的人脸识别中，即使是使用简单的分类器。我们的方法对野外\(LFW\)数据集的贴标签面精度达到97.35%，将当前技术状态的误差降低了27%以上，接近人类水平的性能。
 
+## 方法
+
+### Face Detection & Face Alignment
+
+![](../../.gitbook/assets/image%20%2881%29.png)
+
+#### 2D alignment
+
+对Detection后的图片进行二维裁剪， scale, rotate and translate the image into six anchor locations，将人脸部分裁剪出来。
+
+#### 3D alignment
+
+1. 找到一个3D 模型，用这个3D模型把二维人脸crop成3D人脸。67个基点，然后Delaunay三角化，在轮廓处添加三角形来避免不连续。
+2. 将三角化后的人脸转换成3D形状
+3. 三角化后的人脸变为有深度的3D三角网
+4. 将三角网做偏转，使人脸的正面朝前
+5. 最后放正的人脸
+
+#### Deep alignment
+
+用深度学习实现人脸检测和矫正可参考论文[MTCNN](https://arxiv.org/abs/1604.02878)
+
+### Representation
+
+![](../../.gitbook/assets/image%20%2843%29.png)
+
+最后一个完全连接的层的输出被馈送到k-way softmax（其中K是类的数量），其产生类标签上的分布： $$p_{k}=\exp \left(o_{k}\right) / \sum_{h} \exp \left(o_{h}\right)$$ 。训练的目的是最大限度地提高正确分类的概率\(人脸id\)，我们通过最小化每个训练样本的交叉熵损失来实现这一点。
+
+#### Normaliaztion
+
+作为最后阶段，我们将特征标准化为0到1之间，以降低对光照变化的敏感性：特征向量的每个分量除以训练集上的最大值。
+
+### Verification Metric
+
+验证两个输入实例是否属于同一类（同一性）已经在无约束人脸识别领域进行了广泛的研究，其中监督方法显示出明显的性能优势而不是不受约束的方式。
+
+在这项工作中，我们的目标是学习一个无监督的度量标准，它可以很好地适用于多个数据集。我们的无监督相似性只是两个归一化特征向量之间的内积。我们还试验了一种监督度量，χ2相似性和相似性网络。
+
+即使用线性SVM学习权重参数：
+
+$$
+\chi^{2}\left(f_{1}, f_{2}\right)=\sum_{i} w_{i}\left(f_{1}[i]-f_{2}[i]\right)^{2} /\left(f_{1}[i]+f_{2}[i]\right)
+$$
+
+## 实验
+
+![](../../.gitbook/assets/image%20%2870%29.png)
+
+#### Ensembles of DNNs
+
+接下来，我们将通过向不同类型的输入提供训练而训练的多个网络组合到DNN：1）网络DeepFace-上面基于3D对齐RGB输入的单个描述; 2）灰度级图像加上图像梯度的大小和方向; 3）2D对齐的RGB图像。
+
+![](../../.gitbook/assets/image%20%28113%29.png)
 
