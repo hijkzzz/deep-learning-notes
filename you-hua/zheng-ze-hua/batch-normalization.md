@@ -12,15 +12,15 @@
 
 其中scale/shift变换系数是可训练的
 
-![](../../.gitbook/assets/image%20%2871%29.png)
+![](../../.gitbook/assets/image%20%2874%29.png)
 
 参数的反向传播公式
 
-![](../../.gitbook/assets/image%20%28111%29.png)
+![](../../.gitbook/assets/image%20%28115%29.png)
 
 ### 伪代码
 
-![](../../.gitbook/assets/image%20%28116%29.png)
+![](../../.gitbook/assets/image%20%28120%29.png)
 
 需要注意的是训练的时候使用批次样本的均值与方差，预测的时候使用所有训练样本的均值与方差。
 
@@ -40,7 +40,7 @@
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28120%29.png)
+![](../../.gitbook/assets/image%20%28124%29.png)
 
 
 
