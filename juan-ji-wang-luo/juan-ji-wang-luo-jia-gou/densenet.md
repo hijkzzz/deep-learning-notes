@@ -36,7 +36,7 @@ $$
 
 
 
-![](../../.gitbook/assets/image%20%28127%29.png)
+![](../../.gitbook/assets/image%20%28132%29.png)
 
 我们将Block之间的层称为转移层，它们进行卷积和池化。 在我们的实验中使用的转换层包括批量标准化层和1×1卷积层，接着是2×2平均池化层。
 
@@ -50,11 +50,11 @@ $$
 
 最后得到模型的架构
 
-![](../../.gitbook/assets/image%20%2813%29.png)
+![](../../.gitbook/assets/image%20%2814%29.png)
 
 ## 测试
 
-![](../../.gitbook/assets/image%20%2852%29.png)
+![](../../.gitbook/assets/image%20%2855%29.png)
 
 
 

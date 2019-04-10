@@ -20,17 +20,17 @@ Mask R-CNN在概念上很简单：每个候选对象都由Faster R-CNN输出，�
 
 ### RoIAlign
 
-![](../../.gitbook/assets/image%20%2815%29.png)
+![](../../.gitbook/assets/image%20%2816%29.png)
 
 RoIPool 是用于从每个RoI提取小特征映射（例如，7×7）的标准操作。在RoI中，在连续坐标上通过计算 $$[x / 7]$$ ，其中 $$[\cdot]$$ 是取整，显然这会引入错位。虽然这可能不会影响分类，而分类对小的平移是稳健的，但它对预测像素精确的掩模有很大的负面影响。为了解决这个问题，我们提出了一个ROIAlign来重新移动RoIPool的粗略量化，将提取的特征与输入正确对齐。我们使用双线性插值\[22\]来计算每个ROI箱中四个定期采样位置的输入特征的精确值，并汇总结果（使用最大值或平均值）。
 
 ### Network Architecture
 
-![](../../.gitbook/assets/image%20%2843%29.png)
+![](../../.gitbook/assets/image%20%2846%29.png)
 
 ## 测试
 
-![](../../.gitbook/assets/image%20%28106%29.png)
+![](../../.gitbook/assets/image%20%28111%29.png)
 
 
 

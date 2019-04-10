@@ -12,7 +12,7 @@
 
 ### 残差模块
 
-![](../../.gitbook/assets/image%20%28100%29.png)
+![](../../.gitbook/assets/image%20%28104%29.png)
 
 我们对每几个堆叠层采用残差学习。构建块如图2所示。在本文中，我们认为构建块定义了一个
 
@@ -22,15 +22,15 @@ $$
 
 ### 网络架构
 
-![](../../.gitbook/assets/image%20%2860%29.png)
+![](../../.gitbook/assets/image%20%2863%29.png)
 
-![](../../.gitbook/assets/image%20%2897%29.png)
+![](../../.gitbook/assets/image%20%28101%29.png)
 
 ![](../../.gitbook/assets/image.png)
 
 ## 性能
 
-![](../../.gitbook/assets/image%20%2848%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 
 

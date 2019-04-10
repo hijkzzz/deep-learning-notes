@@ -84,6 +84,8 @@
 
 ## 硬件
 
+* [CUDA](ying-jian/cuda/README.md)
+  * [CUDA C Programming Guide](ying-jian/cuda/cuda-c-programming-guide.md)
 * [矩阵乘法](ying-jian/ju-zhen-cheng-fa/README.md)
   * [Tiled Matrix Multiplication](ying-jian/ju-zhen-cheng-fa/tiled-matrix-multiplication.md)
 * [分布式训练](ying-jian/fen-bu-shi-xun-lian/README.md)
