@@ -2,7 +2,7 @@
 
 ## **介绍**
 
-![](../../.gitbook/assets/image%20%2845%29.png)
+![](../../.gitbook/assets/image%20%2850%29.png)
 
 机器翻译即用神经网络将文本从一种语言翻译到另一种语言，最常见的模型是编码器-解码器模型。
 
@@ -14,21 +14,21 @@ BLEU\(Bilingual Evaluation understudy\)方法由IBM提出，这种方法认为�
 
 最开始提出的BLEU法虽然简单易行，但是它没有考虑到翻译的召回率。后对BLEU做了修正，首先计算出一个n元词在一个句子中最大可能出现的次数MaxRefCount\(n-gram\)，然后跟候选译文中的这个n元词出现的次数作比较，取它们之间最小值作为这个n元词的最终匹配个数。
 
-![](../../.gitbook/assets/image%20%286%29.png)
+![](../../.gitbook/assets/image%20%287%29.png)
 
 其中Count\(n-gram\)是某个n元词在候选译文中的出现次数，而MaxRefCount\(n-gram\)是该n元词在参考译文中出现的最大次数。
 
 共现n元词的精度Pn定义为：
 
-![](../../.gitbook/assets/image%20%28165%29.png)
+![](../../.gitbook/assets/image%20%28177%29.png)
 
 BLEU 方法在得到上述结果之后，其评价分数可通过下式来计算
 
-![](../../.gitbook/assets/image%20%2840%29.png)
+![](../../.gitbook/assets/image%20%2845%29.png)
 
 其中Wn表示共现n元词的权重，BP\(Brevity Penalty\)是惩罚因子：
 
-![](../../.gitbook/assets/image%20%2839%29.png)
+![](../../.gitbook/assets/image%20%2844%29.png)
 
 这里的c是机器译文的词数，r是参考译文的词数。
 
@@ -36,7 +36,7 @@ BLEU 方法在得到上述结果之后，其评价分数可通过下式来计算
 
 NIST\(National Institute of standards and Technology\)方法是在BLEU方法上的一种改进。它并不是简单的将匹配的n—gram片段数目累加起来，而是求出每个n-gram的信息量\(information\)，然后累加起来再除以整个译文的n-gram片段数目。信息量的计算公式是：
 
-![](../../.gitbook/assets/image%20%2869%29.png)
+![](../../.gitbook/assets/image%20%2875%29.png)
 
 上式中分母是n元词在参考译文中出现的次数，分子是对应的n-l元词在参考译文中的出现次数。对于一元词汇，分子的取值就是整个参考译文的长度。
 
@@ -44,7 +44,7 @@ NIST\(National Institute of standards and Technology\)方法是在BLEU方法上�
 
 加权求平均得出最后的评分结果：
 
-![](../../.gitbook/assets/image%20%28149%29.png)
+![](../../.gitbook/assets/image%20%28160%29.png)
 
 NIST采用的是算术平均方式，Lsys是使系统译文的长度，而Lref是参考译文的平均长度，是一个经验阈值，它使整个惩罚值在系统译文的长度是参考译文长度的2/3时为0.5。
 
@@ -62,7 +62,7 @@ METEOR也包括其他指标没有发现一些其他功能，如同义词匹配�
   
 常用的评价准则可参见下表：
 
-![](../../.gitbook/assets/image%20%28115%29.png)
+![](../../.gitbook/assets/image%20%28124%29.png)
 
 \*\*\*\*
 

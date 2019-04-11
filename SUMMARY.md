@@ -32,6 +32,7 @@
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi/README.md)
   * [A Neural Algorithm of Artistic Style](juan-ji-wang-luo/feng-ge-qian-yi/a-neural-algorithm-of-artistic-style.md)
   * [Deep Photo Style Transfer](juan-ji-wang-luo/feng-ge-qian-yi/deep-photo-style-transfer.md)
+  * [Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization](juan-ji-wang-luo/feng-ge-qian-yi/arbitrary-style-transfer-in-real-time-with-adaptive-instance-normalization.md)
   * [Fast Face-swap](juan-ji-wang-luo/feng-ge-qian-yi/deepfake.md)
 * [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie/README.md)
   * [DeepFace](juan-ji-wang-luo/ren-lian-shi-bie/deepface.md)
