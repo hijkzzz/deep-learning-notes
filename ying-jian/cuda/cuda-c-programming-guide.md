@@ -1,7 +1,3 @@
----
-description: 'https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html'
----
-
 # CUDA C Programming Guide
 
 ## Introduction
@@ -244,4 +240,26 @@ CUDA C为熟悉C编程语言的用户提供了一条简单的路径，可以轻�
 可以使用称为PTX的CUDA指令集架构来编写内核，这在PTX参考手册中有所描述。 然而，使用诸如C的高级编程语言通常更有效。在这两种情况下，必须通过nvcc将内核编译成二进制代码以在设备上执行。
 
 nvcc是一个编译器驱动程序，它简化了编译C或PTX代码的过程：它提供了简单而熟悉的命令行选项，并通过调用实现不同编译阶段的工具集来执行它们。 本节概述了nvcc工作流和命令选项。 完整的描述可以在nvcc用户手册中找到。
+
+## Hardware Implementation
+
+## Performance Guidelines
+
+## Appendix
+
+* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) lists all CUDA-enabled devices.
+* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) is a detailed description of all extensions to the C language.
+* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) describes synchronization primitives for various groups of CUDA threads.
+* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) describes how to launch and synchronize one kernel from another.
+* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix) lists the mathematical functions supported in CUDA.
+* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support) lists the C++ features supported in device code.
+* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) gives more details on texture fetching
+* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) gives the technical specifications of various devices, as well as more architectural details.
+* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) introduces the low-level driver API.
+* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) lists all the CUDA environment variables.
+* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) introduces the Unified Memory programming model.
+
+## 
+
+
 
