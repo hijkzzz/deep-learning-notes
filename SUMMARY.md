@@ -32,6 +32,7 @@
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi/README.md)
   * [A Neural Algorithm of Artistic Style](juan-ji-wang-luo/feng-ge-qian-yi/a-neural-algorithm-of-artistic-style.md)
   * [Deep Photo Style Transfer](juan-ji-wang-luo/feng-ge-qian-yi/deep-photo-style-transfer.md)
+  * [Fast Face-swap](juan-ji-wang-luo/feng-ge-qian-yi/deepfake.md)
 * [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie/README.md)
   * [DeepFace](juan-ji-wang-luo/ren-lian-shi-bie/deepface.md)
   * [Deep Face Recognition](juan-ji-wang-luo/ren-lian-shi-bie/deep-face-recognition.md)
@@ -60,7 +61,6 @@
   * [DCGAN](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/dcgan.md)
   * [CycleGAN](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/cyclegan.md)
 * [自编码器](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi/README.md)
-  * [DeepFake](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi/deepfake.md)
   * [Auto-encoding variational Bayes](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi/auto-encoding-variational-bayes.md)
 
 ## 自动机器学习
