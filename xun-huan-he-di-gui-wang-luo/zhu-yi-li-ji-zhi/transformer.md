@@ -12,7 +12,7 @@
 
 Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全连接的层，用于编码器和解码器，分别如图1的左半部分和右半部分所示。
 
-![](../../.gitbook/assets/image%20%28112%29.png)
+![](../../.gitbook/assets/image%20%28118%29.png)
 
 
 
@@ -30,7 +30,7 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 注意功能可以被描述为将query和一组key-value对映射到output，其中query，key，value和output都是向量。输出被计算为值的加权总和，其中分配给每个值的权重由query与相应key的兼容性函数来计算。
 
-![](../../.gitbook/assets/image%20%28155%29.png)
+![](../../.gitbook/assets/image%20%28161%29.png)
 
 ### Scaled Dot-Product Attention
 
