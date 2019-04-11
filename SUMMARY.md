@@ -35,9 +35,6 @@
 * [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie/README.md)
   * [DeepFace](juan-ji-wang-luo/ren-lian-shi-bie/deepface.md)
   * [Deep Face Recognition](juan-ji-wang-luo/ren-lian-shi-bie/deep-face-recognition.md)
-* [视频检索](juan-ji-wang-luo/shi-pin-jian-suo/README.md)
-  * [Large-scale video classification with convolutional neural networks](juan-ji-wang-luo/shi-pin-jian-suo/large-scale-video-classification-with-convolutional-neural-networks.md)
-  * [Video2Shop](juan-ji-wang-luo/shi-pin-jian-suo/video2shop.md)
 
 ## 循环和递归网络
 
@@ -51,8 +48,6 @@
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/README.md)
   * [Pointer Network](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/pointer-network.md)
   * [Transformer](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/transformer.md)
-* [语音识别](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie/README.md)
-  * [Deep Voice](xun-huan-he-di-gui-wang-luo/yu-yin-shi-bie/deep-voice.md)
 * [情感分析](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/README.md)
   * [Convolutional neural networks for sentence classification](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/convolutional-neural-networks-for-sentence-classification.md)
 * [神经图灵机](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/README.md)
