@@ -20,7 +20,7 @@ Gatys等人最近引入了一种神经算法，以另一幅图像的风格渲染
 
 ### Conditional Instance Normalization
 
-Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 $$s$$ 学习一组不同的参数$$\gamma^s$$ 和 $$\beta^s$$ ，而不是只学习一组仿射参数 $$\gamma$$ 和 $$\beta$$ 。
+Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 $$s$$ 学习一组不同的参数$$\gamma^s$$ 和 $$\beta^s$$ ，而不是只学习一组仿射参数 $$\gamma$$ 和 $$\beta$$ 。令人惊讶的是，网络可以通过使用相同的卷积参数生成不完全不同风格的图像但IN层中的不同参数。
 
 ![](../../.gitbook/assets/image%20%28134%29.png)
 
