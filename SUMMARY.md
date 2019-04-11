@@ -39,7 +39,7 @@
 ## 循环和递归网络
 
 * [词向量](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/README.md)
-  * [Glove](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/glove.md)
+  * [Word2Vec](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/glove.md)
   * [BERT](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/bert.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/README.md)
   * [Sequence to Sequence Learning with Neural Networks](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/sequence-to-sequence-learning-with-neural-networks.md)

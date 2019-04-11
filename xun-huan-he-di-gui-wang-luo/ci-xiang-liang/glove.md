@@ -1,8 +1,10 @@
-# Glove
+# Word2Vec
 
 ## 介绍
 
-> [Glove: Global vectors for word representation](http://anthology.aclweb.org/D/D14/D14-1162.pdf)
+> [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
+
+
 
 
 
