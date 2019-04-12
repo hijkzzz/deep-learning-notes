@@ -19,6 +19,9 @@
 ## 卷积网络
 
 * [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/README.md)
+  * [轻量级卷积神经网络](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/README.md)
+    * [MobileNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/mobilenet.md)
+    * [ShuffleNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/shufflenet.md)
   * [Spatial transformer network](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/spatial-transformer-network.md)
   * [ResNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/resnet.md)
   * [Xception](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/xception.md)
@@ -27,6 +30,7 @@
   * [Fast R-CNN](juan-ji-wang-luo/mu-biao-jian-ce/fast-r-cnn.md)
   * [Faster R-CNN](juan-ji-wang-luo/mu-biao-jian-ce/faster-r-cnn.md)
   * [YOLOv3](juan-ji-wang-luo/mu-biao-jian-ce/yolov3.md)
+  * [Light-Head R-CNN](juan-ji-wang-luo/mu-biao-jian-ce/light-head-r-cnn.md)
 * [语义分割](juan-ji-wang-luo/yu-yi-fen-ge/README.md)
   * [FCN](juan-ji-wang-luo/yu-yi-fen-ge/fcn.md)
   * [DeepLab V3+](juan-ji-wang-luo/yu-yi-fen-ge/deeplab-v3.md)
