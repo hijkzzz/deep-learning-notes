@@ -58,6 +58,7 @@
   * [Transformer](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/transformer.md)
 * [情感分析](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/README.md)
   * [Convolutional neural networks for sentence classification](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/convolutional-neural-networks-for-sentence-classification.md)
+  * [Recurrent Convolutional Neural Networks for Text Classification](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/recurrent-convolutional-neural-networks-for-text-classification.md)
 * [神经图灵机](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/README.md)
   * [Neural turing machines](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/neural-turing-machines.md)
 
