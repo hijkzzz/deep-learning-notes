@@ -20,8 +20,8 @@
 
 * [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/README.md)
   * [轻量级卷积神经网络](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/README.md)
-    * [MobileNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/mobilenet.md)
     * [ShuffleNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/shufflenet.md)
+    * [MobileNetV2](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/qing-liang-ji-juan-ji-shen-jing-wang-luo/mobilenet.md)
   * [Spatial transformer network](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/spatial-transformer-network.md)
   * [ResNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/resnet.md)
   * [Xception](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/xception.md)
