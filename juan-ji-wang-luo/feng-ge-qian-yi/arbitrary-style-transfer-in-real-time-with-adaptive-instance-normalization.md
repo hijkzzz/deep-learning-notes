@@ -10,19 +10,19 @@ Gatys等人最近引入了一种神经算法，以另一幅图像的风格渲染
 
 ### Instance Normalization
 
-![](../../.gitbook/assets/image%20%2835%29.png)
+![](../../.gitbook/assets/image%20%2836%29.png)
 
 与BN层不同，这里 $$μ(x)$$ 和 $$σ(x)$$ 在每个样本的每个通道上独立地跨空间维度进行计算：
 
-![](../../.gitbook/assets/image%20%2885%29.png)
+![](../../.gitbook/assets/image%20%2887%29.png)
 
-![](../../.gitbook/assets/image%20%2884%29.png)
+![](../../.gitbook/assets/image%20%2886%29.png)
 
 ### Conditional Instance Normalization
 
 Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 $$s$$ 学习一组不同的参数$$\gamma^s$$ 和 $$\beta^s$$ ，而不是只学习一组仿射参数 $$\gamma$$ 和 $$\beta$$ 。令人惊讶的是，网络可以通过使用相同的卷积参数生成不完全不同风格的图像但IN层中的不同参数。
 
-![](../../.gitbook/assets/image%20%28134%29.png)
+![](../../.gitbook/assets/image%20%28137%29.png)
 
 与没有归一化层的网络相比，具有CIN层的网络需要 $$2FS$$ 个附加参数，其中 $$F$$ 是网络中特征图的总数。由于附加参数的数量与样式的数量成线性比例，因此扩展它们的方法来对大量样式\(例如数万个\)建模是一个挑战。此外，如果不重新训练网络，他们的方法无法适应新的风格。
 
@@ -34,13 +34,13 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 
 我们进行了以下实验：即测试对比度归一化和风格归一化后IN的影响力，结果表明IN在风格化归一化后效果变差，所以也说明了IN本身的作用就是风格归一化。
 
-![](../../.gitbook/assets/image%20%2828%29.png)
+![](../../.gitbook/assets/image%20%2829%29.png)
 
 ### Adaptive Instance Normalization
 
 如果IN将输入规范化为仿射参数指定的单一样式，是否可以通过使用自适应仿射变换使其适应任意的样式？ 在这里，我们提出了一个简单的IN扩展，我们称之为adaptive实例规范化（AdaIN）。AdaIN接收内容输入x和样式输入y，并简单地将x的通道均值和方差对齐以匹配y。与BN，IN或CIN不同，AdaIN没有可学习的仿射参数。相反，它从样式输入中自适应地计算仿射参数。
 
-![](../../.gitbook/assets/image%20%2840%29.png)
+![](../../.gitbook/assets/image%20%2841%29.png)
 
 直观地说，让我们考虑一个检测特定风格的画笔笔迹的特征通道。具有这种笔画的样式图像将为该特征产生高平均激活。AdaIN生成的输出将具有相同的高平均激活功能，同时保留内容图像的空间结构。笔画特征可以通过前馈解码器转换到图像空间，此通道的方差可以编码更细微的样式信息，也可以转移到AdaIN输出和最终输出图像。
 
@@ -48,13 +48,13 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 
 ### Experimental Setup
 
-![](../../.gitbook/assets/image%20%28176%29.png)
+![](../../.gitbook/assets/image%20%28180%29.png)
 
 #### Loss Function
 
 整体损失氛围内容损失和风格损失
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2863%29.png)
 
 内容损失是目标特征和输出图像特征之间的欧几里德距离。我们使用AdaIN输出内容目标，而不是常用的内容图像的特征响应。我们发现这导致了稍微更快的收敛，并且没有反转AdaIN输出的目标
 
@@ -62,13 +62,13 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 
 由于我们的AdaIN图层仅传递样式特征的均值和标准偏差，因此我们的样式丢失仅匹配这些统计信息。虽然我们发现常用的Gram矩阵损失可以产生类似的结果，但我们对IN统计数据进行了匹配，因为它在概念上更清晰：
 
-![](../../.gitbook/assets/image%20%28154%29.png)
+![](../../.gitbook/assets/image%20%28157%29.png)
 
 其中每个φ标识VGG-19中的一层，用于计算样式损失
 
 ## 效果
 
-![](../../.gitbook/assets/image%20%28120%29.png)
+![](../../.gitbook/assets/image%20%28122%29.png)
 
 
 

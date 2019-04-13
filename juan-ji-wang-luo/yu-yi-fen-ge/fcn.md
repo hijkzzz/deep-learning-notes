@@ -10,13 +10,13 @@
 
 简单的说，FCN与CNN的区别在于FCN把CNN最后的全连接层换成卷积层，输出一张已经label好的图。
 
-![](../../.gitbook/assets/image%20%28187%29.png)
+![](../../.gitbook/assets/image%20%28191%29.png)
 
-![](../../.gitbook/assets/image%20%2888%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 具体来说，通过CNN下采样提取图片特征，然后通过上采样的方式输出分类特征图（skip连接补充细节信息），即每个像素输出N个值（所以输出有N张特征图），表示该像素属于哪个类（即softmax分类）。
 
-![](../../.gitbook/assets/image%20%28136%29.png)
+![](../../.gitbook/assets/image%20%28139%29.png)
 
 ### 实现细节
 
@@ -28,15 +28,15 @@
 
 
 
-![](../../.gitbook/assets/image%20%28175%29.png)
+![](../../.gitbook/assets/image%20%28179%29.png)
 
 数据集测试
 
-![](../../.gitbook/assets/image%20%28103%29.png)
+![](../../.gitbook/assets/image%20%28105%29.png)
 
-![](../../.gitbook/assets/image%20%28119%29.png)
+![](../../.gitbook/assets/image%20%28121%29.png)
 
-![](../../.gitbook/assets/image%20%28145%29.png)
+![](../../.gitbook/assets/image%20%28148%29.png)
 
 
 

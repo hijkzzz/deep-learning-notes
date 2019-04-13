@@ -10,9 +10,9 @@
 
 ### VGG
 
-![](../../.gitbook/assets/image%20%2898%29.png)
+![](../../.gitbook/assets/image%20%28100%29.png)
 
-![](../../.gitbook/assets/image%20%2886%29.png)
+![](../../.gitbook/assets/image%20%2888%29.png)
 
 如上图，作者通过可视化卷积层的输出发现，卷积神经网络的深层输出图片的语义信息，而浅层输出图片的风格信息。所以风格迁移的关键思想是使输出图片的语义信息近似给定内容图，风格信息近似给定风格图。
 
@@ -74,7 +74,7 @@ $$
 
 ## 效果
 
-![](../../.gitbook/assets/image%20%28142%29.png)
+![](../../.gitbook/assets/image%20%28145%29.png)
 
 
 
