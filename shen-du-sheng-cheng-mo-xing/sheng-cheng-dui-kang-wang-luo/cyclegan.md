@@ -12,7 +12,7 @@
 
 ### 整体框架
 
-![](../../.gitbook/assets/image%20%28136%29.png)
+![](../../.gitbook/assets/image%20%28143%29.png)
 
 ### Adversarial Loss
 
@@ -24,7 +24,7 @@
 
 ### Cycle Consistency Loss
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2864%29.png)
 
 ### Full Objective
 
@@ -32,5 +32,5 @@
 
 整体训练目标可以表示为：
 
-![](../../.gitbook/assets/image%20%2879%29.png)
+![](../../.gitbook/assets/image%20%2884%29.png)
 

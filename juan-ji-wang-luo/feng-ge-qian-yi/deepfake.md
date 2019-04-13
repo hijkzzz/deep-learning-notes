@@ -10,7 +10,7 @@
 
 ## 方法
 
-![](../../.gitbook/assets/image%20%28103%29.png)
+![](../../.gitbook/assets/image%20%28109%29.png)
 
 拥有人A的形象，我们希望将他/她的身份转化为人B的身份，同时保持头部和表达以及照明条件的完整。在风格转移方面，我们将输入图像A的姿势和表达视为内容，并输入 图像B的标识是风格。 
 
@@ -34,7 +34,7 @@
 
 ![](../../.gitbook/assets/image%20%289%29.png)
 
-![](../../.gitbook/assets/image%20%28170%29.png)
+![](../../.gitbook/assets/image%20%28178%29.png)
 
 #### Style loss
 
@@ -44,11 +44,11 @@
 
 对于每个这样的Patch来说，我们发现从Y中提取的Patch中最好的匹配Patch，并最小化它们之间的距离。 作为误差度量，我们使用了正弦距离：
 
-![](../../.gitbook/assets/image%20%28151%29.png)
+![](../../.gitbook/assets/image%20%28159%29.png)
 
 不过在这里我们只搜索相同位置的Path，但是跨多个样式图像：
 
-![](../../.gitbook/assets/image%20%2881%29.png)
+![](../../.gitbook/assets/image%20%2886%29.png)
 
 #### Light loss
 
@@ -56,17 +56,17 @@
 
 为了获得理想的光感特性，我们构造了一个小型的siamese卷积神经网络。它被训练为区分具有相同或不同照明条件的图像对。成对的图像始终具有相同的姿势。 我们使用了扩展的耶鲁人脸数据库B \[8\]，其中包含了9个姿势和64个照明条件下的主题的灰度肖像。 照明网络的架构如图4所示。
 
-![](../../.gitbook/assets/image%20%28124%29.png)
+![](../../.gitbook/assets/image%20%28131%29.png)
 
 我们将把照明网络的最后一层的特征表示为 $$Γ(x)$$ ，并引入下面的损失函数，该函数试图防止生成的图像具有与内容图像x不同的照明条件。 两者都是单通道亮度图像。
 
-![](../../.gitbook/assets/image%20%28147%29.png)
+![](../../.gitbook/assets/image%20%28154%29.png)
 
 #### Total variation regularization
 
 在约翰逊和其他人的工作之后，我们使用正则化来鼓励空间平滑：
 
-![](../../.gitbook/assets/image%20%28190%29.png)
+![](../../.gitbook/assets/image%20%28198%29.png)
 
 整体损失为
 
