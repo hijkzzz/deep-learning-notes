@@ -81,7 +81,7 @@
 
 * [卷积网络](shen-ru-li-jie/juan-ji-wang-luo/README.md)
   * [Visualizing and Understanding Convolutional Networks](shen-ru-li-jie/juan-ji-wang-luo/visualizing-and-understanding-convolutional-networks.md)
-* [知识蒸馏](shen-ru-li-jie/zhi-shi-zheng-liu/README.md)
+* [模型蒸馏](shen-ru-li-jie/zhi-shi-zheng-liu/README.md)
   * [Distilling the knowledge in a neural network](shen-ru-li-jie/zhi-shi-zheng-liu/distilling-the-knowledge-in-a-neural-network.md)
 
 ## 硬件
