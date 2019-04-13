@@ -60,15 +60,16 @@
   * [Recurrent Convolutional Neural Networks for Text Classification](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/recurrent-convolutional-neural-networks-for-text-classification.md)
 * [神经图灵机](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/README.md)
   * [Neural turing machines](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/neural-turing-machines.md)
+  * [Hybrid computing using a neural network with dynamic external memory](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/hybrid-computing-using-a-neural-network-with-dynamic-external-memory.md)
 
 ## 生成模型/无监督
 
-* [生成对抗网络](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/README.md)
-  * [CGAN](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/conditional-generative-adversarial-nets.md)
-  * [DCGAN](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/dcgan.md)
-  * [CycleGAN](shen-du-sheng-cheng-mo-xing/sheng-cheng-dui-kang-wang-luo/cyclegan.md)
-* [自编码器](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi/README.md)
-  * [Auto-encoding variational Bayes](shen-du-sheng-cheng-mo-xing/zi-bian-ma-qi/auto-encoding-variational-bayes.md)
+* [生成对抗网络](sheng-cheng-mo-xing-wu-jian-du/sheng-cheng-dui-kang-wang-luo/README.md)
+  * [CGAN](sheng-cheng-mo-xing-wu-jian-du/sheng-cheng-dui-kang-wang-luo/conditional-generative-adversarial-nets.md)
+  * [DCGAN](sheng-cheng-mo-xing-wu-jian-du/sheng-cheng-dui-kang-wang-luo/dcgan.md)
+  * [CycleGAN](sheng-cheng-mo-xing-wu-jian-du/sheng-cheng-dui-kang-wang-luo/cyclegan.md)
+* [自编码器](sheng-cheng-mo-xing-wu-jian-du/zi-bian-ma-qi/README.md)
+  * [Auto-encoding variational Bayes](sheng-cheng-mo-xing-wu-jian-du/zi-bian-ma-qi/auto-encoding-variational-bayes.md)
 
 ## 自动机器学习
 
