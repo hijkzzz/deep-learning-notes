@@ -2,6 +2,13 @@
 
 * [介绍](README.md)
 
+## 机器学习
+
+* [线性模型](ji-qi-xue-xi/xian-xing-mo-xing/README.md)
+  * [Factorization Machine](ji-qi-xue-xi/xian-xing-mo-xing/factorization-machine.md)
+* [集成学习](ji-qi-xue-xi/ji-cheng-xue-xi/README.md)
+  * [XGBoost](ji-qi-xue-xi/ji-cheng-xue-xi/xgboost.md)
+
 ## 优化
 
 * [反向传播](you-hua/fan-xiang-chuan-bo/README.md)
