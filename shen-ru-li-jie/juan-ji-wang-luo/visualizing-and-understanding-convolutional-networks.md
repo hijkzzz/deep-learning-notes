@@ -36,13 +36,13 @@ convnet使用学习的filter来与前一层的特征图卷积。为了反转这�
 
 ![](../../.gitbook/assets/image%20%2899%29.png)
 
-![](../../.gitbook/assets/image%20%28118%29.png)
+![](../../.gitbook/assets/image%20%28119%29.png)
 
 ### Feature Evolution during Training
 
 图4可视化了在投射回像素空间的给定特征图内的强激活\(跨越所有训练示例\)训练期间的进展
 
-![](../../.gitbook/assets/image%20%28191%29.png)
+![](../../.gitbook/assets/image%20%28196%29.png)
 
 ### Feature Invariance
 

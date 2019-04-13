@@ -16,11 +16,11 @@
 
 参数的反向传播公式
 
-![](../../.gitbook/assets/image%20%28153%29.png)
+![](../../.gitbook/assets/image%20%28157%29.png)
 
 ### 伪代码
 
-![](../../.gitbook/assets/image%20%28161%29.png)
+![](../../.gitbook/assets/image%20%28165%29.png)
 
 需要注意的是训练的时候使用批次样本的均值与方差，预测的时候使用所有训练样本的均值与方差。
 
@@ -40,7 +40,7 @@
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28166%29.png)
+![](../../.gitbook/assets/image%20%28170%29.png)
 
 
 

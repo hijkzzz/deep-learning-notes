@@ -74,7 +74,7 @@ $$
 
 ## 效果
 
-![](../../.gitbook/assets/image%20%28152%29.png)
+![](../../.gitbook/assets/image%20%28156%29.png)
 
 
 

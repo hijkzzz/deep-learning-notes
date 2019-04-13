@@ -28,7 +28,7 @@ $$
 
 一般来说，输出像素被定义为位于规则网格上 $$G=\left\{G_{i}\right\}, \ G_{i}=\left(x_{i}^{t}, y_{i}^{t}\right)$$ 
 
-![](../../.gitbook/assets/image%20%28167%29.png)
+![](../../.gitbook/assets/image%20%28171%29.png)
 
 $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐标， $$\left(x_{i}^{s}, y_{i}^{s}\right)$$ 是输入特征图中定义采样点的源坐标， $$\mathrm{A}_{\theta}$$ 是仿射变换矩阵。
 
@@ -52,7 +52,7 @@ $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐
 
 其对应的偏导数为
 
-![](../../.gitbook/assets/image%20%28132%29.png)
+![](../../.gitbook/assets/image%20%28135%29.png)
 
 ### Spatial Transformer Networks
 
@@ -60,5 +60,5 @@ $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28149%29.png)
+![](../../.gitbook/assets/image%20%28153%29.png)
 

@@ -12,7 +12,7 @@
 
 ### 残差模块
 
-![](../../.gitbook/assets/image%20%28134%29.png)
+![](../../.gitbook/assets/image%20%28138%29.png)
 
 我们对每几个堆叠层采用残差学习。构建块如图2所示。在本文中，我们认为构建块定义了一个
 
@@ -24,7 +24,7 @@ $$
 
 ![](../../.gitbook/assets/image%20%2885%29.png)
 
-![](../../.gitbook/assets/image%20%28130%29.png)
+![](../../.gitbook/assets/image%20%28133%29.png)
 
 ![](../../.gitbook/assets/image.png)
 
