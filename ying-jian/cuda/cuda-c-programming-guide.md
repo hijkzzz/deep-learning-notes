@@ -56,22 +56,22 @@ Figure 5. Automatic Scalability
 
 本文档分为以下章节：
 
-* 章节 [Introduction](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#introduction) is a general introduction to CUDA.
-* 章节 [Programming Model](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-model) outlines the CUDA programming model.
-* 章节 [Programming Interface](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-interface) describes the programming interface.
-* 章节 [Hardware Implementation](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#hardware-implementation) describes the hardware implementation.
-* 章节 [Performance Guidelines](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#performance-guidelines) gives some guidance on how to achieve maximum performance.
-* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) lists all CUDA-enabled devices.
-* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) is a detailed description of all extensions to the C language.
-* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) describes synchronization primitives for various groups of CUDA threads.
-* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) describes how to launch and synchronize one kernel from another.
-* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix) lists the mathematical functions supported in CUDA.
-* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support) lists the C++ features supported in device code.
-* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) gives more details on texture fetching
-* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) gives the technical specifications of various devices, as well as more architectural details.
-* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) introduces the low-level driver API.
-* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) lists all the CUDA environment variables.
-* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) introduces the Unified Memory programming model.
+* 章节 [Introduction](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#introduction) 是对CUDA的一般介绍。
+* 章节 [Programming Model](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-model) 概述了CUDA编程模型。
+* 章节 [Programming Interface](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-interface) 描述了编程接口。
+* 章节 [Hardware Implementation](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#hardware-implementation) 描述了硬件实现。
+* 章节 [Performance Guidelines](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#performance-guidelines) 为如何实现最佳性能提供了一些指导。
+* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) 列出了所有支持CUDA的设备。
+* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) 是对C语言的所有扩展的详细描述。
+* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) 描述了各种CUDA线程组的同步原语。
+* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) 描述了如何从另一个内核启动和同步一个内核。
+* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix)列出了CUDA中支持的数学函数。
+* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support)列出了设备代码中支持的C ++功能。
+* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) 提供了有关纹理提取的更多细节
+* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) 给出了各种设备的技术规范，以及更多的架构细节。
+* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) 介绍了低级驱动程序API。
+* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) 列出了所有CUDA环境变量。
+* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) 介绍了统一内存编程模型。
 
 ## Programming Model
 
@@ -241,23 +241,125 @@ CUDA C为熟悉C编程语言的用户提供了一条简单的路径，可以轻�
 
 nvcc是一个编译器驱动程序，它简化了编译C或PTX代码的过程：它提供了简单而熟悉的命令行选项，并通过调用实现不同编译阶段的工具集来执行它们。 本节概述了nvcc工作流和命令选项。 完整的描述可以在nvcc用户手册中找到。
 
+#### Compilation Workflow
+
+**Offline Compilation**
+
+用nvcc编译的源文件可以包括主机代码（即，在主机上执行的代码）和设备代码（即，在设备上执行的代码）的混合。 nvcc的基本工作流程包括将设备代码与主机代码分离，然后：
+
+* 将设备代码编译为汇编表（PTX代码）和/或二进制表（cubin对象），
+* 通过必要的CUDA C运行时函数调用替换内核中引入的&lt;&lt;&lt; ... &gt;&gt;&gt;语法（并在执行配置中更详细地描述）来修改主机代码，以从PTX代码加载和启动每个编译的内核 和/或cubin对象。
+
+修改后的主机代码既可以作为C代码输出，也可以使用其他工具进行编译，也可以通过让nvcc在上一个编译阶段调用主机编译器直接输出目标代码。
+
+应用程序可以：
+
+* 链接到已编译的主机代码（这是最常见的情况），
+* 或者忽略修改后的主机代码（如果有）并使用CUDA驱动程序API（请参阅驱动程序API）来加载和执行PTX代码或cubin对象
+
+**Just-in-Time Compilation**
+
+应用程序在运行时加载的任何PTX代码都由设备驱动程序进一步编译为二进制代码。 这称为即时编译。 即时编译会增加应用程序加载时间，但允许应用程序受益于每个新设备驱动程序随附的任何新编译器改进。 它也是应用程序在编译应用程序时不存在的设备上运行的唯一方法，如应用程序兼容性中所述。
+
+当设备驱动程序即时编译某些应用程序的某些PTX代码时，它会自动缓存生成的二进制代码的副本，以避免在后续应用程序调用中重复编译。 缓存（称为计算缓存）在升级设备驱动程序时自动失效，因此应用程序可以从设备驱动程序中内置的新实时编译器的改进中受益。
+
+环境变量可用于控制即时编译，如CUDA环境变量中所述
+
+#### Binary Compatibility
+
+二进制代码是特定于体系结构的。 使用编译器选项-code生成cubin对象，该选项指定目标体系结构：例如，使用-code = sm\_35进行编译会为计算能力3.5的设备生成二进制代码。 从一个小修订版到下一个修订版保证二进制兼容性，但不是从一个小修订版到前一个修订版或主要修订版。 换句话说，为计算能力X.y生成的cubin对象将仅在计算能力X.z的设备上执行，其中z≥y。
+
+注意：仅桌面支持二进制兼容性。 Tegra不支持它。 此外，不支持桌面和Tegra之间的二进制兼容性。
+
+#### PTX Compatibility
+
+某些PTX指令仅在具有更高计算能力的设备上受支持。 例如，Warp Shuffle Functions仅在计算能力3.0及以上的设备上受支持。 -arch编译器选项指定在将C编译为PTX代码时假定的计算能力。 因此，包含warp shuffle的代码必须使用-arch = compute\_30（或更高版本）进行编译。
+
+为某些特定计算能力生成的PTX代码始终可以编译为具有更大或相等计算能力的二进制代码。 请注意，从早期PTX版本编译的二进制文件可能无法使用某些硬件功能。 例如，从为计算能力6.0（Pascal）生成的PTX编译的计算能力7.0（Volta）的二进制目标设备将不使用Tensor Core指令，因为这些指令在Pascal上不可用。 结果，如果使用最新版本的PTX生成二进制文件，则最终二进制文件可能表现得更差。
+
+#### Application Compatibility
+
+要在具有特定计算能力的设备上执行代码，应用程序必须加载与此计算功能兼容的二进制或PTX代码，如二进制兼容性和PTX兼容性中所述。 特别是，为了能够在具有更高计算能力的未来架构上执行代码（尚未生成二进制代码），应用程序必须加载将为这些设备及时编译的PTX代码（请参阅Just In Time编译）。
+
+嵌入在CUDA C应用程序中的PTX和二进制代码由-arch和-code编译器选项或-gencode编译器选项控制，如nvcc用户手册中所述。 例如，
+
+```bash
+nvcc x.cu
+        -gencode arch=compute_35,code=sm_35
+        -gencode arch=compute_50,code=sm_50
+        -gencode arch=compute_60,code=\'compute_60,sm_60\'
+```
+
+嵌入与计算能力3.5和5.0兼容的二进制代码（第一和第二代码选项）和兼容计算能力6.0的PTX和二进制代码（第三代码选项）
+
+生成主机代码以在运行时自动选择要加载和执行的最合适的代码，在上面的示例中，将是：
+
+* 3.5 binary code for devices with compute capability 3.5 and 3.7,
+* 5.0 binary code for devices with compute capability 5.0 and 5.2,
+* 6.0 binary code for devices with compute capability 6.0 and 6.1,
+* PTX code which is compiled to binary code at runtime for devices with compute capability 7.0 and higher.
+
+例如，x.cu可以具有使用warp shuffle操作的优化代码路径，仅在计算能力3.0及更高版本的设备中支持。\_\_CUDA\_ARCH\_\_宏可用于根据计算能力区分各种代码路径。 它仅针对设备代码定义。 例如，当使用-arch = compute_35进行编译时，\_\_ CUDA\_ARCH\_\__等于350。
+
+#### C/C++ Compatibility
+
+编译器的前端根据C ++语法规则处理CUDA源文件。 主机代码支持完整的C ++。 但是，如C / C ++语言支持中所述，设备代码仅完全支持C ++的一个子集。
+
+#### 64-Bit Compatibility
+
+64位版本的nvcc以64位模式编译设备代码（即指针是64位）。 只有在64位模式下编译的主机代码才支持以64位模式编译的器件代码。
+
+类似地，32位版本的nvcc以32位模式编译器件代码，而以32位模式编译的器件代码仅支持以32位模式编译的主机代码。
+
+32位版本的nvcc也可以使用-m64编译器选项以64位模式编译设备代码。
+
+64位版本的nvcc也可以使用-m32编译器选项以32位模式编译设备代码。
+
+### CUDA C Runtime
+
+运行时在cudart库中实现，该库通过cudart.lib或libcudart.a静态链接到应用程序，或通过cudart.dll或libcudart.so动态链接。 需要cudart.dll和/或cudart.so进行动态链接的应用程序通常将它们作为应用程序安装包的一部分包含在内。 在链接到CUDA运行时的同一实例的组件之间传递CUDA运行时符号的地址是安全的。
+
+所有入口点都以cuda为前缀。
+
+正如 [Heterogeneous Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#heterogeneous-programming) 中提到的, CUDA编程模型假设一个系统由一个主机和一个设备组成，每个设备都有各自独立的内存。 [Device Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#device-memory)概述了用于管理设备内存的运行时函数。
+
+[Shared Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#shared-memory) 说明了在线程层次结构中引入的共享内存的使用，以最大限度地提高性能。
+
+[Page-Locked Host Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#page-locked-host-memory) 引入页面锁定的主机内存，它需要将内核执行与主机和设备内存之间的数据传输重叠。
+
+[Asynchronous Concurrent Execution](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#asynchronous-concurrent-execution) 描述了用于在系统中的各个级别启用异步并发执行的概念和API。
+
+[Multi-Device System](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#multi-device-system) 显示了编程模型如何扩展到具有连接到同一主机的多个设备的系统。
+
+[Error Checking](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#error-checking) 描述了如何正确检查运行时生成的错误。
+
+[Call Stack](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#call-stack) 提到用于管理CUDA C调用堆栈的运行时函数。
+
+[Texture and Surface Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-and-surface-memory)呈现纹理和表面存储空间，提供访问设备存储器的另一种方式; 它们还暴露了GPU纹理硬件的一个子集。
+
+[Graphics Interoperability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#graphics-interoperability) 介绍了运行时提供的各种功能，以便与两个主要的图形API，OpenGL和Direct3D进行互操作。
+
+
+
+
+
 ## Hardware Implementation
 
 ## Performance Guidelines
 
 ## Appendix
 
-* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) lists all CUDA-enabled devices.
-* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) is a detailed description of all extensions to the C language.
-* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) describes synchronization primitives for various groups of CUDA threads.
-* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) describes how to launch and synchronize one kernel from another.
-* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix) lists the mathematical functions supported in CUDA.
-* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support) lists the C++ features supported in device code.
-* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) gives more details on texture fetching
-* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) gives the technical specifications of various devices, as well as more architectural details.
-* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) introduces the low-level driver API.
-* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) lists all the CUDA environment variables.
-* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) introduces the Unified Memory programming model.
+* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) 列出了所有支持CUDA的设备。
+* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) 是对C语言的所有扩展的详细描述。
+* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) 描述了各种CUDA线程组的同步原语。
+* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) 描述了如何从另一个内核启动和同步一个内核。
+* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix)列出了CUDA中支持的数学函数。
+* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support)列出了设备代码中支持的C ++功能。
+* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) 提供了有关纹理提取的更多细节
+* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) 给出了各种设备的技术规范，以及更多的架构细节。
+* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) 介绍了低级驱动程序API。
+* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) 列出了所有CUDA环境变量。
+* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) 介绍了统一内存编程模型。
 
 ## 
 
