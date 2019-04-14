@@ -6,13 +6,13 @@
 
 图像到图像的转换是一类视觉和图形问题，其目标是使用一组对齐的图像对来学习输入图像和输出图像之间的映射。但是，对于许多任务，将无法使用配对的培训数据。在没有成对例子的情况下，我们提出了一种学习将图像从源域翻译成目标域的方法。我们的目标是通过对抗损失学习映射 $$G : X \rightarrow Y$$ 使得来自分布 $$G(X)$$ 的图像与分布 $$Y$$ 无法区分。为这个映射是高度欠约束的，我们用一个逆映射对它进行耦合 $$F : Y \rightarrow X$$ 并引入循环一致性损失来强制执行 $$F(G(X)) \approx X$$ \(反之亦然\)。定性结果显示在几个不存在配对训练数据的任务中，包括收集风格转移，对象变形，季节转移，照片增强等。与几种现有方法的定量比较表明了我们方法的优越性。
 
-![](../../.gitbook/assets/image%20%2843%29.png)
+![](../../.gitbook/assets/image%20%2844%29.png)
 
 ## 方法
 
 ### 整体框架
 
-![](../../.gitbook/assets/image%20%28163%29.png)
+![](../../.gitbook/assets/image%20%28164%29.png)
 
 ### Adversarial Loss
 
@@ -24,7 +24,7 @@
 
 ### Cycle Consistency Loss
 
-![](../../.gitbook/assets/image%20%2871%29.png)
+![](../../.gitbook/assets/image%20%2872%29.png)
 
 ### Full Objective
 
@@ -32,5 +32,5 @@
 
 整体训练目标可以表示为：
 
-![](../../.gitbook/assets/image%20%2895%29.png)
+![](../../.gitbook/assets/image%20%2896%29.png)
 

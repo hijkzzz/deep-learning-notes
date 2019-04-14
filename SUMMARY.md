@@ -84,19 +84,19 @@
 
 * [深度强化学习](https://hujian.gitbook.io/deep-reinforcement-learning/)
 
-## 自动机器学习
-
-* [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/README.md)
-  * [Neural Architecture Search With Reinforcement Learning](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/neural-architecture-search-with-reinforcement-learning.md)
-* [超参数](zi-dong-ji-qi-xue-xi/chao-can-shu/README.md)
-  * [Population based training of neural networks](zi-dong-ji-qi-xue-xi/chao-can-shu/population-based-training-of-neural-networks.md)
-
 ## 深入理解
 
 * [卷积网络](shen-ru-li-jie/juan-ji-wang-luo/README.md)
   * [Visualizing and Understanding Convolutional Networks](shen-ru-li-jie/juan-ji-wang-luo/visualizing-and-understanding-convolutional-networks.md)
 * [模型蒸馏](shen-ru-li-jie/zhi-shi-zheng-liu/README.md)
   * [Distilling the knowledge in a neural network](shen-ru-li-jie/zhi-shi-zheng-liu/distilling-the-knowledge-in-a-neural-network.md)
+
+## 自动机器学习
+
+* [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/README.md)
+  * [Neural Architecture Search With Reinforcement Learning](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/neural-architecture-search-with-reinforcement-learning.md)
+* [超参数](zi-dong-ji-qi-xue-xi/chao-can-shu/README.md)
+  * [Population based training of neural networks](zi-dong-ji-qi-xue-xi/chao-can-shu/population-based-training-of-neural-networks.md)
 
 ## 硬件
 

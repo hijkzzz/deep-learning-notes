@@ -12,7 +12,7 @@
 
 Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全连接的层，用于编码器和解码器，分别如图1的左半部分和右半部分所示。
 
-![](../../.gitbook/assets/image%20%28165%29.png)
+![](../../.gitbook/assets/image%20%28166%29.png)
 
 
 
@@ -30,13 +30,13 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 注意功能可以被描述为将query和一组key-value对映射到output，其中query，key，value和output都是向量。输出被计算为值的加权总和，其中分配给每个值的权重由query与相应key的兼容性函数来计算。
 
-![](../../.gitbook/assets/image%20%28220%29.png)
+![](../../.gitbook/assets/image%20%28221%29.png)
 
 #### Scaled Dot-Product Attention
 
 注意力的计算公式如下
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2862%29.png)
 
 其中Q、K、V分别是query、key、value向量组成的矩阵（这些向量通过embedding与权重矩阵相乘得到）， $$d_{k}$$ 是向量的维度。缩放因子 $$\sqrt{d_{k}}$$ 用于减小点积大小增长对梯度的影响。
 
@@ -46,13 +46,13 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 我们使用8个并行的注意力头提升对不同区域的关注
 
-![](../../.gitbook/assets/image%20%28106%29.png)
+![](../../.gitbook/assets/image%20%28107%29.png)
 
 ### Position-wise Feed-Forward Networks
 
 除了注意子层之外，我们编码器和解码器中的每一层都包含一个完全关联的前馈网络，该网络分别且完全相同地应用于每个位置。这包括两个线性变换，其间有ReLU激活。
 
-![](../../.gitbook/assets/image%20%2865%29.png)
+![](../../.gitbook/assets/image%20%2866%29.png)
 
 ### Embeddings and Softmax
 
@@ -62,7 +62,7 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 由于我们的模型不包含重复和没有卷积，为了使模型能够利用序列的顺序，我们必须注入一些关于相对或绝对位置的信息。为此，我们在编码器和解码器堆栈的底部为输入嵌入添加“位置编码”。
 
-![](../../.gitbook/assets/image%20%28181%29.png)
+![](../../.gitbook/assets/image%20%28182%29.png)
 
 ### Why Self-Attention
 
@@ -70,11 +70,11 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 第三是网络中远程依赖之间的路径长度。学习长程相关性是许多序列转导任务中的一个关键挑战。影响学习这种依赖性的能力的一个关键因素是前向和后向信号在网络中的总长度。 输入和输出序列中任何位置组合之间的这些路径越短，学习远程依赖性就越容易\[12\]。 因此，我们还比较了由不同层类型组成的网络中任意两个输入和输出位置之间的最大路径长度。
 
-![](../../.gitbook/assets/image%20%2893%29.png)
+![](../../.gitbook/assets/image%20%2894%29.png)
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%2891%29.png)
+![](../../.gitbook/assets/image%20%2892%29.png)
 
 
 
