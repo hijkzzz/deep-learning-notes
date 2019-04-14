@@ -22,7 +22,7 @@ BERT的模型架构是一个多层双向Transformer编码器，基于Vaswani等�
 
 选择 $$BERT_{BASE }$$ 与OpenAI GPT具有相同的模型大小以进行比较。至关重要的是，BERT Transformer使用双向自我关注，而GPT Transformer使用受限制的自我关注，而且只有左侧的上下文才能使用。
 
-![](../../.gitbook/assets/image%20%28202%29.png)
+![](../../.gitbook/assets/image%20%28204%29.png)
 
 ### Input Representation
 
@@ -34,7 +34,7 @@ BERT的模型架构是一个多层双向Transformer编码器，基于Vaswani等�
 * 句子对被打包成单个序列。我们用两种方式区分句子。首先，我们用一个特殊的记号\(\[SEP\)把它们分开。第二，我们在第一个句子的每一个token上加上一个可学习的sentence Aembedding，在第二个句子的每一个token上加上一个可学习的sentence B embedding。
 * 对于单句输入，我们只使用sentence A embeddings
 
-![](../../.gitbook/assets/image%20%28142%29.png)
+![](../../.gitbook/assets/image%20%28143%29.png)
 
 ### Pre-training Tasks
 
@@ -44,15 +44,15 @@ BERT的模型架构是一个多层双向Transformer编码器，基于Vaswani等�
 
 为了训练深度双向表示，我们采用直接的方法随机屏蔽一定比例的输入token，然后仅预测那些被屏蔽的token。
 
-![](../../.gitbook/assets/image%20%28143%29.png)
+![](../../.gitbook/assets/image%20%28144%29.png)
 
 #### Task \#2: Next Sentence Prediction
 
 许多重要的下游任务，例如问答（QA）和自然语言推理（NLI），都是基于对两个文本句子之间的理解的理解，而这两个文本句子并不直接通过语言建模来捕获。为了训练一个理解句子关系的模型，我们预先训练一个二进制的下一个句子预测任务，这个预测任务可以从任何单语语料库中简单地生成。
 
-![](../../.gitbook/assets/image%20%28153%29.png)
+![](../../.gitbook/assets/image%20%28155%29.png)
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28129%29.png)
+![](../../.gitbook/assets/image%20%28130%29.png)
 

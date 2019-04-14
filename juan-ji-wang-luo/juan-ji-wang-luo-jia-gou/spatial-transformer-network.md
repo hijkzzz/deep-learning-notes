@@ -28,7 +28,7 @@ $$
 
 一般来说，输出像素被定义为位于规则网格上 $$G=\left\{G_{i}\right\}, \ G_{i}=\left(x_{i}^{t}, y_{i}^{t}\right)$$ 
 
-![](../../.gitbook/assets/image%20%28192%29.png)
+![](../../.gitbook/assets/image%20%28194%29.png)
 
 $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐标， $$\left(x_{i}^{s}, y_{i}^{s}\right)$$ 是输入特征图中定义采样点的源坐标， $$\mathrm{A}_{\theta}$$ 是仿射变换矩阵。
 
@@ -36,13 +36,13 @@ $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐
 
 ![](../../.gitbook/assets/image%20%2891%29.png)
 
-![](../../.gitbook/assets/image%20%28121%29.png)
+![](../../.gitbook/assets/image%20%28122%29.png)
 
 ### Differentiable Image Sampling
 
 得到转换后的坐标，接下来用新坐标 $$\left(x_{t}^{t}, y_{i}^{t}\right)$$ 插值生成输出特征图：
 
-![](../../.gitbook/assets/image%20%28122%29.png)
+![](../../.gitbook/assets/image%20%28123%29.png)
 
 其中$$k(x)$$ 表示插值函数（如双线性插值）， $$U_{n m}^{c}$$ 是输入特征通道C位置为 $$(n, m)$$ 元素值， $$V_{i}^{c}$$ 是输出值。请注意，对于输入的每个通道，采样是完全相同的，因此每个通道都以相同的方式进行转换（这保留了通道之间的空间一致性）。
 
@@ -52,7 +52,7 @@ $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐
 
 其对应的偏导数为
 
-![](../../.gitbook/assets/image%20%28151%29.png)
+![](../../.gitbook/assets/image%20%28153%29.png)
 
 ### Spatial Transformer Networks
 
@@ -60,5 +60,5 @@ $$\left(x_{i}^{t}, y_{i}^{t}\right)$$ 输出特征图中规则网格的目标坐
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28172%29.png)
+![](../../.gitbook/assets/image%20%28174%29.png)
 

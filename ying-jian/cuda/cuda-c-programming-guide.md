@@ -8,11 +8,11 @@
 
 Figure 1. Floating-Point Operations per Second for the CPU and GPU
 
-![](../../.gitbook/assets/image%20%28225%29.png)
+![](../../.gitbook/assets/image%20%28227%29.png)
 
 Figure 2. Memory Bandwidth for the CPU and GPU
 
-![](../../.gitbook/assets/image%20%28140%29.png)
+![](../../.gitbook/assets/image%20%28141%29.png)
 
 CPU和GPU之间浮点能力差异背后的原因是GPU专门用于计算密集型，高度并行计算 - 正是图形渲染的关键 - 因此设计使得更多晶体管用于数据处理 而不是数据缓存和流量控制，如图3示意性所示。
 
@@ -32,7 +32,7 @@ CUDA带有一个软件环境，允许开发人员使用C作为高级编程语言
 
 Figure 4. GPU Computing Applications. CUDA is designed to support various languages and application programming interfaces.
 
-![](../../.gitbook/assets/image%20%28161%29.png)
+![](../../.gitbook/assets/image%20%28163%29.png)
 
 ### A Scalable Programming Model
 
@@ -50,7 +50,7 @@ CUDA并行编程模型旨在克服这一挑战，同时为熟悉标准编程语�
 
 Figure 5. Automatic Scalability
 
-![](../../.gitbook/assets/image%20%28220%29.png)
+![](../../.gitbook/assets/image%20%28222%29.png)
 
 ### Document Structure
 
@@ -189,7 +189,7 @@ CUDA线程可以在执行期间从多个内存空间访问数据，如图7所示
 
 Figure 7. Memory Hierarchy
 
-![](../../.gitbook/assets/image%20%28224%29.png)
+![](../../.gitbook/assets/image%20%28226%29.png)
 
 ### Heterogeneous Programming
 
@@ -568,7 +568,7 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C)
 
 Figure 9. Matrix Multiplication without Shared Memory
 
-![](../../.gitbook/assets/image%20%28212%29.png)
+![](../../.gitbook/assets/image%20%28214%29.png)
 
 以下代码示例是矩阵乘法的实现，它确实利用了共享内存。 在该实现中，每个线程块负责计算C的一个方形子矩阵Csub，并且块内的每个线程负责计算Csub的一个元素。 如图10所示，Csub等于两个长矩阵的乘积：具有与Csub相同的行索引的维度A（A.width，block\_size）的子矩阵，以及维度B的子矩阵 （block\_size，A.width）与Csub具有相同的列索引。 为了适应设备的资源，这两个长矩阵根据需要被分成维数block\_size的多个方形矩阵，并且Csub被计算为这些矩阵的乘积之和。 通过首先将两个对应的方形矩阵从全局存储器加载到共享存储器，一个线程加载一个元素，然后让每个线程计算乘积的一个元素。 每个线程将乘积的结果累积到一个寄存器中，一旦完成就将结果写入全局存储器。
 
@@ -718,7 +718,7 @@ void MatMul(const Matrix A, const Matrix B, Matrix C)
 
 Figure 10. Matrix Multiplication with Shared Memory
 
-![](../../.gitbook/assets/image%20%28199%29.png)
+![](../../.gitbook/assets/image%20%28201%29.png)
 
 #### Page-Locked Host Memory
 
@@ -961,6 +961,83 @@ cudaStreamCreateWithPriority(&st_low, cudaStreamNonBlocking, priority_low);
 ```
 
 **Graphs**
+
+ 图表为CUDA中的工作提交提供了一个新模型。 图是一系列操作，例如内核启动，由依赖关系连接，与其执行分开定义。 这允许图表定义一次然后重复启动。 将图形的定义与其执行分开可以实现许多优化：首先，与流相比，CPU启动成本降低，因为大部分设置是事先完成的; 第二，向CUDA展示整个工作流程可以实现流的分段工作提交机制可能无法实现的优化。
+
+要查看图表可能的优化，请考虑流中发生的情况：当您将内核放入流中时，主机驱动程序会执行一系列操作，以准备在GPU上执行内核。 设置和启动内核所必需的这些操作是必须为发出的每个内核支付的开销。 对于具有较短执行时间的GPU内核，此开销成本可能是整个端到端执行时间的重要部分。
+
+使用图表的工作提交分为三个不同的阶段：定义，实例化和执行。
+
+* 在定义阶段，程序会在图中创建操作的描述以及它们之间的依赖关系。
+* 实例化获取图形模板的快照，验证它，并执行大部分工作的设置和初始化，目的是最小化启动时需要完成的工作。 生成的实例称为可执行图。
+* 可执行图可以启动到流中，类似于任何其他CUDA工作。 它可以在不重复实例化的情况下启动任意次。
+
+Graph Structure
+
+操作在图形中形成一个节点。操作之间的依赖关系是边。这些依赖性限制了操作的执行顺序。
+
+一旦操作所依赖的节点完成，就可以在任何时候调度该操作。时间安排由CUDA系统决定。
+
+Node Types
+
+ 图形节点可以是以下之一:
+
+* 核心
+* 中央处理器功能调用
+* 记忆拷贝
+* memset函数
+* 空节点
+* 子图形:执行单独的嵌套图形。参见图11。
+
+Figure 11. Child Graph Example
+
+![](../../.gitbook/assets/image%20%28151%29.png)
+
+Creating a Graph Using Graph APIs
+
+可以通过两种机制创建图形：显式API和流捕获。 以下是创建和执行下图的示例。
+
+Figure 12. Creating a Graph Using Graph APIs Example
+
+![](../../.gitbook/assets/image%20%28117%29.png)
+
+```c
+// Create the graph - it starts out empty
+cudaGraphCreate(&graph, 0);
+
+// For the purpose of this example, we'll create
+// the nodes separately from the dependencies to
+// demonstrate that it can be done in two stages.
+// Note that dependencies can also be specified 
+// at node creation. 
+cudaGraphAddKernelNode(&a, graph, NULL, 0, &nodeParams);
+cudaGraphAddKernelNode(&b, graph, NULL, 0, &nodeParams);
+cudaGraphAddKernelNode(&c, graph, NULL, 0, &nodeParams);
+cudaGraphAddKernelNode(&d, graph, NULL, 0, &nodeParams);
+
+// Now set up dependencies on each node
+cudaGraphAddDependencies(graph, &a, &b, 1);     // A->B
+cudaGraphAddDependencies(graph, &a, &c, 1);     // A->C
+cudaGraphAddDependencies(graph, &b, &d, 1);     // B->D
+cudaGraphAddDependencies(graph, &c, &d, 1);     // C->D
+```
+
+Creating a Graph Using Stream Capture
+
+流捕获提供了一种从现有基于流的API创建图的机制。 通过调用cudaStreamBeginCapture\(\)和cudaStreamEndCapture\(\)，可以将包含现有代码的一部分代码启动到流中，包括现有代码。 见下文。
+
+```c
+cudaGraph_t graph;
+
+cudaStreamBeginCapture(stream);
+
+kernel_A<<< ..., stream >>>(...);
+kernel_B<<< ..., stream >>>(...);
+libraryCall(stream);
+kernel_C<<< ..., stream >>>(...);
+
+cudaStreamEndCapture(stream, &graph);
+```
 
 
 

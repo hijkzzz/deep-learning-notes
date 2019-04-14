@@ -18,7 +18,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 集成树模型使用K个树预测的结果相加
 
-![](../../.gitbook/assets/image%20%28159%29.png)
+![](../../.gitbook/assets/image%20%28161%29.png)
 
 其中 $$\mathcal{F}=\left\{f(\mathrm{x})=w_{q(\mathrm{x})}\right\}\left(q : \mathbb{R}^{m} \rightarrow T, w \in \mathbb{R}^{T}\right)$$ ，q表示每个树的结构，它将一个例子映射到相应的叶子索引。T是树中叶子的数量。 每个 $$f_{k}$$ 对应于独立的树结构q和叶子权重w。与决策树不同，每个回归树包含每个叶子上的连续分数，我们使用 $$w_i$$ 代表i-th 叶子的分数。
 
@@ -42,7 +42,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 去除常量
 
-![](../../.gitbook/assets/image%20%28169%29.png)
+![](../../.gitbook/assets/image%20%28171%29.png)
 
 设 $$I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}$$ 是叶子节点 $$j$$ 上的实例，代入展开：
 
@@ -90,7 +90,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 给定 $$\mathcal{D}_{k}=\left\{\left(x_{1 k}, h_{1}\right),\left(x_{2 k}, h_{2}\right) \cdots\left(x_{n k}, h_{n}\right)\right\}$$ 表示每个训练实例的第k个特征值和二阶梯度统计。 我们可以定义一个排名函数。
 
-![](../../.gitbook/assets/image%20%28183%29.png)
+![](../../.gitbook/assets/image%20%28185%29.png)
 
 表示特征值小于z的实例的比例。目标是找到候选分割点 $$\left\{s_{k 1}, s_{k 2}, \cdots s_{k l}\right\}$$ ：
 
@@ -98,7 +98,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 这里 $$\epsilon$$ 是一个近似因子，直觉上，这意味着大约有 $$1/\epsilon$$ 个候选点。为了了解为什么 $$h_{i}$$ 会代表权重，我们可以将等式\(3\)改写为：
 
-![](../../.gitbook/assets/image%20%28168%29.png)
+![](../../.gitbook/assets/image%20%28170%29.png)
 
 这是用 $$g_{i} / h_{i}$$ 和 $$h_{i}$$ 精确加权的平方损失。
 
@@ -106,11 +106,11 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 在许多现实问题中，输入稀疏是很常见的。使算法了解数据中的稀疏模式是非常重要的。为了做到这一点，我们建议在每个树节点中添加一个默认方向，如图4所示。当稀疏矩阵x中缺少A值时，实例将被分类为默认方向。
 
-![](../../.gitbook/assets/image%20%28117%29.png)
+![](../../.gitbook/assets/image%20%28118%29.png)
 
 从数据中学习最佳默认方向。 该算法显示在Alg3中。 关键的改进是只访问non-missing entries。
 
-![](../../.gitbook/assets/image%20%28227%29.png)
+![](../../.gitbook/assets/image%20%28229%29.png)
 
 ### SYSTEM DESIGN
 
@@ -120,7 +120,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 在精确的贪婪算法中，我们将整个数据库存储在一个块中，并通过对预先排序的条目进行lin-early扫描来运行拆分搜索算法。 我们集体对所有叶子进行分割，因此对块的一次扫描会收集所有叶子中分割候选的统计数据。 图6显示了我们如何将数据集转换为格式并使用块结构找到最佳分割。
 
-![](../../.gitbook/assets/image%20%28150%29.png)
+![](../../.gitbook/assets/image%20%28152%29.png)
 
 收集每列的统计数据可以并行化，为我们提供了一种用于拆分查找的并行算法。 重要的是，列块结构还支持列子数据，因为很容易在块中选择列的子集
 
@@ -128,11 +128,11 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 虽然所提出的块结构有助于优化分裂查找的计算复杂度，但是新算法需要通过行索引间接提取梯度统计量，因为这些值是按特征顺序访问的。 这是一种非连续的内存访问。 分裂枚举的简单实现引入了累积和非连续记忆提取操作之间的立即读/写依赖性（参见图8）。 当梯度统计信息不适合CPU缓存并发生缓存未命中时，这会减慢split finding。
 
-![](../../.gitbook/assets/image%20%28179%29.png)
+![](../../.gitbook/assets/image%20%28181%29.png)
 
 对于精确的贪婪算法，我们可以通过缓存感知预取算法来缓解这个问题。具体来说，我们在每个线程中分配一个内部缓冲区，获取数据统计信息，然后以小批量的方式执行累加。这种预取将directread/write依赖项更改为更长的依赖项，并有助于在预取中的行数很大时减少运行时开销。
 
-![](../../.gitbook/assets/image%20%28126%29.png)
+![](../../.gitbook/assets/image%20%28127%29.png)
 
 #### Blocks for Out-of-core Computation
 
