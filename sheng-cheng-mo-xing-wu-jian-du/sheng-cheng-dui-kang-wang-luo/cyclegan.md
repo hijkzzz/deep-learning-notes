@@ -12,7 +12,7 @@
 
 ### 整体框架
 
-![](../../.gitbook/assets/image%20%28161%29.png)
+![](../../.gitbook/assets/image%20%28163%29.png)
 
 ### Adversarial Loss
 

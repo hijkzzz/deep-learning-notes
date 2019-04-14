@@ -10,7 +10,7 @@
 
 ### Face Detection & Face Alignment
 
-![](../../.gitbook/assets/image%20%28129%29.png)
+![](../../.gitbook/assets/image%20%28130%29.png)
 
 #### 3D alignment
 
@@ -55,5 +55,5 @@ $$
 
 接下来，我们将通过向不同类型的输入提供训练而训练的多个网络组合到DNN：1）网络DeepFace-上面基于3D对齐RGB输入的单个描述; 2）灰度级图像加上图像梯度的大小和方向; 3）2D对齐的RGB图像。
 
-![](../../.gitbook/assets/image%20%28176%29.png)
+![](../../.gitbook/assets/image%20%28179%29.png)
 

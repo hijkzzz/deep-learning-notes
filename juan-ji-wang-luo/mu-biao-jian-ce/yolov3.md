@@ -50,13 +50,13 @@ YOLOv3预测3种不同尺度的方框。 我们的系统使用与金字塔网络
 
 ## 性能
 
-![](../../.gitbook/assets/image%20%28215%29.png)
+![](../../.gitbook/assets/image%20%28218%29.png)
 
-![](../../.gitbook/assets/image%20%28134%29.png)
+![](../../.gitbook/assets/image%20%28135%29.png)
 
 ## 尝试了但是没有效果的方法
 
-![](../../.gitbook/assets/image%20%28154%29.png)
+![](../../.gitbook/assets/image%20%28156%29.png)
 
 
 

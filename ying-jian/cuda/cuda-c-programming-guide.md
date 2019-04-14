@@ -8,11 +8,11 @@
 
 Figure 1. Floating-Point Operations per Second for the CPU and GPU
 
-![](../../.gitbook/assets/image%20%28219%29.png)
+![](../../.gitbook/assets/image%20%28222%29.png)
 
 Figure 2. Memory Bandwidth for the CPU and GPU
 
-![](../../.gitbook/assets/image%20%28138%29.png)
+![](../../.gitbook/assets/image%20%28139%29.png)
 
 CPU和GPU之间浮点能力差异背后的原因是GPU专门用于计算密集型，高度并行计算 - 正是图形渲染的关键 - 因此设计使得更多晶体管用于数据处理 而不是数据缓存和流量控制，如图3示意性所示。
 
@@ -32,7 +32,7 @@ CUDA带有一个软件环境，允许开发人员使用C作为高级编程语言
 
 Figure 4. GPU Computing Applications. CUDA is designed to support various languages and application programming interfaces.
 
-![](../../.gitbook/assets/image%20%28158%29.png)
+![](../../.gitbook/assets/image%20%28160%29.png)
 
 ### A Scalable Programming Model
 
@@ -50,7 +50,7 @@ CUDA并行编程模型旨在克服这一挑战，同时为熟悉标准编程语�
 
 Figure 5. Automatic Scalability
 
-![](../../.gitbook/assets/image%20%28214%29.png)
+![](../../.gitbook/assets/image%20%28217%29.png)
 
 ### Document Structure
 
@@ -189,7 +189,7 @@ CUDA线程可以在执行期间从多个内存空间访问数据，如图7所示
 
 Figure 7. Memory Hierarchy
 
-![](../../.gitbook/assets/image%20%28218%29.png)
+![](../../.gitbook/assets/image%20%28221%29.png)
 
 ### Heterogeneous Programming
 

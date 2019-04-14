@@ -12,7 +12,7 @@
 
 Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全连接的层，用于编码器和解码器，分别如图1的左半部分和右半部分所示。
 
-![](../../.gitbook/assets/image%20%28163%29.png)
+![](../../.gitbook/assets/image%20%28165%29.png)
 
 
 
@@ -30,7 +30,7 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 注意功能可以被描述为将query和一组key-value对映射到output，其中query，key，value和output都是向量。输出被计算为值的加权总和，其中分配给每个值的权重由query与相应key的兼容性函数来计算。
 
-![](../../.gitbook/assets/image%20%28217%29.png)
+![](../../.gitbook/assets/image%20%28220%29.png)
 
 #### Scaled Dot-Product Attention
 
@@ -62,7 +62,7 @@ Transformer遵循这种整体架构，使用堆叠的自注意和逐点，完全
 
 由于我们的模型不包含重复和没有卷积，为了使模型能够利用序列的顺序，我们必须注入一些关于相对或绝对位置的信息。为此，我们在编码器和解码器堆栈的底部为输入嵌入添加“位置编码”。
 
-![](../../.gitbook/assets/image%20%28178%29.png)
+![](../../.gitbook/assets/image%20%28181%29.png)
 
 ### Why Self-Attention
 
