@@ -10,7 +10,7 @@
 
 简单的说，FCN与CNN的区别在于FCN把CNN最后的全连接层换成卷积层，输出一张已经label好的图。
 
-![](../../.gitbook/assets/image%20%28226%29.png)
+![](../../.gitbook/assets/image%20%28228%29.png)
 
 ![](../../.gitbook/assets/image%20%28109%29.png)
 
@@ -28,7 +28,7 @@
 
 
 
-![](../../.gitbook/assets/image%20%28213%29.png)
+![](../../.gitbook/assets/image%20%28215%29.png)
 
 数据集测试
 

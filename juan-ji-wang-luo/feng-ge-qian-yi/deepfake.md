@@ -34,7 +34,7 @@
 
 ![](../../.gitbook/assets/image%20%2811%29.png)
 
-![](../../.gitbook/assets/image%20%28204%29.png)
+![](../../.gitbook/assets/image%20%28205%29.png)
 
 #### Style loss
 
@@ -66,7 +66,7 @@
 
 在约翰逊和其他人的工作之后，我们使用正则化来鼓励空间平滑：
 
-![](../../.gitbook/assets/image%20%28224%29.png)
+![](../../.gitbook/assets/image%20%28226%29.png)
 
 整体损失为
 

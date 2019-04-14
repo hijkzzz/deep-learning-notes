@@ -8,7 +8,7 @@
 
 ## 方法
 
-![](../../.gitbook/assets/image%20%28220%29.png)
+![](../../.gitbook/assets/image%20%28222%29.png)
 
 ### The RoI pooling layer
 

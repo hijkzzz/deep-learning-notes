@@ -48,7 +48,7 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 
 ### Experimental Setup
 
-![](../../.gitbook/assets/image%20%28214%29.png)
+![](../../.gitbook/assets/image%20%28216%29.png)
 
 #### Loss Function
 

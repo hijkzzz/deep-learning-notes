@@ -110,7 +110,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 从数据中学习最佳默认方向。 该算法显示在Alg3中。 关键的改进是只访问non-missing entries。
 
-![](../../.gitbook/assets/image%20%28225%29.png)
+![](../../.gitbook/assets/image%20%28227%29.png)
 
 ### SYSTEM DESIGN
 

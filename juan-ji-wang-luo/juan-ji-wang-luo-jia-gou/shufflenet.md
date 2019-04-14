@@ -26,7 +26,7 @@
 
 建议的网络主要由一组分为三个阶段的ShuffleNet单元组成。
 
-![](../../.gitbook/assets/image%20%28212%29.png)
+![](../../.gitbook/assets/image%20%28214%29.png)
 
 ## 实验
 
