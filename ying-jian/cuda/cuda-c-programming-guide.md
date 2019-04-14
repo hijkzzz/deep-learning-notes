@@ -8,17 +8,17 @@
 
 Figure 1. Floating-Point Operations per Second for the CPU and GPU
 
-![](../../.gitbook/assets/image%20%28202%29.png)
+![](../../.gitbook/assets/image%20%28219%29.png)
 
 Figure 2. Memory Bandwidth for the CPU and GPU
 
-![](../../.gitbook/assets/image%20%28125%29.png)
+![](../../.gitbook/assets/image%20%28138%29.png)
 
 CPU和GPU之间浮点能力差异背后的原因是GPU专门用于计算密集型，高度并行计算 - 正是图形渲染的关键 - 因此设计使得更多晶体管用于数据处理 而不是数据缓存和流量控制，如图3示意性所示。
 
 Figure 3. The GPU Devotes More Transistors to Data Processing
 
-![](../../.gitbook/assets/image%20%2835%29.png)
+![](../../.gitbook/assets/image%20%2839%29.png)
 
 更具体地说，图形处理器特别适合于解决可以表示为数据并行计算的问题——在许多数据元素上并行执行相同的程序——具有高运算强度——算术运算与存储器运算的比率。因为对每个数据元素执行相同的程序，所以对复杂的流控制的要求较低，并且因为它在许多数据元素上执行并且具有高运算强度，所以可以用计算而不是大数据高速缓存来隐藏存储器访问延迟。
 
@@ -32,7 +32,7 @@ CUDA带有一个软件环境，允许开发人员使用C作为高级编程语言
 
 Figure 4. GPU Computing Applications. CUDA is designed to support various languages and application programming interfaces.
 
-![](../../.gitbook/assets/image%20%28144%29.png)
+![](../../.gitbook/assets/image%20%28158%29.png)
 
 ### A Scalable Programming Model
 
@@ -50,7 +50,7 @@ CUDA并行编程模型旨在克服这一挑战，同时为熟悉标准编程语�
 
 Figure 5. Automatic Scalability
 
-![](../../.gitbook/assets/image%20%28197%29.png)
+![](../../.gitbook/assets/image%20%28214%29.png)
 
 ### Document Structure
 
@@ -141,7 +141,7 @@ int main()
 
 Figure 6. Grid of Thread Blocks
 
-![](../../.gitbook/assets/image%20%2825%29.png)
+![](../../.gitbook/assets/image%20%2829%29.png)
 
 每个块的线程数和&lt;&lt;&lt; ... &gt;&gt;&gt;语法中指定的每个网格的块数可以是int或dim3类型。 可以如上例中那样指定二维块或网格。
 
@@ -189,7 +189,7 @@ CUDA线程可以在执行期间从多个内存空间访问数据，如图7所示
 
 Figure 7. Memory Hierarchy
 
-![](../../.gitbook/assets/image%20%28201%29.png)
+![](../../.gitbook/assets/image%20%28218%29.png)
 
 ### Heterogeneous Programming
 
@@ -201,7 +201,7 @@ Unified Memory提供托管内存以桥接主机和设备内存空间。 可以�
 
 Figure 8. Heterogeneous Programming
 
-![](../../.gitbook/assets/image%20%2816%29.png)
+![](../../.gitbook/assets/image%20%2818%29.png)
 
 注意：串行代码在主机上执行，而并行代码在设备上执行。
 
