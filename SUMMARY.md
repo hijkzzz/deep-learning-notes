@@ -80,6 +80,10 @@
 * [自编码器](sheng-cheng-mo-xing-wu-jian-du/zi-bian-ma-qi/README.md)
   * [Auto-encoding variational Bayes](sheng-cheng-mo-xing-wu-jian-du/zi-bian-ma-qi/auto-encoding-variational-bayes.md)
 
+## 强化学习
+
+* [深度强化学习](https://hujian.gitbook.io/deep-reinforcement-learning/)
+
 ## 自动机器学习
 
 * [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/README.md)
