@@ -768,6 +768,200 @@ Figure 10. Matrix Multiplication with Shared Memory
 
 #### Asynchronous Concurrent Execution
 
+CUDA将以下操作公开为可以相互并发操作的独立任务:
+
+* 主机上的计算；
+* 设备上的计算；
+* 内存从主机传输到设备；
+* 内存从设备传输到主机；
+* 给定设备内存中的内存传输；
+* 设备之间的内存传输。
+
+这些操作之间实现的并发级别取决于设备的功能集和计算能力，如下所述。
+
+**Concurrent Execution between Host and Device**
+
+通过异步库函数来促进并发主机执行，该异步库函数在设备完成所请求的任务之前将控制返回到主机线程。 使用异步调用时，许多设备操作可以排在一起，以便在适当的设备资源可用时由CUDA驱动程序执行。 这减轻了主机线程管理设备的大部分责任，使其可以自由地执行其他任务。 以下设备操作与主机异步：
+
+内核启动；
+
+* 单个设备内存中的内存副本；
+* 64 KB或更小的内存块从主机到设备的内存拷贝；
+* 由以异步结尾的函数执行的内存副本；
+* 内存集函数调用。
+
+程序员可以通过将CUDA\_LAUNCH\_BLOCKING环境变量设置为1来全局禁用系统上运行的所有CUDA应用程序的内核启动的异步性。此功能仅用于调试目的，不应用作使生产软件可靠运行的方法。
+
+如果通过分析器（Nsight，Visual Profiler）收集硬件计数器，则内核启动是同步的，除非启用了并发内核分析。 如果异步内存副本涉及非页锁定的主机内存，则它们也将是同步的。
+
+ **Concurrent Kernel Execution**
+
+一些计算能力2.x和更高的设备可以同时执行多个内核。 应用程序可以通过检查concurrentKernels设备属性（请参阅设备枚举）来查询此功能，对于支持它的设备，该属性等于1。
+
+设备可以并发执行的最大内核启动次数取决于其计算能力，如表14所示。
+
+来自一个CUDA上下文的内核不能与来自另一个CUDA上下文的内核同时执行。
+
+使用许多纹理或大量本地内存的内核不太可能与其他内核并发执行。
+
+**Overlap of Data Transfer and Kernel Execution**
+
+一些设备可以在内核执行的同时执行与GPU之间的异步内存复制。应用程序可以通过检查asyncEngineCount设备属性\(请参见设备枚举\)来查询该功能，对于支持该功能的设备，该属性大于零。如果拷贝中包含主机内存，则必须对其进行页面锁定。
+
+也可以在内核执行的同时执行设备内拷贝\(在支持并发内核设备属性的设备上\)和/或在设备之间拷贝\(对于支持异步注册属性的设备\)。使用标准内存复制功能启动设备内复制，目的地址和源地址位于同一设备上。
+
+**Concurrent Data Transfers**
+
+某些计算能力为2.x或更高的设备可能会与进出该设备的副本重叠。应用程序可以通过检查asyncEngineCount设备属性\(请参见设备枚举\)来查询此功能，对于支持它的设备，该属性等于2。为了重叠，传输中涉及的任何主机内存都必须是页面锁定的。
+
+**Streams**
+
+应用程序通过流管理上述并发操作。流是按顺序执行的命令序列\(可能由不同的主机线程发出\)。另一方面，不同的流可以彼此无序或同时执行它们的命令；这种行为没有保证，因此不应该依赖于正确性\(例如，内核间的通信是未定义的\)。
+
+Creation and Destruction
+
+通过创建流对象并将其指定为内核启动序列和主机&lt; - &gt;设备内存副本的流参数来定义流。 以下代码示例创建两个流，并在页锁定内存中分配float的数组hostPtr。
+
+```c
+cudaStream_t stream[2];
+for (int i = 0; i < 2; ++i)
+    cudaStreamCreate(&stream[i]);
+float* hostPtr;
+cudaMallocHost(&hostPtr, 2 * size);
+```
+
+下面的代码示例将这些流中的每一个定义为从主机到设备的一个内存拷贝、一个内核启动和从设备到主机的一个内存拷贝的序列:
+
+```c
+for (int i = 0; i < 2; ++i) {
+    cudaMemcpyAsync(inputDevPtr + i * size, hostPtr + i * size,
+                    size, cudaMemcpyHostToDevice, stream[i]);
+    MyKernel <<<100, 512, 0, stream[i]>>>
+          (outputDevPtr + i * size, inputDevPtr + i * size, size);
+    cudaMemcpyAsync(hostPtr + i * size, outputDevPtr + i * size,
+                    size, cudaMemcpyDeviceToHost, stream[i]);
+}
+```
+
+每个流将其输入数组hostPtr的部分复制到设备内存中的数组inputDevPtr，通过调用MyKernel\(\)处理设备上的inputDevPtr，并将结果outputDevPtr复制回hostPtr的相同部分。 重叠行为描述了在此示例中流如何重叠，具体取决于设备的功能。 请注意，hostPtr必须指向页面锁定的主机内存才能发生任何重叠。
+
+通过调用cudaStreamDestroy\(\)来释放流
+
+```c
+for (int i = 0; i < 2; ++i)
+    cudaStreamDestroy(stream[i]);
+```
+
+如果调用cudaStreamDestroy\(\)时设备仍在流中工作，那么一旦设备完成流中的所有工作，函数将立即返回，并且与流相关联的资源将自动释放。
+
+Default Stream
+
+内核启动和主机&lt; - &gt;设备内存副本未指定任何流参数，或者等效地将stream参数设置为零，将发布到默认流。 因此它们按顺序执行。
+
+对于使用--default-stream每线程编译标志（或在包含CUDA标头（cuda.h和cuda\_runtime.h）之前定义CUDA\_API\_PER\_THREAD\_DEFAULT\_STREAM宏）编译的代码，默认流是常规流和每个主机线程 有自己的默认流。
+
+对于使用--default-stream遗留编译标志编译的代码，默认流是一个称为NULL流的特殊流，每个设备都有一个用于所有主机线程的NULL流。 NULL流是特殊的，因为它会导致隐式同步，如隐式同步中所述。
+
+对于未指定--default-stream编译标志而编译的代码，将--default-stream legacy视为默认值。
+
+Explicit Synchronization
+
+有多种方法可以显式地使流相互同步。
+
+cudaDeviceSynchronize\(\)等待，直到所有主机线程的所有流中的所有前面的命令都完成。
+
+cudaStreamSynchronize\(\)将一个流作为参数，并等待直到给定流中所有前面的命令完成。它可用于将主机与特定流同步，从而允许其他流继续在设备上执行。
+
+cudaStreamWaitEvent\(\)将一个流和一个事件作为参数\(有关事件的描述，请参见事件\)，并使在调用cudaStreamWaitEvent\(\)之后添加到给定流中的所有命令延迟执行，直到给定事件完成。流可以是0，在这种情况下，调用cudaStreamWaitEvent\(\)后添加到任何流的所有命令都会等待事件。
+
+cudaStreamQuery\(\)为应用程序提供了一种方法，可以知道流中所有前面的命令是否都已完成。
+
+为了避免不必要的减速，所有这些同步功能通常最好用于计时目的，或者隔离失败的启动或内存拷贝。
+
+Implicit Synchronization
+
+如果主机线程在它们之间发出以下任何一个操作，则来自不同流的两个命令不能同时运行：
+
+* 页面锁定主机内存分配，
+* 设备内存分配，
+* 设备内存集，
+* 两个地址之间的内存复制到同一设备内存，
+* 对NULL流的任何CUDA命令，在Compute Capability 3.x和Compute Capability 7.x中描述的L1 /共享内存配置之间的切换。
+
+对于支持并发内核执行且计算能力为3.0或更低的设备，需要进行相关性检查以查看流内核启动是否完成的任何操作：
+
+* 只有当CUDA上下文中任何流的所有先前内核启动的所有线程块都已开始执行时，才能开始执行;
+* 阻止所有后来的内核启动从CUDA上下文中的任何流启动，直到检查内核启动完成为止。
+
+需要依赖性检查的操作包括与正在检查的启动相同的流中的任何其他命令，以及对该流中cudaStreamQuery\(\)的任何调用。因此，应用程序应该遵循这些准则来提高并发内核执行的潜力:
+
+* 所有独立操作应在相关操作之前发布
+* 任何类型的同步都应该尽可能延迟
+
+Overlapping Behavior
+
+两个流之间的执行重叠量取决于向每个流发出命令的顺序，以及设备是否支持数据传输和内核执行的重叠\(参见数据传输和内核执行的重叠\)、并发内核执行\(参见并发内核执行\)和/或并发数据传输\(参见并发数据传输\)。
+
+例如，在不支持并发数据传输的设备上，“创建”和“销毁”这两个代码示例流根本不重叠，因为从主机到设备的内存拷贝是在从设备到主机的内存拷贝发布到流\[0\]之后发布到流\[1\]的，所以它只能在从设备到主机发布到流\[0\]的内存拷贝完成后才开始。如果代码以下列方式重写\(假设设备支持数据传输和内核执行的重叠\)
+
+```c
+for (int i = 0; i < 2; ++i)
+    cudaMemcpyAsync(inputDevPtr + i * size, hostPtr + i * size,
+                    size, cudaMemcpyHostToDevice, stream[i]);
+for (int i = 0; i < 2; ++i)
+    MyKernel<<<100, 512, 0, stream[i]>>>
+          (outputDevPtr + i * size, inputDevPtr + i * size, size);
+    for (int i = 0; i < 2; ++i)
+    cudaMemcpyAsync(hostPtr + i * size, outputDevPtr + i * size,
+                    size, cudaMemcpyDeviceToHost, stream[i]);
+```
+
+然后从发送到流\[1\]的主机到设备的内存复制与发送到流\[0\]的内核启动重叠。
+
+在支持并发数据传输的设备上，创建和销毁的代码示例的两个流重叠：从主机到设备的内存副本发送到流\[1\]与从设备到主机的内存副本重叠发送到流\[0\] 甚至将内核启动发送到stream \[0\]（假设设备支持数据传输和内核执行的重叠）。 但是，对于计算能力为3.0或更低的设备，内核执行不可能重叠，因为在从设备到主机的内存复制发送到流\[0\]之后，第二次内核启动被发送到流\[1\]，因此它被阻塞直到 根据Implicit Synchronization，发送到stream \[0\]的第一个内核启动完成。 如果代码被重写如上，则内核执行重叠（假设设备支持并发内核执行），因为在从设备到主机的内存复制发送到流\[0\]之前，第二次内核启动被发送到流\[1\]。 但是，在这种情况下，从发送到流\[0\]的设备到主机的内存复制只与按照隐式同步发送到流\[1\]的内核启动的最后一个线程块重叠，后者只能代表总数的一小部分。 内核的执行时间。
+
+Callbacks
+
+ 运行时提供了一种通过cudaStreamAddCallback\(\)在任何点将回调插入流的方法。回调是一个函数，一旦在回调完成之前向流发出所有命令，就会在主机上执行该函数。流0中的回调一旦在回调完成之前所有流中发出的所有前面的任务和命令都被执行。
+
+下面的代码示例在将主机到设备的内存副本、内核启动和设备到主机的内存副本发布到两个流之后，将回调函数MyCallback添加到每个流中。在每个设备到主机的内存拷贝完成后，回调将在主机上开始执行。
+
+```c
+void CUDART_CB MyCallback(cudaStream_t stream, cudaError_t status, void *data){
+    printf("Inside callback %d\n", (size_t)data);
+}
+...
+for (size_t i = 0; i < 2; ++i) {
+    cudaMemcpyAsync(devPtrIn[i], hostPtr[i], size, cudaMemcpyHostToDevice, stream[i]);
+    MyKernel<<<100, 512, 0, stream[i]>>>(devPtrOut[i], devPtrIn[i], size);
+    cudaMemcpyAsync(hostPtr[i], devPtrOut[i], size, cudaMemcpyDeviceToHost, stream[i]);
+    cudaStreamAddCallback(stream[i], MyCallback, (void*)i, 0);
+}
+        
+```
+
+ 回调后在流中发出的命令\(或者如果回调是向流0发出的，则为向任何流发出的所有命令\)不会在回调完成之前开始执行。cudaStreamAddCallback\(\)的最后一个参数保留供将来使用。
+
+回调不能\(直接或间接\)调用CUDA应用编程接口，因为如果回调导致死锁，它可能最终会等待自己。
+
+Stream Priorities
+
+可以在创建时使用cudaStreamCreateWithPriority\(\)指定流的相对优先级。允许的优先级范围，按\[最高优先级、最低优先级排序\]可以使用CudadeViceGetStreamPriorityRange\(\)函数获得。在运行时，当低优先级方案中的块完成时，高优先级流中的等待块被调度在它们的位置。
+
+下面的代码示例获取当前设备允许的优先级范围，并创建具有最高和最低可用优先级的流。
+
+```c
+// get the range of stream priorities for this device
+int priority_high, priority_low;
+cudaDeviceGetStreamPriorityRange(&priority_low, &priority_high);
+// create streams with highest and lowest available priorities
+cudaStream_t st_high, st_low;
+cudaStreamCreateWithPriority(&st_high, cudaStreamNonBlocking, priority_high);
+cudaStreamCreateWithPriority(&st_low, cudaStreamNonBlocking, priority_low);
+```
+
+**Graphs**
+
 
 
 ## Hardware Implementation
