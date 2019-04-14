@@ -8,6 +8,8 @@
   * [Factorization Machine](ji-qi-xue-xi/xian-xing-mo-xing/factorization-machine.md)
 * [集成学习](ji-qi-xue-xi/ji-cheng-xue-xi/README.md)
   * [XGBoost](ji-qi-xue-xi/ji-cheng-xue-xi/xgboost.md)
+* [概率图模型](ji-qi-xue-xi/gai-lv-tu-mo-xing/README.md)
+  * [Conditional Random Field](ji-qi-xue-xi/gai-lv-tu-mo-xing/conditional-random-field.md)
 
 ## 优化
 
