@@ -343,7 +343,7 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C)
 
 Figure 9. Matrix Multiplication without Shared Memory
 
-![](../../../.gitbook/assets/image%20%28222%29.png)
+![](../../../.gitbook/assets/image%20%28224%29.png)
 
 以下代码示例是矩阵乘法的实现，它确实利用了共享内存。 在该实现中，每个线程块负责计算C的一个方形子矩阵Csub，并且块内的每个线程负责计算Csub的一个元素。 如图10所示，Csub等于两个长矩阵的乘积：具有与Csub相同的行索引的维度A（A.width，block\_size）的子矩阵，以及维度B的子矩阵 （block\_size，A.width）与Csub具有相同的列索引。 为了适应设备的资源，这两个长矩阵根据需要被分成维数block\_size的多个方形矩阵，并且Csub被计算为这些矩阵的乘积之和。 通过首先将两个对应的方形矩阵从全局存储器加载到共享存储器，一个线程加载一个元素，然后让每个线程计算乘积的一个元素。 每个线程将乘积的结果累积到一个寄存器中，一旦完成就将结果写入全局存储器。
 
@@ -493,7 +493,7 @@ void MatMul(const Matrix A, const Matrix B, Matrix C)
 
 Figure 10. Matrix Multiplication with Shared Memory
 
-![](../../../.gitbook/assets/image%20%28208%29.png)
+![](../../../.gitbook/assets/image%20%28210%29.png)
 
 ### Page-Locked Host Memory
 
@@ -766,7 +766,7 @@ _Node Types_
 
 Figure 11. Child Graph Example
 
-![](../../../.gitbook/assets/image%20%28156%29.png)
+![](../../../.gitbook/assets/image%20%28157%29.png)
 
 _Creating a Graph Using Graph APIs_
 
@@ -774,7 +774,7 @@ _Creating a Graph Using Graph APIs_
 
 Figure 12. Creating a Graph Using Graph APIs Example
 
-![](../../../.gitbook/assets/image%20%28122%29.png)
+![](../../../.gitbook/assets/image%20%28123%29.png)
 
 ```c
 // Create the graph - it starts out empty
@@ -1102,7 +1102,51 @@ CUDA支持纹理硬件的一个子集，GPU用于图形访问纹理和表面存�
 
 _Texture Memory_
 
-\_\_
+使用纹理函数中描述的设备函数从内核读取纹理内存。 读取调用这些函数之一的纹理的过程称为纹理提取。 每个纹理提取指定一个称为纹理对象API的纹理对象的参数或纹理参考API的纹理参考。
+
+纹理对象或纹理参考指定：
+
+* 纹理，是获取的纹理内存块。 纹理对象在运行时创建，并且在创建纹理对象时指定纹理，如Texture Object API中所述。 纹理引用是在编译时创建的，纹理是在运行时指定的，方法是通过运行时函数将纹理引用绑定到纹理，如Texture Reference API中所述; 几个不同的纹理引用可能绑定到相同的纹理或内存中重叠的纹理。 纹理可以是线性存储器的任何区域或CUDA数组（在CUDA数组中描述）。
+* 它的维数指定纹理是使用一个纹理坐标作为一维数组，使用两个纹理坐标作为二维数组，还是使用三个纹理坐标作为三维数组数组。数组的元素被称为纹理元素，是纹理元素的简称。纹理宽度、高度和深度指的是每个维度中数组的大小。表14根据设备的计算能力列出了最大纹理宽度、高度和深度。
+* 纹理元素的类型，仅限于基本整数和单精度浮点类型，以及从基本整数和单精度浮点类型派生的char、short、int、long、long、float、double中定义的任何1、2和4分量向量类型。
+* 读取模式，等于cudaReadModeNormalizedFloat或cudaReadModeElementType。 如果它是cudaReadModeNormalizedFloat并且texel的类型是16位或8位整数类型，则纹理提取返回的值实际上作为浮点类型返回，并且整数类型的整个范围映射到\[0.0 ，1.0表示无符号整数类型，\[-1.0,1.0\]表示有符号整数类型; 例如，值为0xff的无符号8位纹理元素读取为1.如果是cudaReadModeElementType，则不执行转换。
+* 纹理坐标是否标准化。 默认情况下，使用\[0，N-1\]范围内的浮点坐标引用纹理（通过纹理函数的函数），其中N是对应于坐标的维度中纹理的大小。 例如，对于x和y维度，尺寸为64x32的纹理将分别用\[0,63\]和\[0,31\]范围内的坐标引用。 归一化纹理坐标导致坐标在\[0.0,1.0-1 / N\]范围内而不是\[0，N-1\]中指定，因此相同的64x32纹理将通过范围\[0,1-\]中的归一化坐标来寻址 x和y维度均为1 / N\]。 如果纹理坐标优选独立于纹理大小，则标准化纹理坐标自然适合某些应用程序的要求。
+* 寻址模式。使用超出范围的坐标调用B.8节的设备功能是有效的。寻址模式定义了在这种情况下会发生什么。默认寻址模式是将坐标箝位到有效范围:\[0，N\)用于非归一化坐标，\[0.0，1.0\)用于归一化坐标。如果改为指定边框模式，纹理坐标超出范围的纹理提取将返回零。对于归一化坐标，还可以使用环绕模式和镜像模式。使用环绕模式时，每个坐标x转换为frac\(x\)=x floor\(x\)，其中floor\(x\)是不大于x的最大整数。使用镜像模式时，如果floor\(x\)为偶数，每个坐标x转换为frac\(x\)，如果floor\(x\)为奇数，则转换为1-frac\(x\)。寻址模式被指定为大小为三的阵列，其第一、第二和第三元素分别为第一、第二和第三纹理坐标指定寻址模式；寻址模式是cudaAddressModeBorder、cudaAddressModeClamp、cudaAddressModeWrap和cudaAddressModeMirrorcudaAddressModeWrap和cudaAddressModeMirror仅支持归一化纹理坐标。
+* 过滤模式，指定在获取纹理时如何根据输入的纹理坐标计算返回值。线性纹理过滤只能对被配置为返回浮点数据的纹理进行。它在相邻纹理元素之间执行低精度插值。启用时，读取纹理提取位置周围的纹理元素，并基于纹理坐标落在纹理元素之间的位置对纹理提取的返回值进行插值。一维纹理执行简单的线性插值，二维纹理执行双线性插值，三维纹理执行三线性插补处理插值。纹理提取提供了纹理提取的更多细节。过滤模式等于cudaFilterModePoint或CudaFilterModeLink。如果是cudaFilterModePoint，返回值是纹理坐标最接近输入纹理坐标的纹理元素。如果是cudaFilterModeLinear，则返回值是纹理坐标最接近输入纹理坐标的两个\(对于一维纹理\)、四个\(对于二维纹理\)或八个\(对于三维纹理\)纹理元素的线性插值。cudaFilterModeLinear仅对浮点类型的返回值有效
+
+[Texture Object API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-object-api)介绍纹理对象API。
+
+[Texture Reference API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-reference-api) 介绍纹理对象API。
+
+[16-Bit Floating-Point Textures](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#sixteen-bit-floating-point-textures)  解释了如何处理16位浮点纹理。
+
+纹理也可以分层，如 [Layered Textures](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#layered-textures)所述。
+
+[Cubemap Textures](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cubemap-textures) and [Cubemap Layered Textures](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cubemap-layered-textures) 描述一种特殊类型的纹理，即立方体贴图纹理。
+
+[Texture Gather](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-gather) 描述了一种特殊的纹理提取，纹理聚集。
+
+Texture Object API
+
+纹理对象是使用cudaCreateTextureObject\(\)从指定纹理的struct cudaResourceDesc类型的资源描述和这样定义的纹理描述创建的:
+
+```c
+struct cudaTextureDesc
+{
+    enum cudaTextureAddressMode addressMode[3];
+    enum cudaTextureFilterMode  filterMode;
+    enum cudaTextureReadMode    readMode;
+    int                         sRGB;
+    int                         normalizedCoords;
+    unsigned int                maxAnisotropy;
+    enum cudaTextureFilterMode  mipmapFilterMode;
+    float                       mipmapLevelBias;
+    float                       minMipmapLevelClamp;
+    float                       maxMipmapLevelClamp;
+};
+```
+
+
 
 _Surface Memory_
 
@@ -1110,9 +1154,51 @@ _Surface Memory_
 
 ## Versioning and Compatibility
 
+开发CUDA应用程序时，开发人员应该关心两个版本号:描述计算设备的一般规范和特性的计算能力\(参见计算能力\)和描述驱动程序API和运行时支持的特性的CUDA驱动程序API的版本。
+
+驱动程序API的版本在驱动程序头文件中定义为CUDA\_VERSION。它允许开发人员检查他们的应用程序是否需要比当前安装的设备驱动程序更新的设备驱动程序。这很重要，因为驱动程序接口是向后兼容的，这意味着针对驱动程序接口的特定版本编译的应用程序、插件和库\(包括运行时\)将继续在后续的设备驱动程序版本中工作，如图13所示。驱动程序应用程序接口不向前兼容，这意味着针对驱动程序应用程序接口的特定版本编译的应用程序、插件和库\(包括运行时\)将无法在设备驱动程序的早期版本上运行。
+
+请注意，受支持版本的混合和匹配存在限制:
+
+* 由于一个系统上一次只能安装一个版本的CUDA驱动程序，因此安装的驱动程序的版本必须与该系统上必须运行的任何应用程序、插件或库的最大驱动程序应用编程接口版本相同或更高。
+* 应用程序使用的所有插件和库必须使用相同版本的CUDA运行时，除非它们静态链接到运行时，在这种情况下，运行时的多个版本可以共存于同一进程空间中。请注意，如果使用nvcc来链接应用程序，默认情况下将使用CUDA运行时库的静态版本，并且所有CUDA工具包库都与CUDA运行时静态链接。
+* 应用程序使用的所有插件和库必须使用使用运行时的任何库的相同版本\(例如cuFFT、cuBLAS，...\)除非静态链接到那些库。
+
+Figure 13. The Driver API Is Backward but Not Forward Compatible
+
+![](../../../.gitbook/assets/image%20%28175%29.png)
+
 ## Compute Modes
+
+在运行Windows Server 2008及更高版本或Linux的Tesla解决方案中，可以使用NVIDIA的系统管理界面（nvidia-smi）以三种以下模式之一设置系统中的任何设备，该系统是作为驱动程序的一部分分发的工具：
+
+* 默认计算模式：多个主机线程可以使用该设备（通过在此设备上调用cudaSetDevice\(\)，使用运行时API，或者在使用驱动程序API时同时使当前与设备关联的上下文）。
+* 独占进程计算模式：系统中的所有进程只能在设备上创建一个CUDA上下文。 在创建该上下文的进程中，上下文可以是所需数量的线程。
+* 禁止的计算模式：无法在设备上创建CUDA上下文。
+
+这尤其意味着，如果设备0处于禁止模式或独占进程模式，并且被另一个进程使用，则使用运行时应用编程接口而不显式调用cudaSetDevice\(\)的主机线程可能与设备0以外的设备相关联。cudaSetValidDevices\(\)可用于从设备的优先级列表中设置设备。
+
+还要注意，对于采用帕斯卡体系结构的设备\(主要版本号为6及更高版本的计算能力\)，存在对计算抢占的支持。这允许在指令级粒度抢占计算任务，而不是像现有的麦克斯韦和开普勒图形处理器体系结构那样抢占线程块粒度，其好处是可以防止具有长时间运行内核的应用程序垄断系统或超时。但是，将会有与计算抢占相关联的关联切换开销，该开销会在支持的设备上自动启用。具有支持的属性CudadeVattrComputePreepEnsupported的单个属性查询函数cudaDeviceGetAttribute\(\)可用于确定正在使用的设备是否支持计算抢占。希望避免与不同进程相关联的关联切换开销的用户可以通过选择独占进程模式来确保在GPU上只有一个进程是活动的。
+
+应用程序可以通过检查计算模式设备属性来查询设备的计算模式\(请参见设备枚举\)。
 
 ## Mode Switches
 
+ 具有显示输出的GPU将一些DRAM存储器专用于所谓的主表面，其用于刷新其输出被用户查看的显示设备。 当用户通过更改显示器的分辨率或位深度（使用NVIDIA控制面板或Windows上的显示控制面板）启动显示模式切换时，主表面所需的内存量会发生变化。 例如，如果用户将显示分辨率从1280x1024x32位更改为1600x1200x32位，则系统必须将7.68 MB专用于主表面而不是5.24 MB。 （启用了抗锯齿运行的全屏图形应用程序可能需要更多的主表面显示内存。）在Windows上，可能启动显示模式切换的其他事件包括启动全屏DirectX应用程序，按Alt + Tab键到任务 切换到全屏DirectX应用程序，或按Ctrl + Alt + Del锁定计算机。
+
+如果模式开关增加了主表面所需的内存量，则系统可能不得不蚕食专用于CUDA应用程序的内存分配。 因此，模式切换会导致对CUDA运行时的任何调用失败并返回无效的上下文错误。
+
 ## Tesla Compute Cluster Mode for Windows
+
+使用NVIDIA的系统管理界面（nvidia-smi），可以将Windows设备驱动程序置于TCC（特斯拉计算集群）模式，用于特斯拉和Quadro系列计算能力2.0及更高版本的设备。
+
+此模式具有以下主要优点：
+
+它可以在具有非NVIDIA集成显卡的集群节点中使用这些GPU;
+
+它通过远程桌面提供这些GPU，直接和通过依赖远程桌面的集群管理系统;
+
+它使这些GPU可用于作为Windows服务运行的应用程序（即，在会话0中）。
+
+但是，TCC模式删除了对任何图形功能的支持。
 

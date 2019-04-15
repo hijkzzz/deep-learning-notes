@@ -10,7 +10,7 @@
 
 ### Face Detection & Face Alignment
 
-![](../../.gitbook/assets/image%20%28137%29.png)
+![](../../.gitbook/assets/image%20%28138%29.png)
 
 #### 3D alignment
 
@@ -27,7 +27,7 @@
 
 ### Representation
 
-![](../../.gitbook/assets/image%20%2883%29.png)
+![](../../.gitbook/assets/image%20%2884%29.png)
 
 最后一个完全连接的层的输出被馈送到k-way softmax（其中K是类的数量），其产生类标签上的分布： $$p_{k}=\exp \left(o_{k}\right) / \sum_{h} \exp \left(o_{h}\right)$$ 。训练的目的是最大限度地提高正确分类的概率\(人脸id\)，我们通过最小化每个训练样本的交叉熵损失来实现这一点。
 
@@ -49,11 +49,11 @@ $$
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28120%29.png)
+![](../../.gitbook/assets/image%20%28121%29.png)
 
 #### Ensembles of DNNs
 
 接下来，我们将通过向不同类型的输入提供训练而训练的多个网络组合到DNN：1）网络DeepFace-上面基于3D对齐RGB输入的单个描述; 2）灰度级图像加上图像梯度的大小和方向; 3）2D对齐的RGB图像。
 
-![](../../.gitbook/assets/image%20%28188%29.png)
+![](../../.gitbook/assets/image%20%28190%29.png)
 

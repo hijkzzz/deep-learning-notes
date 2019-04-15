@@ -10,17 +10,17 @@
 
 ### MODEL ARCHITECTURE
 
-![](../../.gitbook/assets/image%20%28202%29.png)
+![](../../.gitbook/assets/image%20%28204%29.png)
 
-![](../../.gitbook/assets/image%20%28181%29.png)
+![](../../.gitbook/assets/image%20%28183%29.png)
 
 ### EMPIRICAL VALIDATION OFDCGANS CAPABILITIES
 
 评估无监督表示学习算法质量的一种常见技术是将它们作为监督数据集上的特征提取器来应用，并评估在这些特征之上拟合的线性模型的性能。
 
-![](../../.gitbook/assets/image%20%28189%29.png)
+![](../../.gitbook/assets/image%20%28191%29.png)
 
-![](../../.gitbook/assets/image%20%2848%29.png)
+![](../../.gitbook/assets/image%20%2849%29.png)
 
 
 

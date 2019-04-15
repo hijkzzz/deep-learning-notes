@@ -18,11 +18,11 @@
 
 ### Factorization Machine Model
 
-![](../../.gitbook/assets/image%20%28192%29.png)
+![](../../.gitbook/assets/image%20%28194%29.png)
 
 其中
 
-![](../../.gitbook/assets/image%20%28158%29.png)
+![](../../.gitbook/assets/image%20%28159%29.png)
 
 ![](../../.gitbook/assets/image%20%2832%29.png)
 
@@ -36,7 +36,7 @@
 
 ### Factorization Machines as Predictors
 
-![](../../.gitbook/assets/image%20%28211%29.png)
+![](../../.gitbook/assets/image%20%28213%29.png)
 
 ### Learning Factorization Machines
 
