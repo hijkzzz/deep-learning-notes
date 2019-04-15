@@ -59,7 +59,7 @@ Figure 5. Automatic Scalability
 * 章节 [Introduction](introduction.md) 是对CUDA的一般介绍。
 * 章节 [Programming Model](programming-model.md) 概述了CUDA编程模型。
 * 章节 [Programming Interface](programming-interface.md) 描述了编程接口。
-* 章节 [Hardware Implementation](hardware-implementation.md) 描述了硬件实现。
+* 章节 [Hardware Implementation](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#hardware-implementation) 描述了硬件实现。
 * 章节 [Performance Guidelines](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#performance-guidelines) 为如何实现最佳性能提供了一些指导。
 * 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) 列出了所有支持CUDA的设备。
 * 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) 是对C语言的所有扩展的详细描述。
