@@ -104,15 +104,15 @@ nvcc x.cu
 
 [Asynchronous Concurrent Execution](programming-interface.md#asynchronous-concurrent-execution) 描述了用于在系统中的各个级别启用异步并发执行的概念和API。
 
-[Multi-Device System](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#multi-device-system) 显示了编程模型如何扩展到具有连接到同一主机的多个设备的系统。
+[Multi-Device System](programming-interface.md#multi-device-system) 显示了编程模型如何扩展到具有连接到同一主机的多个设备的系统。
 
-[Error Checking](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#error-checking) 描述了如何正确检查运行时生成的错误。
+[Error Checking](programming-interface.md#error-checking) 描述了如何正确检查运行时生成的错误。
 
-[Call Stack](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#call-stack) 提到用于管理CUDA C调用堆栈的运行时函数。
+[Call Stack](programming-interface.md#call-stack) 提到用于管理CUDA C调用堆栈的运行时函数。
 
-[Texture and Surface Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-and-surface-memory)呈现纹理和表面存储空间，提供访问设备存储器的另一种方式; 它们还暴露了GPU纹理硬件的一个子集。
+[Texture and Surface Memory](programming-interface.md#texture-and-surface-memory)呈现纹理和表面存储空间，提供访问设备存储器的另一种方式; 它们还暴露了GPU纹理硬件的一个子集。
 
-[Graphics Interoperability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#graphics-interoperability) 介绍了运行时提供的各种功能，以便与两个主要的图形API，OpenGL和Direct3D进行互操作。
+[Graphics Interoperability](programming-interface.md#graphics-interoperability) 介绍了运行时提供的各种功能，以便与两个主要的图形API，OpenGL和Direct3D进行互操作。
 
 ### Initialization
 
@@ -593,7 +593,7 @@ CUDA将以下操作公开为可以相互并发操作的独立任务:
 
 应用程序通过流管理上述并发操作。流是按顺序执行的命令序列\(可能由不同的主机线程发出\)。另一方面，不同的流可以彼此无序或同时执行它们的命令；这种行为没有保证，因此不应该依赖于正确性\(例如，内核间的通信是未定义的\)。
 
-Creation and Destruction
+_Creation and Destruction_
 
 通过创建流对象并将其指定为内核启动序列和主机&lt; - &gt;设备内存副本的流参数来定义流。 以下代码示例创建两个流，并在页锁定内存中分配float的数组hostPtr。
 
@@ -629,7 +629,7 @@ for (int i = 0; i < 2; ++i)
 
 如果调用cudaStreamDestroy\(\)时设备仍在流中工作，那么一旦设备完成流中的所有工作，函数将立即返回，并且与流相关联的资源将自动释放。
 
-Default Stream
+_Default Stream_
 
 内核启动和主机&lt; - &gt;设备内存副本未指定任何流参数，或者等效地将stream参数设置为零，将发布到默认流。 因此它们按顺序执行。
 
@@ -639,7 +639,7 @@ Default Stream
 
 对于未指定--default-stream编译标志而编译的代码，将--default-stream legacy视为默认值。
 
-Explicit Synchronization
+_Explicit Synchronization_
 
 有多种方法可以显式地使流相互同步。
 
@@ -653,7 +653,7 @@ cudaStreamQuery\(\)为应用程序提供了一种方法，可以知道流中所�
 
 为了避免不必要的减速，所有这些同步功能通常最好用于计时目的，或者隔离失败的启动或内存拷贝。
 
-Implicit Synchronization
+_Implicit Synchronization_
 
 如果主机线程在它们之间发出以下任何一个操作，则来自不同流的两个命令不能同时运行：
 
@@ -673,7 +673,7 @@ Implicit Synchronization
 * 所有独立操作应在相关操作之前发布
 * 任何类型的同步都应该尽可能延迟
 
-Overlapping Behavior
+_Overlapping Behavior_
 
 两个流之间的执行重叠量取决于向每个流发出命令的顺序，以及设备是否支持数据传输和内核执行的重叠\(参见数据传输和内核执行的重叠\)、并发内核执行\(参见并发内核执行\)和/或并发数据传输\(参见并发数据传输\)。
 
@@ -695,7 +695,7 @@ for (int i = 0; i < 2; ++i)
 
 在支持并发数据传输的设备上，创建和销毁的代码示例的两个流重叠：从主机到设备的内存副本发送到流\[1\]与从设备到主机的内存副本重叠发送到流\[0\] 甚至将内核启动发送到stream \[0\]（假设设备支持数据传输和内核执行的重叠）。 但是，对于计算能力为3.0或更低的设备，内核执行不可能重叠，因为在从设备到主机的内存复制发送到流\[0\]之后，第二次内核启动被发送到流\[1\]，因此它被阻塞直到 根据Implicit Synchronization，发送到stream \[0\]的第一个内核启动完成。 如果代码被重写如上，则内核执行重叠（假设设备支持并发内核执行），因为在从设备到主机的内存复制发送到流\[0\]之前，第二次内核启动被发送到流\[1\]。 但是，在这种情况下，从发送到流\[0\]的设备到主机的内存复制只与按照隐式同步发送到流\[1\]的内核启动的最后一个线程块重叠，后者只能代表总数的一小部分。 内核的执行时间。
 
-Callbacks
+_Callbacks_
 
  运行时提供了一种通过cudaStreamAddCallback\(\)在任何点将回调插入流的方法。回调是一个函数，一旦在回调完成之前向流发出所有命令，就会在主机上执行该函数。流0中的回调一旦在回调完成之前所有流中发出的所有前面的任务和命令都被执行。
 
@@ -719,7 +719,7 @@ for (size_t i = 0; i < 2; ++i) {
 
 回调不能\(直接或间接\)调用CUDA应用编程接口，因为如果回调导致死锁，它可能最终会等待自己。
 
-Stream Priorities
+_Stream Priorities_
 
 可以在创建时使用cudaStreamCreateWithPriority\(\)指定流的相对优先级。允许的优先级范围，按\[最高优先级、最低优先级排序\]可以使用CudadeViceGetStreamPriorityRange\(\)函数获得。在运行时，当低优先级方案中的块完成时，高优先级流中的等待块被调度在它们的位置。
 
@@ -747,17 +747,17 @@ cudaStreamCreateWithPriority(&st_low, cudaStreamNonBlocking, priority_low);
 * 实例化获取图形模板的快照，验证它，并执行大部分工作的设置和初始化，目的是最小化启动时需要完成的工作。 生成的实例称为可执行图。
 * 可执行图可以启动到流中，类似于任何其他CUDA工作。 它可以在不重复实例化的情况下启动任意次。
 
-Graph Structure
+_Graph Structure_
 
 操作在图形中形成一个节点。操作之间的依赖关系是边。这些依赖性限制了操作的执行顺序。
 
 一旦操作所依赖的节点完成，就可以在任何时候调度该操作。时间安排由CUDA系统决定。
 
-Node Types
+_Node Types_
 
  图形节点可以是以下之一:
 
-* 核心
+* kernel
 * 中央处理器功能调用
 * 记忆拷贝
 * memset函数
@@ -768,7 +768,7 @@ Figure 11. Child Graph Example
 
 ![](../../../.gitbook/assets/image%20%28156%29.png)
 
-Creating a Graph Using Graph APIs
+_Creating a Graph Using Graph APIs_
 
 可以通过两种机制创建图形：显式API和流捕获。 以下是创建和执行下图的示例。
 
@@ -814,5 +814,305 @@ kernel_C<<< ..., stream >>>(...);
 cudaStreamEndCapture(stream, &graph);
 ```
 
+对cudaStreamBeginCapture\(\)的调用会将流置于捕获模式。 捕获流时，启动到流中的工作不会排队执行。 它被附加到逐步建立的内部图形。 然后通过调用cudaStreamEndCapture\(\)返回该图，该结果也结束了流的捕获模式。 通过流捕获主动构建的图被称为捕获图。
 
+除了cudaStreamLegacy\(“NULL stream”\)之外，可以在任何CUDA流上使用流捕获。 请注意，它可以在cudaStreamPerThread上使用。 如果程序正在使用遗留流，则可以将流0重新定义为每线程流而不进行功能改变。 请参阅默认流。
+
+是否正在捕获流可以使用cudaStreamIsCapturing\(\)查询。
+
+Cross-stream Dependencies and Events
+
+流捕获可以处理用cudaEventRecord\(\)和cudaStreamWaitEvent\(\)表示的跨流依赖关系，前提是被等待的事件被记录到同一个捕获图中。
+
+当在处于捕获模式的流中记录事件时，将导致捕获事件。捕获的事件表示捕获图中的一组节点。
+
+当一个捕获的事件被一个流等待时，如果它还没有被捕获，它将把这个流放在捕获模式中，并且流中的下一项将对捕获事件中的节点具有额外的依赖关系。然后将这两个流捕获到。
+
+```c
+// stream1 is the origin stream
+cudaStreamBeginCapture(stream1);
+
+kernel_A<<< ..., stream1 >>>(...);
+
+// Fork into stream2
+cudaEventRecord(event1, stream1);
+cudaStreamWaitEvent(stream2, event1);
+
+kernel_B<<< ..., stream1 >>>(...);
+kernel_C<<< ..., stream2 >>>(...);
+
+// Join stream2 back to origin stream (stream1)
+cudaEventRecord(event2, stream2);
+cudaStreamWaitEvent(stream1, event2);
+
+kernel_D<<< ..., stream1 >>>(...);
+
+// End capture in the origin stream
+cudaStreamEndCapture(stream1, &graph);
+
+// stream1 and stream2 no longer in capture mode   
+```
+
+上面代码返回的图形如图12所示。
+
+注意：当流从捕获模式中取出时，流中的下一个未捕获项（如果有）仍将依赖于最近的先前未捕获项，尽管中间项已被删除。
+
+Prohibited and Unhandled Operations
+
+同步或查询正在捕获的流或捕获的事件的执行状态是无效的，因为它们不代表计划执行的项目。当任何关联流处于捕获模式时，查询包含活动流捕获的更宽句柄的执行状态或同步该句柄也是无效的，例如设备或上下文句柄。
+
+当捕获同一个上下文中的任何流，并且该流不是用cudaStreamNonBlocking创建的时，任何对旧流的尝试都是无效的。这是因为遗留流句柄始终包含这些其他流；排队到传统流会对被捕获的流产生依赖性，并且查询或同步它会查询或同步被捕获的流。
+
+因此，在这种情况下调用同步APIs也是无效的。同步APIs，如cudaMemcpy\(\)，将工作排入遗留流，并在返回之前对其进行同步。
+
+注意:一般来说，当依赖关系将捕获的东西与未捕获的东西连接起来，而不是排队执行时，CUDA更喜欢返回错误而不是忽略依赖关系。将流置于捕获模式或脱离捕获模式时会出现异常；这切断了模式转换前后添加到流中的项目之间的依赖关系。
+
+通过等待正在被捕获的流中与不同于事件的捕获图相关联的捕获事件来合并两个单独的捕获图是无效的。等待正在捕获的流中的未捕获事件是无效的。
+
+图形中目前不支持将异步操作排入流中的少量APIs，如果用正在捕获的流调用这些APIs，例如cudaStreamAttachMemAsync\(\)。
+
+Invalidation
+
+当在流捕获期间尝试无效操作时，任何关联的捕获图都将无效。当捕获图无效时，进一步使用任何正在捕获的流或与该图相关联的捕获事件都是无效的，并将返回错误，直到流捕获以cudaStreamEndCapture\(\)结束。该调用将使相关流脱离捕获模式，但也会返回错误值和零图值。
+
+_Using Graph APIs_
+
+cudaGraph\_t对象不是线程安全的。 用户有责任确保多个线程不会同时访问相同的cudaGraph\_t。
+
+cudaGraphExec\_t无法与自身同时运行。 cudaGraphExec\_t的启动将在同一可执行图的先前启动之后进行。
+
+ 图形执行是在流中完成的，以便与其他异步工作进行排序。然而，该流仅用于排序;它不限制图的内部并行性，也不影响图节点的执行位置。
+
+请参阅图API。
+
+#### Events
+
+运行时还通过让应用程序异步记录程序中任意点的事件并在这些事件完成时进行查询，提供了一种密切监视设备进度以及执行精确定时的方法。当事件之前的所有任务\(或者可选地，给定流中的所有命令\)完成时，该事件就完成了。流0中的事件在所有流中的所有先前任务和命令完成后完成。
+
+_Creation and Destruction_
+
+```c
+cudaEvent_t start, stop;
+cudaEventCreate(&start);
+cudaEventCreate(&stop);
+```
+
+```c
+cudaEventDestroy(start);
+cudaEventDestroy(stop);
+```
+
+_Elapsed Time_
+
+```c
+cudaEventRecord(start, 0);
+for (int i = 0; i < 2; ++i) {
+    cudaMemcpyAsync(inputDev + i * size, inputHost + i * size,
+                    size, cudaMemcpyHostToDevice, stream[i]);
+    MyKernel<<<100, 512, 0, stream[i]>>>
+               (outputDev + i * size, inputDev + i * size, size);
+    cudaMemcpyAsync(outputHost + i * size, outputDev + i * size,
+                    size, cudaMemcpyDeviceToHost, stream[i]);
+}
+cudaEventRecord(stop, 0);
+cudaEventSynchronize(stop);
+float elapsedTime;
+cudaEventElapsedTime(&elapsedTime, start, stop);
+```
+
+### Multi-Device System
+
+主机系统可以有多个设备。 以下代码示例演示如何枚举这些设备，查询其属性以及确定启用CUDA的设备的数量。
+
+```c
+int deviceCount;
+cudaGetDeviceCount(&deviceCount);
+int device;
+for (device = 0; device < deviceCount; ++device) {
+    cudaDeviceProp deviceProp;
+    cudaGetDeviceProperties(&deviceProp, device);
+    printf("Device %d has compute capability %d.%d.\n",
+           device, deviceProp.major, deviceProp.minor);
+}
+```
+
+_Device Selection_
+
+主机线程可以通过调用cudaSetDevice\(\)来设置它在任何时候操作的设备。在当前设置的设备上进行设备内存分配和内核启动；与当前设置的设备相关联地创建流和事件。如果没有调用cudaSetDevice\(\)，则当前设备是设备0。
+
+下面的代码示例说明了设置当前设备如何影响内存分配和内核执行。
+
+```c
+size_t size = 1024 * sizeof(float);
+cudaSetDevice(0);            // Set device 0 as current
+float* p0;
+cudaMalloc(&p0, size);       // Allocate memory on device 0
+MyKernel<<<1000, 128>>>(p0); // Launch kernel on device 0
+cudaSetDevice(1);            // Set device 1 as current
+float* p1;
+cudaMalloc(&p1, size);       // Allocate memory on device 1
+MyKernel<<<1000, 128>>>(p1); // Launch kernel on device 1
+```
+
+_Stream and Event Behavior_
+
+ 如果将内核启动发布到与当前设备无关的流，则内核启动将失败，如以下代码示例所示。
+
+```c
+cudaSetDevice(0);               // Set device 0 as current
+cudaStream_t s0;
+cudaStreamCreate(&s0);          // Create stream s0 on device 0
+MyKernel<<<100, 64, 0, s0>>>(); // Launch kernel on device 0 in s0
+cudaSetDevice(1);               // Set device 1 as current
+cudaStream_t s1;
+cudaStreamCreate(&s1);          // Create stream s1 on device 1
+MyKernel<<<100, 64, 0, s1>>>(); // Launch kernel on device 1 in s1
+
+// This kernel launch will fail:
+MyKernel<<<100, 64, 0, s0>>>(); // Launch kernel on device 1 in s0
+```
+
+即使内存拷贝被发布到与当前设备不相关联的流，它也将成功。
+
+如果输入事件和输入流与不同的设备相关联，cudaEventRecord\(\)将失败。
+
+如果两个输入事件与不同的设备相关联，cudaEventElapsedTime\(\)将失败。
+
+即使输入事件与不同于当前设备的设备相关联，cudaEventSynchronize\(\)和cudaEventQuery\(\)也会成功。
+
+即使输入流和输入事件与不同的设备相关联，cudaStreamWaitEvent\(\)也会成功。cudaStreamWaitEvent\(\)因此可以用来使多个设备相互同步。
+
+每个设备都有自己的默认流\(请参见默认流\)，因此向设备的默认流发出的命令可能会无序执行，或者与向任何其他设备的默认流发出的命令同时执行。
+
+_Peer-to-Peer Memory Access_
+
+当应用程序作为64位进程运行时，特斯拉系列中计算能力为2.0或更高的设备可以寻址彼此的存储器\(即，在一个设备上执行的内核可以取消引用指向另一个设备的存储器的指针\)。如果这两个设备的cudaDeviceCanAccessPeer\(\)返回true，则这种对等内存访问功能在这两个设备之间受支持。
+
+必须通过调用cudaDeviceEnablePeerAccess\(\)在两个设备之间启用对等内存访问，如下面的代码示例所示。在未启用NVSwitch的系统上，每个设备最多可以支持八个系统范围的对等连接。
+
+两个设备都使用统一地址空间\(请参见统一虚拟地址空间\)，因此可以使用相同的指针来寻址来自两个设备的内存，如下面的代码示例所示_。_
+
+```c
+cudaSetDevice(0);                   // Set device 0 as current
+float* p0;
+size_t size = 1024 * sizeof(float);
+cudaMalloc(&p0, size);              // Allocate memory on device 0
+MyKernel<<<1000, 128>>>(p0);        // Launch kernel on device 0
+cudaSetDevice(1);                   // Set device 1 as current
+cudaDeviceEnablePeerAccess(0, 0);   // Enable peer-to-peer access
+                                    // with device 0
+
+// Launch kernel on device 1
+// This kernel launch can access memory on device 0 at address p0
+MyKernel<<<1000, 128>>>(p0);
+```
+
+IOMMU on Linux
+
+ 仅在Linux上，CUDA和显示驱动程序不支持启用IOMMU的裸机PCIe对等内存拷贝。但是，CUDA和显示驱动程序确实通过虚拟机通道支持IOMMU。因此，当在本机裸机系统上运行时，Linux上的用户应该禁用IOMMU。应启用IOMMU，并将VFIO驱动程序用作虚拟机的PCIe通道。
+
+在Windows系统上，上述限制并不存在。
+
+另请参见在64位平台上分配DMA缓冲区。
+
+_Peer-to-Peer Memory Copy_
+
+ 存储器拷贝可以在两个不同设备的存储器之间执行。
+
+当两个设备都使用统一地址空间时\(请参见统一虚拟地址空间\)，这是使用设备内存中提到的常规内存复制功能来完成的。
+
+否则，这将使用cudaMemcpyPeer\(\)、cudaMemcpyPeerAsync\(\)、cudaMemcpy3DPeer\(\)或cudaMemcpy3DPeerAsync\(\)来完成，如下面的代码示例所示
+
+```c
+cudaSetDevice(0);                   // Set device 0 as current
+float* p0;
+size_t size = 1024 * sizeof(float);
+cudaMalloc(&p0, size);              // Allocate memory on device 0
+cudaSetDevice(1);                   // Set device 1 as current
+float* p1;
+cudaMalloc(&p1, size);              // Allocate memory on device 1
+cudaSetDevice(0);                   // Set device 0 as current
+MyKernel<<<1000, 128>>>(p0);        // Launch kernel on device 0
+cudaSetDevice(1);                   // Set device 1 as current
+cudaMemcpyPeer(p1, 1, p0, 0, size); // Copy p0 to p1
+MyKernel<<<1000, 128>>>(p1);        // Launch kernel on device 1
+```
+
+两个不同设备的存储器之间的副本（在隐式NULL流中）：
+
+* 直到先前发给任一设备的所有命令都完成后才会启动
+* 在复制到任一设备之后发出的任何命令（请参阅异步并发执行）之前，运行完成。
+
+与流的正常行为一致，两个设备的存储器之间的异步复制可能与另一个流中的副本或内核重叠。
+
+请注意，如果通过对等内存访问中所述的cudaDeviceEnablePeerAccess\(\)在两个设备之间启用了对等访问，则这两个设备之间的对等内存复制不再需要通过主机进行， 因此更快。
+
+### Unified Virtual Address Space
+
+当应用程序作为64位进程运行时，主机和所有计算能力为2.0或更高的设备使用一个地址空间。通过CUDA应用编程接口调用进行的所有主机内存分配和支持设备上的所有设备内存分配都在此虚拟地址范围内。因此:
+
+* 通过CUDA分配的主机上或使用统一地址空间的任何设备上的任何内存的位置，都可以通过使用cudaPointerGetAttributes\(\)的指针值来确定。
+* 当复制到使用统一地址空间的任何设备的内存中或从其中复制时，cudaMemcpy \*\(的cudaMemcpyKind参数\)可以设置为cudaMemcpyDefault，以根据指针确定位置。这也适用于没有通过CUDA分配的主机指针，只要当前设备使用统一寻址。
+* 通过cudaHostAlloc\(\)的分配在使用统一地址空间的所有设备上是自动可移植的\(参见可移植内存\)，并且cudaHostAlloc\(\)返回的指针可以直接从这些设备上运行的内核中使用\(即，不需要通过cudaHostGetDevicePointer\(\)获得设备指针，如映射内存中所述。
+
+应用程序可以通过检查统一寻址设备属性\(参见设备枚举\)是否等于1来查询统一地址空间是否用于特定设备
+
+### Interprocess Communication
+
+主机线程创建的任何设备内存指针或事件句柄都可以被同一进程中的任何其他线程直接引用。但是，它在此进程之外无效，因此不能被属于不同进程的线程直接引用。
+
+为了跨进程共享设备内存指针和事件，应用程序必须使用行程间通讯应用编程接口，这在参考手册中有详细描述。IPC应用编程接口仅支持Linux上的64位进程和计算能力为2.0或更高的设备。请注意，cudaMallocManaged分配不支持IPC应用编程接口。
+
+使用此应用程序接口，应用程序可以使用cudaIpcGetMemHandle\(\)获取给定设备内存指针的IPC句柄，并使用标准的IPC机制\(例如进程间共享内存或文件\)将其传递给另一个进程，然后使用cudaIpcOpenMemHandle\(\)从IPC句柄中检索设备指针，该指针是另一个进程中的有效指针。事件句柄可以使用类似的入口点共享。
+
+使用仪表板组合仪表应用编程接口的一个例子是，单个主进程生成一批输入数据，使得数据可用于多个从进程，而不需要再生或复制。
+
+使用CUDA IPC的应用程序应该使用相同的CUDA驱动程序和运行时进行编译、链接和运行。
+
+注:图睿设备不支持CUDA IPC调用。
+
+### Error Checking
+
+所有运行时函数都返回一个错误代码，但是对于异步函数\(参见异步程序并发执行\)，该错误代码不可能报告设备上可能发生的任何异步错误，因为该函数在设备完成任务之前返回；错误代码仅报告在执行任务之前发生在主机上的错误，通常与参数验证有关；如果发生异步错误，它将由一些随后不相关的运行时函数调用来报告。
+
+因此，在某个异步函数调用之后检查异步错误的唯一方法是在调用之后通过调用cudaDeviceSynchronize\(\)\(或通过使用异步程序并发执行中描述的任何其他同步机制\)并检查cudaDeviceSynchronize\(\)返回的错误代码来进行同步。
+
+运行时为初始化为cudaSuccess的每个主机线程维护一个错误变量，并在每次出错时被错误代码覆盖\(无论是参数验证错误还是异步错误\)。cudaPeekAtLastError\(\)返回此变量。cudaGetLastError\(\)返回此变量，并将其重置为cudaSuccess。
+
+内核启动不会返回任何错误代码，因此必须在内核启动后立即调用cudaPeekAtLastError\(\)或cudaGetLastError\(\)，以检索任何启动前错误。为了确保cudaPeekAtLastError\(\)或cudaGetLastError\(\)返回的任何错误都不是来自内核启动之前的调用，必须确保运行时错误变量在内核启动之前设置为cudaSuccess，例如，在内核启动之前调用cudaGetLastError\(\)。内核启动是异步的，因此为了检查异步错误，应用程序必须在内核启动和对cudaPeekAtLastError\(\)或cudaGetLastError\(\)的调用之间进行同步。
+
+请注意，cudaErrorNotReady\(可能由cudaStreamQuery\(\)和cudaEventQuery\(\)返回\)不被视为错误，因此不会由cudaPeekAtLastError\(\)或cudaGetLastError\(\)报告。
+
+### Call Stack
+
+在计算能力为2.x及更高的设备上，可以使用cudaDeviceGetLimit\(\)查询调用堆栈的大小，并使用cudaDeviceSetLimit\(\)进行设置。
+
+当调用堆栈溢出时，如果应用程序通过CUDA调试器\(cuda-gdb，Nsight\)运行，内核调用将失败，并出现堆栈溢出错误，否则为。
+
+### Texture and Surface Memory
+
+CUDA支持纹理硬件的一个子集，GPU用于图形访问纹理和表面存储器。 从纹理或表面存储器而不是全局存储器读取数据可以具有若干性能优势，如设备存储器访问中所述。
+
+有两种不同的API可以访问纹理和表面内存：
+
+* 所有设备都支持的纹理参考API，
+* 纹理对象API仅在计算能力3.x的设备上受支持。
+
+纹理参考API具有纹理对象API不具有的限制。 它们在Texture Reference API中提到。
+
+_Texture Memory_
+
+\_\_
+
+_Surface Memory_
+
+### Graphics Interoperability
+
+## Versioning and Compatibility
+
+## Compute Modes
+
+## Mode Switches
+
+## Tesla Compute Cluster Mode for Windows
 
