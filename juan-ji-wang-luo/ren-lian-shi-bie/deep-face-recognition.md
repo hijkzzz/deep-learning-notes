@@ -12,7 +12,7 @@
 
 ### Dataset Collection
 
-![](../../.gitbook/assets/image%20%2812%29.png)
+![](../../.gitbook/assets/image%20%2814%29.png)
 
 1. 构建数据集的第一个阶段是获取候选身份名称列表以获取面孔。这个想法是关注名人和公众人物，如演员或政治家，以便可以找到足够数量的不同图像。 网络，以及在下载图像时避免任何隐私问题。
 2. 在Google和Bing图像搜索中都有2,622个名人名字，然后在名称后附加关键字“actor”。
@@ -30,17 +30,17 @@
 
 三联损失训练旨在学习在最终应用中表现良好的得分向量，即。 通过比较欧氏空间中的人脸描述符进行身份验证。这类似于“度量学习”的灵感，并且像许多度量学习方法一样，用于学习同时具有独特性和紧凑性的投影，同时实现降维。即用一个仿射变换投影 $$\mathbf{x}_{t}=W^{\prime} \phi\left(\ell_{t}\right) /\left\|\phi\left(\ell_{t}\right)\right\|_{2}, W^{\prime} \in \mathbb{R}^{L \times D}$$ ，其中L&lt;&lt;D。用于训练的损失函数为：
 
-![](../../.gitbook/assets/image%20%28131%29.png)
+![](../../.gitbook/assets/image%20%28136%29.png)
 
 三元组 $$(a,p,n)$$ 包含一个人脸图像锚点以及锚点身份的正面和负面示例。
 
 #### Architecture
 
-![](../../.gitbook/assets/image%20%2833%29.png)
+![](../../.gitbook/assets/image%20%2837%29.png)
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%2817%29.png)
+![](../../.gitbook/assets/image%20%2820%29.png)
 
 
 

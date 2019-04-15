@@ -58,7 +58,6 @@
   * [Word2Vec](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/glove.md)
   * [BERT](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/bert.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/README.md)
-  * [Sequence to Sequence Learning with Neural Networks](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/sequence-to-sequence-learning-with-neural-networks.md)
   * [Neural Machine Translation by Jointly Learning to Align and Translate](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/neural-machine-translation-by-jointly-learning-to-align-and-translate.md)
   * [Google's neural machine translation system: Bridging the gap between human and machine translation](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/googles-neural-machine-translation-system-bridging-the-gap-between-human-and-machine-translation.md)
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/README.md)

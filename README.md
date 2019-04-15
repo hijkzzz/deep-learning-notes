@@ -4,5 +4,5 @@
 
 > [gitbook-cli 本地部署](https://www.npmjs.com/package/gitbook-cli)
 
-![](.gitbook/assets/image%20%2824%29.png)
+![](.gitbook/assets/image%20%2827%29.png)
 
