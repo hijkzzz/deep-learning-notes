@@ -1,229 +1,4 @@
-# CUDA C Programming Guide
-
-## Introduction
-
-### From Graphics Processing to General Purpose Parallel Computing
-
-在可实现的高清3D图形市场需求的推动下，可编程图形处理器单元或GPU已经发展成为高度并行，多线程，多核处理器，具有巨大的计算能力和非常高的内存带宽，如图1和图所示 2。
-
-Figure 1. Floating-Point Operations per Second for the CPU and GPU
-
-![](../../.gitbook/assets/image%20%28235%29.png)
-
-Figure 2. Memory Bandwidth for the CPU and GPU
-
-![](../../.gitbook/assets/image%20%28146%29.png)
-
-CPU和GPU之间浮点能力差异背后的原因是GPU专门用于计算密集型，高度并行计算 - 正是图形渲染的关键 - 因此设计使得更多晶体管用于数据处理 而不是数据缓存和流量控制，如图3示意性所示。
-
-Figure 3. The GPU Devotes More Transistors to Data Processing
-
-![](../../.gitbook/assets/image%20%2845%29.png)
-
-更具体地说，图形处理器特别适合于解决可以表示为数据并行计算的问题——在许多数据元素上并行执行相同的程序——具有高运算强度——算术运算与存储器运算的比率。因为对每个数据元素执行相同的程序，所以对复杂的流控制的要求较低，并且因为它在许多数据元素上执行并且具有高运算强度，所以可以用计算而不是大数据高速缓存来隐藏存储器访问延迟。
-
-数据并行处理将数据元素映射到并行处理线程。许多处理大型数据集的应用程序可以使用数据并行编程模型来加速计算。在3D渲染中，大量像素和顶点被映射到并行线程。类似地，图像和媒体处理应用，例如渲染图像的后处理、视频编码和解码、图像缩放、立体视觉和模式识别，可以将图像块和像素映射到并行处理线程。事实上，从一般信号处理或物理模拟到计算金融或计算生物学，图像渲染和处理领域之外的许多算法都通过数据并行处理得到了加速。
-
-### CUDA®: A General-Purpose Parallel Computing Platform and Programming Model
-
- 2006年11月，NVIDIA推出了CUDA®，这是一种通用并行计算平台和编程模型，它利用NVIDIA GPU中的并行计算引擎，以比CPU更高效的方式解决许多复杂的计算问题。
-
-CUDA带有一个软件环境，允许开发人员使用C作为高级编程语言。 如图4所示，支持其他语言，应用程序编程接口或基于指令的方法，例如FORTRAN，DirectCompute，OpenACC。
-
-Figure 4. GPU Computing Applications. CUDA is designed to support various languages and application programming interfaces.
-
-![](../../.gitbook/assets/image%20%28169%29.png)
-
-### A Scalable Programming Model
-
-多核CPU和多核GPU的出现意味着主流处理器芯片现在是并行系统。 面临的挑战是开发透明地扩展其并行性的应用软件，以利用越来越多的处理器内核，就像3D图形应用程序透明地将其并行性扩展到具有大量不同内核的多核GPU一样。
-
-CUDA并行编程模型旨在克服这一挑战，同时为熟悉标准编程语言（如C）的程序员保持较低的学习曲线。
-
-其核心是三个关键的抽象 - 线程组，共享存储器和屏障同步的层次结构 - 它们只是作为最小的语言扩展集向程序员公开。
-
-这些抽象提供了细粒度数据并行性和线程并行性，嵌套在粗粒度数据并行和任务并行中。 它们指导程序员将问题划分为粗略的子问题，这些子问题可以通过线程块并行地独立解决，并且每个子问题都可以更精细，可以由块内的所有线程并行地协同解决。
-
-这种分解通过允许线程在解决每个子问题时进行协作来保持语言表达能力，同时实现自动可伸缩性。 实际上，每个线程块可以在GPU内的任何可用多处理器上以任何顺序，同时或顺序调度，以便编译的CUDA程序可以在任何数量的多处理器上执行，如图5所示，并且仅运行时 系统需要知道物理多处理器计数。
-
-这种可扩展的编程模型允许GPU架构通过简单地扩展多处理器和内存分区的数量来跨越广泛的市场范围：从高性能发烧友GeForce GPU和专业Quadro和Tesla计算产品到各种廉价的主流GeForce GPU（ 请参阅支持CUDA的GPU以获取所有支持CUDA的GPU的列表。
-
-Figure 5. Automatic Scalability
-
-![](../../.gitbook/assets/image%20%28230%29.png)
-
-### Document Structure
-
-本文档分为以下章节：
-
-* 章节 [Introduction](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#introduction) 是对CUDA的一般介绍。
-* 章节 [Programming Model](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-model) 概述了CUDA编程模型。
-* 章节 [Programming Interface](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-interface) 描述了编程接口。
-* 章节 [Hardware Implementation](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#hardware-implementation) 描述了硬件实现。
-* 章节 [Performance Guidelines](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#performance-guidelines) 为如何实现最佳性能提供了一些指导。
-* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) 列出了所有支持CUDA的设备。
-* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) 是对C语言的所有扩展的详细描述。
-* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) 描述了各种CUDA线程组的同步原语。
-* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) 描述了如何从另一个内核启动和同步一个内核。
-* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix)列出了CUDA中支持的数学函数。
-* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support)列出了设备代码中支持的C ++功能。
-* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) 提供了有关纹理提取的更多细节
-* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) 给出了各种设备的技术规范，以及更多的架构细节。
-* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) 介绍了低级驱动程序API。
-* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) 列出了所有CUDA环境变量。
-* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) 介绍了统一内存编程模型。
-
-## Programming Model
-
-本章通过概述CUDA编程模型在C语言中的公开方式，介绍了CUDA编程模型背后的主要概念。
-
-本章和下一章中使用的向量加法示例的完整代码可以在`vectorAdd` CUDA示例中找到。
-
-### Kernels
-
-CUDA C通过允许程序员定义称为内核的C函数来扩展C，这些函数在被调用时由N个不同的CUDA线程并行执行N次，而不是像常规C函数那样只执行一次。
-
-使用`__global__`声明说明符定义内核，并使用新的`<<< ... >>>`执行配置语法指定为给定内核调用执行该内核的CUDA线程数（请参阅C语言扩展）。 执行内核的每个线程都有一个唯一的线程ID，可以通过内置的`threadIdx`变量在内核中访问。
-
-```c
-// Kernel definition
-__global__ void VecAdd(float* A, float* B, float* C)
-{
-    int i = threadIdx.x;
-    C[i] = A[i] + B[i];
-}
-
-int main()
-{
-    ...
-    // Kernel invocation with N threads
-    VecAdd<<<1, N>>>(A, B, C);
-    ...
-}
-```
-
-这里，执行VecAdd\(\)的N个线程中的每一个执行一对成对添加。
-
-### Thread Hierarchy
-
-为方便起见，threadIdx是一个3分量向量，因此可以使用一维，二维或三维线程索引来识别线程，从而形成一维，二维或三维块。 线程，称为线程块。 这提供了一种自然的方式来调用域中元素（如向量，矩阵或体积）的计算。
-
-线程的索引及其线程ID以直接的方式相互关联：对于一维块，它们是相同的;对于二维块大小 $$\left(D_{x}, D_{y}\right)$$ ，索引线程的线程ID是 $$\left(x+y D_{x}\right)$$ ，对于三维块大小 $$\left(D_{X}, D_{V}, D_{Z}\right)$$ ，索引线程的线程ID是 $$\left(x+y D_{x}+z D_{x} D_{y}\right)$$ 。
-
-作为示例，以下代码添加两个大小为N×N的矩阵A和B，并将结果存储到矩阵C中
-
-```c
-// Kernel definition
-__global__ void MatAdd(float A[N][N], float B[N][N],
-                       float C[N][N])
-{
-    int i = threadIdx.x;
-    int j = threadIdx.y;
-    C[i][j] = A[i][j] + B[i][j];
-}
-
-int main()
-{
-    ...
-    // Kernel invocation with one block of N * N * 1 threads
-    int numBlocks = 1;
-    dim3 threadsPerBlock(N, N);
-    MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
-    ...
-}
-```
-
-每个块的线程数有限制，因为块的所有线程都应该驻留在同一个处理器核心上，并且必须共享该核心的有限内存资源。 在当前的GPU上，线程块最多可包含1024个线程。
-
-但是，内核可以由多个同形状的线程块执行，因此线程总数等于每个块的线程数乘以块数。
-
-块被组织成一维，二维或三维线程块网格，如图6所示。网格中线程块的数量通常由正在处理的数据的大小或者数量决定。 系统中的处理器，它可以大大超过。
-
-Figure 6. Grid of Thread Blocks
-
-![](../../.gitbook/assets/image%20%2834%29.png)
-
-每个块的线程数和&lt;&lt;&lt; ... &gt;&gt;&gt;语法中指定的每个网格的块数可以是int或dim3类型。 可以如上例中那样指定二维块或网格。
-
-网格中的每个块可以通过内核中通过内置的blockIdx变量访问的一维，二维或三维索引来识别。 线程块的维度可以通过内置的blockDim变量在内核中访问。
-
-扩展先前的MatAdd\(\)示例以处理多个块，代码如下所示。
-
-```c
-// Kernel definition
-__global__ void MatAdd(float A[N][N], float B[N][N],
-float C[N][N])
-{
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int j = blockIdx.y * blockDim.y + threadIdx.y;
-    if (i < N && j < N)
-        C[i][j] = A[i][j] + B[i][j];
-}
-
-int main()
-{
-    ...
-    // Kernel invocation
-    dim3 threadsPerBlock(16, 16);
-    dim3 numBlocks(N / threadsPerBlock.x, N / threadsPerBlock.y);
-    MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
-    ...
-}
-```
-
- 线程块大小为16x16（256个线程），虽然在这种情况下是任意的，但却是常见的选择。 使用足够的块创建网格，以便像以前一样为每个矩阵元素创建一个线程。 为简单起见，此示例假定每个维度中每个网格的线程数可以被该维度中每个块的线程数整除，但不一定是这种情况。
-
-线程块需要独立执行：必须能够以任何顺序，并行或串行执行它们。 这种独立性要求允许线程块以任意顺序在任意数量的内核上进行调度，如图5所示，使程序员能够编写随内核数量扩展的代码。
-
-块内的线程可以通过一些共享内存共享数据并通过同步它们的执行来协调内存访问来协作。 更确切地说，可以通过调用 $$__syncthreads()$$ 内部函数来指定内核中的同步点; ****$$__syncthreads()$$充当一个屏障，在该屏障中，块中的所有线程必须等待才能允许任何线程继续。 共享内存提供了使用共享内存的示例。 除$$__syncthreads()$$之外，协作组API还提供了一组丰富的线程同步原语。
-
-为了实现高效的协作，共享内存应该是每个处理器内核附近的低延迟内存\(非常像L1缓存\)，并且\_\_syncthreads\(\)应该是轻量级的
-
-### Memory Hierarchy
-
-CUDA线程可以在执行期间从多个内存空间访问数据，如图7所示。每个线程都有私有本地内存。 每个线程块都具有对块的所有线程可见的共享内存，并且具有与块相同的生存期。 所有线程都可以访问相同的全局内存。
-
-所有线程都可以访问两个额外的只读内存空间：常量和纹理内存空间。 全局，常量和纹理内存空间针对不同的内存使用进行了优化（请参阅设备内存访问）。 纹理存储器还为某些特定数据格式提供不同的寻址模式以及数据滤波（请参阅[纹理和表面存储器](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-and-surface-memory)）。
-
-全局，常量和纹理内存空间在同一应用程序的内核启动之间是持久的。
-
-Figure 7. Memory Hierarchy
-
-![](../../.gitbook/assets/image%20%28234%29.png)
-
-### Heterogeneous Programming
-
-如图8所示，CUDA编程模型假设CUDA线程在物理上独立的设备上执行，该设备作为运行C程序的主机的协处理器运行。 例如，当内核在GPU上执行而其余的C程序在CPU上执行时就是这种情况。
-
-CUDA编程模型还假设主机和设备都在DRAM中保持它们自己独立的存储空间，分别称为主机存储器和设备存储器。 因此，程序通过调用CUDA运行时（[在编程接口中描述](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-interface)）来管理内核可见的全局，常量和纹理内存空间。 这包括设备内存分配和释放以及主机和设备内存之间的数据传输。
-
-Unified Memory提供托管内存以桥接主机和设备内存空间。 可以从系统中的所有CPU和GPU访问托管内存，作为具有公共地址空间的单个连贯内存映像。 此功能可以实现设备内存的超额预订，并且无需在主机和设备上显式镜像数据，从而大大简化了移植应用程序的任务。 有关统一内存的介绍，请参阅[统一内存编程](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd)。
-
-Figure 8. Heterogeneous Programming
-
-![](../../.gitbook/assets/image%20%2821%29.png)
-
-注意：串行代码在主机上执行，而并行代码在设备上执行。
-
-### Compute Capability
-
-设备的计算能力由版本号表示，有时也称为“SM版本”。 此版本号标识GPU硬件支持的功能，并由运行时的应用程序用于确定当前GPU上可用的硬件功能和/或指令。
-
-计算能力包括主修订号X和次修订号Y，并由X.Y表示。
-
-具有相同主要修订号的设备具有相同的核心体系结构。 基于Volta架构的设备的主要版本号为7，基于Pascal架构的设备为6，基于Maxwell架构的设备为5，基于Kepler架构的设备为3，基于Fermi架构的设备为2， 和1为基于特斯拉架构的设备。
-
-次要修订号对应于核心架构的增量改进，可能包括新功能。
-
-图灵是计算能力7.5设备的架构，是基于Volta架构的增量更新。
-
-[启用CUDA的GPU](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus)列出了所有支持CUDA的设备及其计算功能。 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities)提供每种计算能力的技术规范。
-
-注意：不应将特定GPU的计算能力版本与CUDA版本（例如，CUDA 7.5，CUDA 8，CUDA 9）混淆，后者是CUDA软件平台的版本。 应用程序开发人员使用CUDA平台创建在多代GPU架构上运行的应用程序，包括尚未发明的未来GPU架构。 虽然新版本的CUDA平台通常通过支持该架构的计算能力版本来添加对新GPU架构的本机支持，但新版本的CUDA平台通常还包括独立于硬件生成的软件功能。
-
-从CUDA 7.0和CUDA 9.0开始，不再支持Tesla和Fermi架构。
-
-## Programming Interface
+# Programming Interface
 
 CUDA C为熟悉C编程语言的用户提供了一条简单的路径，可以轻松编写程序以供设备执行。
 
@@ -235,15 +10,15 @@ CUDA C为熟悉C编程语言的用户提供了一条简单的路径，可以轻�
 
 运行时构建在较低级别的C API（CUDA驱动程序API）之上，该API也可由应用程序访问。驱动程序API通过暴露较低级别的概念（例如CUDA上下文 - 设备的主机进程的模拟）和CUDA模块（设备的动态加载库的模拟）来提供额外的控制级别。大多数应用程序不使用驱动程序API，因为它们不需要这种额外的控制级别，并且在使用运行时时，上下文和模块管理是隐式的，从而产生更简洁的代码。 驱动程序API在[Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api)中介绍，并在参考手册中有详细描述。
 
-### Compilation with NVCC
+## Compilation with NVCC
 
 可以使用称为PTX的CUDA指令集架构来编写内核，这在PTX参考手册中有所描述。 然而，使用诸如C的高级编程语言通常更有效。在这两种情况下，必须通过nvcc将内核编译成二进制代码以在设备上执行。
 
 nvcc是一个编译器驱动程序，它简化了编译C或PTX代码的过程：它提供了简单而熟悉的命令行选项，并通过调用实现不同编译阶段的工具集来执行它们。 本节概述了nvcc工作流和命令选项。 完整的描述可以在nvcc用户手册中找到。
 
-#### Compilation Workflow
+### Compilation Workflow
 
-**Offline Compilation**
+#### **Offline Compilation**
 
 用nvcc编译的源文件可以包括主机代码（即，在主机上执行的代码）和设备代码（即，在设备上执行的代码）的混合。 nvcc的基本工作流程包括将设备代码与主机代码分离，然后：
 
@@ -257,7 +32,7 @@ nvcc是一个编译器驱动程序，它简化了编译C或PTX代码的过程：
 * 链接到已编译的主机代码（这是最常见的情况），
 * 或者忽略修改后的主机代码（如果有）并使用CUDA驱动程序API（请参阅驱动程序API）来加载和执行PTX代码或cubin对象
 
-**Just-in-Time Compilation**
+#### **Just-in-Time Compilation**
 
 应用程序在运行时加载的任何PTX代码都由设备驱动程序进一步编译为二进制代码。 这称为即时编译。 即时编译会增加应用程序加载时间，但允许应用程序受益于每个新设备驱动程序随附的任何新编译器改进。 它也是应用程序在编译应用程序时不存在的设备上运行的唯一方法，如应用程序兼容性中所述。
 
@@ -265,7 +40,7 @@ nvcc是一个编译器驱动程序，它简化了编译C或PTX代码的过程：
 
 环境变量可用于控制即时编译，如CUDA环境变量中所述
 
-#### Binary Compatibility
+### Binary Compatibility
 
 二进制代码是特定于体系结构的。 使用编译器选项-code生成cubin对象，该选项指定目标体系结构：例如，使用-code = sm\_35进行编译会为计算能力3.5的设备生成二进制代码。 从一个小修订版到下一个修订版保证二进制兼容性，但不是从一个小修订版到前一个修订版或主要修订版。 换句话说，为计算能力X.y生成的cubin对象将仅在计算能力X.z的设备上执行，其中z≥y。
 
@@ -315,19 +90,19 @@ nvcc x.cu
 
 64位版本的nvcc也可以使用-m32编译器选项以32位模式编译设备代码。
 
-### CUDA C Runtime
+## CUDA C Runtime
 
 运行时在cudart库中实现，该库通过cudart.lib或libcudart.a静态链接到应用程序，或通过cudart.dll或libcudart.so动态链接。 需要cudart.dll和/或cudart.so进行动态链接的应用程序通常将它们作为应用程序安装包的一部分包含在内。 在链接到CUDA运行时的同一实例的组件之间传递CUDA运行时符号的地址是安全的。
 
 所有入口点都以cuda为前缀。
 
-正如 [Heterogeneous Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#heterogeneous-programming) 中提到的, CUDA编程模型假设一个系统由一个主机和一个设备组成，每个设备都有各自独立的内存。 [Device Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#device-memory)概述了用于管理设备内存的运行时函数。
+正如 [Heterogeneous Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#heterogeneous-programming) 中提到的, CUDA编程模型假设一个系统由一个主机和一个设备组成，每个设备都有各自独立的内存。 [Device Memory](programming-interface.md#device-memory)概述了用于管理设备内存的运行时函数。
 
-[Shared Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#shared-memory) 说明了在线程层次结构中引入的共享内存的使用，以最大限度地提高性能。
+[Shared Memory](programming-interface.md#shared-memory) 说明了在线程层次结构中引入的共享内存的使用，以最大限度地提高性能。
 
-[Page-Locked Host Memory](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#page-locked-host-memory) 引入页面锁定的主机内存，它需要将内核执行与主机和设备内存之间的数据传输重叠。
+[Page-Locked Host Memory](programming-interface.md#page-locked-host-memory) 引入页面锁定的主机内存，它需要将内核执行与主机和设备内存之间的数据传输重叠。
 
-[Asynchronous Concurrent Execution](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#asynchronous-concurrent-execution) 描述了用于在系统中的各个级别启用异步并发执行的概念和API。
+[Asynchronous Concurrent Execution](programming-interface.md#asynchronous-concurrent-execution) 描述了用于在系统中的各个级别启用异步并发执行的概念和API。
 
 [Multi-Device System](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#multi-device-system) 显示了编程模型如何扩展到具有连接到同一主机的多个设备的系统。
 
@@ -339,7 +114,7 @@ nvcc x.cu
 
 [Graphics Interoperability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#graphics-interoperability) 介绍了运行时提供的各种功能，以便与两个主要的图形API，OpenGL和Direct3D进行互操作。
 
-#### Initialization
+### Initialization
 
 运行时没有明确的初始化函数; 它在第一次调用运行时函数时初始化（更具体地说，除了参考手册的设备和版本管理部分中的函数之外的任何函数）。 在计时运行时函数调用和从第一次调用运行时解释错误代码时，需要记住这一点。
 
@@ -347,7 +122,7 @@ nvcc x.cu
 
 当主机线程调用cudaDeviceReset\(\)时，这会破坏主机线程当前操作的设备的主要上下文（即，设备选择中定义的当前设备）。 由此设备作为当前主机线程进行的下一个运行时函数调用将为此设备创建新的主要上下文。
 
-#### Device Memory
+### Device Memory
 
 如异构编程中所述，CUDA编程模型假定由主机和设备组成的系统，每个系统都有自己独立的内存。 内核在设备内存之外运行，因此运行时提供分配，释放和复制设备内存的功能，以及在主机内存和设备内存之间传输数据的功能。
 
@@ -489,7 +264,7 @@ cudaMemcpyToSymbol(devPointer, &ptr, sizeof(ptr));
 
 cudaGetSymbolAddress\(\)用于检索指向为全局内存空间中声明的变量分配的内存的地址。分配的内存大小是通过cudaGetSymbolSize\(\)获得的。
 
-#### Shared Memory
+### Shared Memory
 
 如变量内存空间说明符中所述，共享内存是使用\_\_shared\_\_内存空间说明符分配的。
 
@@ -568,7 +343,7 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C)
 
 Figure 9. Matrix Multiplication without Shared Memory
 
-![](../../.gitbook/assets/image%20%28222%29.png)
+![](../../../.gitbook/assets/image%20%28222%29.png)
 
 以下代码示例是矩阵乘法的实现，它确实利用了共享内存。 在该实现中，每个线程块负责计算C的一个方形子矩阵Csub，并且块内的每个线程负责计算Csub的一个元素。 如图10所示，Csub等于两个长矩阵的乘积：具有与Csub相同的行索引的维度A（A.width，block\_size）的子矩阵，以及维度B的子矩阵 （block\_size，A.width）与Csub具有相同的列索引。 为了适应设备的资源，这两个长矩阵根据需要被分成维数block\_size的多个方形矩阵，并且Csub被计算为这些矩阵的乘积之和。 通过首先将两个对应的方形矩阵从全局存储器加载到共享存储器，一个线程加载一个元素，然后让每个线程计算乘积的一个元素。 每个线程将乘积的结果累积到一个寄存器中，一旦完成就将结果写入全局存储器。
 
@@ -718,9 +493,9 @@ void MatMul(const Matrix A, const Matrix B, Matrix C)
 
 Figure 10. Matrix Multiplication with Shared Memory
 
-![](../../.gitbook/assets/image%20%28208%29.png)
+![](../../../.gitbook/assets/image%20%28208%29.png)
 
-#### Page-Locked Host Memory
+### Page-Locked Host Memory
 
 运行时提供允许使用页面锁定\(也称为固定\)主机内存\(与malloc\(\)分配的常规可分页主机内存相反\)的功能:
 
@@ -737,17 +512,17 @@ Figure 10. Matrix Multiplication with Shared Memory
 
 简单的零拷贝CUDA示例附带了关于页面锁定内存api的详细文档。
 
-**Portable Memory**
+#### **Portable Memory**
 
 页面锁定内存块可以与系统中的任何设备结合使用\(有关多设备系统的更多详细信息，请参见多设备系统\)，但默认情况下，使用上述页面锁定内存的好处仅与分配该块时的当前设备结合使用\(并且所有设备共享相同的统一地址空间\(如果有\)，如统一虚拟地址空间中所述\)。为了使这些优点对所有设备都可用，需要通过将标志cudaHostAllocPortable传递给cudaHostAlloc\(\)来分配块，或者通过将标志cudaHostRegisterPortable传递给cudaHostRegister\(\)来进行页面锁定
 
-**Write-Combining Memory**
+#### **Write-Combining Memory**
 
 默认情况下，页面锁定的主机内存被分配为可缓存的。可以通过将标志cudaHostAllocWriteCombined传递给cudaHostAlloc\(\)来选择性地将其分配为写组合。写组合内存释放了主机的L1和L2缓存资源，使更多缓存可供应用程序的其余部分使用。此外，在通过PCI Express总线传输期间，不会窥探写入组合内存，这可以将传输性能提高高达40%。
 
 从主机的写入组合存储器读取速度非常慢，因此写入组合存储器通常应该用于主机仅写入的存储器。
 
-**Mapped Memory**
+#### **Mapped Memory**
 
 还可以通过将标记cudaHostAllocMapped传递给cudaHostAlloc\(\)或将标记cudaHostRegisterMapped传递给cudaHostRegister\(\)将页面锁定的主机内存块映射到设备的地址空间中。因此，这样的块通常有两个地址:一个在由cudaHostAlloc\(\)或malloc\(\)返回的主机内存中，另一个在设备内存中，可以使用cudaHostGetDevicePointer\(\)检索，然后用于从内核中访问该块。唯一的例外是使用cudaHostAlloc\(\)分配的指针，以及统一虚拟地址空间中提到的主机和设备使用统一地址空间的情况。
 
@@ -766,7 +541,7 @@ Figure 10. Matrix Multiplication with Shared Memory
 
 另请注意，CUDA运行时要求将1字节，2字节，4字节和8字节自然对齐的加载和存储到从设备发起的主机内存，从主机和其他方面的角度保留为单个访问 设备。 在某些平台上，原子到内存可能会被硬件分解为单独的加载和存储操作。 这些组件加载和存储操作对保留自然对齐的访问具有相同的要求。 例如，CUDA运行时不支持PCI Express总线拓扑，其中PCI Express桥接器将8字节自然对齐写入分成设备和主机之间的两个4字节写入。
 
-#### Asynchronous Concurrent Execution
+### Asynchronous Concurrent Execution
 
 CUDA将以下操作公开为可以相互并发操作的独立任务:
 
@@ -779,7 +554,7 @@ CUDA将以下操作公开为可以相互并发操作的独立任务:
 
 这些操作之间实现的并发级别取决于设备的功能集和计算能力，如下所述。
 
-**Concurrent Execution between Host and Device**
+#### **Concurrent Execution between Host and Device**
 
 通过异步库函数来促进并发主机执行，该异步库函数在设备完成所请求的任务之前将控制返回到主机线程。 使用异步调用时，许多设备操作可以排在一起，以便在适当的设备资源可用时由CUDA驱动程序执行。 这减轻了主机线程管理设备的大部分责任，使其可以自由地执行其他任务。 以下设备操作与主机异步：
 
@@ -794,7 +569,7 @@ CUDA将以下操作公开为可以相互并发操作的独立任务:
 
 如果通过分析器（Nsight，Visual Profiler）收集硬件计数器，则内核启动是同步的，除非启用了并发内核分析。 如果异步内存副本涉及非页锁定的主机内存，则它们也将是同步的。
 
- **Concurrent Kernel Execution**
+####  **Concurrent Kernel Execution**
 
 一些计算能力2.x和更高的设备可以同时执行多个内核。 应用程序可以通过检查concurrentKernels设备属性（请参阅设备枚举）来查询此功能，对于支持它的设备，该属性等于1。
 
@@ -804,17 +579,17 @@ CUDA将以下操作公开为可以相互并发操作的独立任务:
 
 使用许多纹理或大量本地内存的内核不太可能与其他内核并发执行。
 
-**Overlap of Data Transfer and Kernel Execution**
+#### **Overlap of Data Transfer and Kernel Execution**
 
 一些设备可以在内核执行的同时执行与GPU之间的异步内存复制。应用程序可以通过检查asyncEngineCount设备属性\(请参见设备枚举\)来查询该功能，对于支持该功能的设备，该属性大于零。如果拷贝中包含主机内存，则必须对其进行页面锁定。
 
 也可以在内核执行的同时执行设备内拷贝\(在支持并发内核设备属性的设备上\)和/或在设备之间拷贝\(对于支持异步注册属性的设备\)。使用标准内存复制功能启动设备内复制，目的地址和源地址位于同一设备上。
 
-**Concurrent Data Transfers**
+#### **Concurrent Data Transfers**
 
 某些计算能力为2.x或更高的设备可能会与进出该设备的副本重叠。应用程序可以通过检查asyncEngineCount设备属性\(请参见设备枚举\)来查询此功能，对于支持它的设备，该属性等于2。为了重叠，传输中涉及的任何主机内存都必须是页面锁定的。
 
-**Streams**
+#### **Streams**
 
 应用程序通过流管理上述并发操作。流是按顺序执行的命令序列\(可能由不同的主机线程发出\)。另一方面，不同的流可以彼此无序或同时执行它们的命令；这种行为没有保证，因此不应该依赖于正确性\(例如，内核间的通信是未定义的\)。
 
@@ -960,7 +735,7 @@ cudaStreamCreateWithPriority(&st_high, cudaStreamNonBlocking, priority_high);
 cudaStreamCreateWithPriority(&st_low, cudaStreamNonBlocking, priority_low);
 ```
 
-**Graphs**
+#### **Graphs**
 
  图表为CUDA中的工作提交提供了一个新模型。 图是一系列操作，例如内核启动，由依赖关系连接，与其执行分开定义。 这允许图表定义一次然后重复启动。 将图形的定义与其执行分开可以实现许多优化：首先，与流相比，CPU启动成本降低，因为大部分设置是事先完成的; 第二，向CUDA展示整个工作流程可以实现流的分段工作提交机制可能无法实现的优化。
 
@@ -991,7 +766,7 @@ Node Types
 
 Figure 11. Child Graph Example
 
-![](../../.gitbook/assets/image%20%28156%29.png)
+![](../../../.gitbook/assets/image%20%28156%29.png)
 
 Creating a Graph Using Graph APIs
 
@@ -999,7 +774,7 @@ Creating a Graph Using Graph APIs
 
 Figure 12. Creating a Graph Using Graph APIs Example
 
-![](../../.gitbook/assets/image%20%28122%29.png)
+![](../../../.gitbook/assets/image%20%28122%29.png)
 
 ```c
 // Create the graph - it starts out empty
@@ -1038,28 +813,6 @@ kernel_C<<< ..., stream >>>(...);
 
 cudaStreamEndCapture(stream, &graph);
 ```
-
-
-
-## Hardware Implementation
-
-## Performance Guidelines
-
-## Appendix
-
-* 附录 [CUDA-Enabled GPUs](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-enabled-gpus) 列出了所有支持CUDA的设备。
-* 附录 [C Language Extensions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions) 是对C语言的所有扩展的详细描述。
-* 附录 [Cooperative Groups](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups) 描述了各种CUDA线程组的同步原语。
-* 附录 [CUDA Dynamic Parallelism](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-dynamic-parallelism) 描述了如何从另一个内核启动和同步一个内核。
-* 附录 [Mathematical Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#mathematical-functions-appendix)列出了CUDA中支持的数学函数。
-* 附录 [C/C++ Language Support](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-cplusplus-language-support)列出了设备代码中支持的C ++功能。
-* 附录 [Texture Fetching](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-fetching) 提供了有关纹理提取的更多细节
-* 附录 [Compute Capabilities](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities) 给出了各种设备的技术规范，以及更多的架构细节。
-* 附录 [Driver API](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#driver-api) 介绍了低级驱动程序API。
-* 附录 [CUDA Environment Variables](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars) 列出了所有CUDA环境变量。
-* 附录 [Unified Memory Programming](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd) 介绍了统一内存编程模型。
-
-## 
 
 
 
