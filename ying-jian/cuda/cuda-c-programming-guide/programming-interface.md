@@ -343,7 +343,7 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C)
 
 Figure 9. Matrix Multiplication without Shared Memory
 
-![](../../../.gitbook/assets/image%20%28224%29.png)
+![](../../../.gitbook/assets/image%20%28225%29.png)
 
 以下代码示例是矩阵乘法的实现，它确实利用了共享内存。 在该实现中，每个线程块负责计算C的一个方形子矩阵Csub，并且块内的每个线程负责计算Csub的一个元素。 如图10所示，Csub等于两个长矩阵的乘积：具有与Csub相同的行索引的维度A（A.width，block\_size）的子矩阵，以及维度B的子矩阵 （block\_size，A.width）与Csub具有相同的列索引。 为了适应设备的资源，这两个长矩阵根据需要被分成维数block\_size的多个方形矩阵，并且Csub被计算为这些矩阵的乘积之和。 通过首先将两个对应的方形矩阵从全局存储器加载到共享存储器，一个线程加载一个元素，然后让每个线程计算乘积的一个元素。 每个线程将乘积的结果累积到一个寄存器中，一旦完成就将结果写入全局存储器。
 
@@ -493,7 +493,7 @@ void MatMul(const Matrix A, const Matrix B, Matrix C)
 
 Figure 10. Matrix Multiplication with Shared Memory
 
-![](../../../.gitbook/assets/image%20%28210%29.png)
+![](../../../.gitbook/assets/image%20%28211%29.png)
 
 ### Page-Locked Host Memory
 
@@ -766,7 +766,7 @@ _Node Types_
 
 Figure 11. Child Graph Example
 
-![](../../../.gitbook/assets/image%20%28157%29.png)
+![](../../../.gitbook/assets/image%20%28158%29.png)
 
 _Creating a Graph Using Graph APIs_
 
@@ -774,7 +774,7 @@ _Creating a Graph Using Graph APIs_
 
 Figure 12. Creating a Graph Using Graph APIs Example
 
-![](../../../.gitbook/assets/image%20%28123%29.png)
+![](../../../.gitbook/assets/image%20%28124%29.png)
 
 ```c
 // Create the graph - it starts out empty
@@ -1146,11 +1146,704 @@ struct cudaTextureDesc
 };
 ```
 
+Texture Reference API
 
+纹理引用的一些属性是不可变的，必须在编译时知道; 在声明纹理参考时指定它们。 纹理引用在文件范围内声明为纹理类型的变量：
+
+```c
+texture<DataType, Type, ReadMode> texRef;
+```
+
+ 其中:
+
+* DataType指定纹理元素的类型；
+* Type指定纹理引用的类型，对于一维、二维或三维纹理，类型分别等于cudaTextureType1D、cudaTextureType2D或cudaTextureType3D，对于一维或二维分层纹理，类型分别等于CuDatextureType1d分层或CuDatextureType2d分层；类型是一个可选参数，默认为cudaTextureType1D
+* ReadMode指定读取模式；这是一个可选参数，默认为cudaReadModeElementType。
+
+ 纹理引用只能声明为静态全局变量，不能作为参数传递给函数。
+
+纹理引用的其他属性是可变的，可以在运行时通过主机运行时更改。 如参考手册中所述，运行时API具有低级C风格接口和高级C ++风格接口。 纹理类型在高级API中定义为从低级API中定义的textureReference类型公开派生的结构，如下所示：
+
+```c
+struct textureReference {
+    int                          normalized;
+    enum cudaTextureFilterMode   filterMode;
+    enum cudaTextureAddressMode  addressMode[3];
+    struct cudaChannelFormatDesc channelDesc;
+    int                          sRGB;
+    unsigned int                 maxAnisotropy;
+    enum cudaTextureFilterMode   mipmapFilterMode;
+    float                        mipmapLevelBias;
+    float                        minMipmapLevelClamp;
+    float                        maxMipmapLevelClamp;
+}
+```
+
+* normalized 指定纹理坐标是否规格化；
+* filterMode 指定过滤模式；
+* addressMode 指定寻址模式；
+* channelDesc 描述纹理元素的格式；它必须匹配纹理引用声明的DataType参数；信道类型如下:
+
+```c
+struct cudaChannelFormatDesc {
+  int x, y, z, w;
+  enum cudaChannelFormatKind f;
+};
+```
+
+其中x，y，z和w等于返回值的每个分量的位数，f是
+
+* cudaChannelFormatKindSigned if these components are of signed integer type,
+* cudaChannelFormatKindUnsigned if they are of unsigned integer type,
+* cudaChannelFormatKindFloat if they are of floating point type.
+
+有关sRGB，maxAnisotropy，mipmapFilterMode，mipmapLevelBias，minMipmapLevelClamp和maxMipmapLevelClamp的参考手册，请参阅参考手册。
+
+normalized，addressMode和filterMode可以在主机代码中直接修改。
+
+在内核可以使用纹理引用从纹理内存中读取之前，必须使用cudaBindTexture\(\)或cudaBindTexture2D\(\)为线性内存将纹理引用绑定到纹理，或者为CUDA数组使用cudaBindTextureToArray\(\)。 cudaUnbindTexture\(\)用于取消绑定纹理引用。 一旦纹理引用被解除绑定，它就可以安全地反弹到另一个数组，即使使用先前绑定纹理的内核尚未完成。 建议使用cudaMallocPitch\(\)在线性存储器中分配二维纹理，并使用cudaMallocPitch\(\)返回的pitch作为cudaBindTexture2D\(\)的输入参数
+
+以下代码示例将2D纹理引用绑定到devPtr指向的线性内存：
+
+* Using the low-level API:
+
+```c
+texture<float, cudaTextureType2D,
+        cudaReadModeElementType> texRef;
+textureReference* texRefPtr;
+cudaGetTextureReference(&texRefPtr, &texRef);
+cudaChannelFormatDesc channelDesc =
+                             cudaCreateChannelDesc<float>();
+size_t offset;
+cudaBindTexture2D(&offset, texRefPtr, devPtr, &channelDesc,
+                  width, height, pitch);
+```
+
+* Using the high-level API:
+
+```c
+texture<float, cudaTextureType2D,
+        cudaReadModeElementType> texRef;
+cudaChannelFormatDesc channelDesc =
+                             cudaCreateChannelDesc<float>();
+size_t offset;
+cudaBindTexture2D(&offset, texRef, devPtr, channelDesc,
+                  width, height, pitch);
+```
+
+以下代码示例将2D纹理引用绑定到CUDA数组cuArray
+
+* Using the low-level API:
+
+```c
+texture<float, cudaTextureType2D,
+        cudaReadModeElementType> texRef;
+textureReference* texRefPtr;
+cudaGetTextureReference(&texRefPtr, &texRef);
+cudaChannelFormatDesc channelDesc;
+cudaGetChannelDesc(&channelDesc, cuArray);
+cudaBindTextureToArray(texRef, cuArray, &channelDesc);
+```
+
+* Using the high-level API:
+
+```c
+texture<float, cudaTextureType2D,
+        cudaReadModeElementType> texRef;
+cudaBindTextureToArray(texRef, cuArray);
+```
+
+将纹理绑定到纹理引用时指定的格式必须与声明纹理引用时指定的参数匹配; 否则，纹理提取的结果是未定义的。
+
+如表14所示，可以绑定到内核的纹理数量有限制。
+
+以下代码示例将一些简单的转换内核应用于纹理。
+
+```c
+/ 2D float texture
+texture<float, cudaTextureType2D, cudaReadModeElementType> texRef;
+
+// Simple transformation kernel
+__global__ void transformKernel(float* output,
+                                int width, int height,
+                                float theta) 
+{
+    // Calculate normalized texture coordinates
+    unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
+
+    float u = x / (float)width;
+    float v = y / (float)height;
+
+    // Transform coordinates
+    u -= 0.5f;
+    v -= 0.5f;
+    float tu = u * cosf(theta) - v * sinf(theta) + 0.5f;
+    float tv = v * cosf(theta) + u * sinf(theta) + 0.5f;
+
+
+    // Read from texture and write to global memory
+    output[y * width + x] = tex2D(texRef, tu, tv);
+}
+
+// Host code
+int main()
+{
+    // Allocate CUDA array in device memory
+    cudaChannelFormatDesc channelDesc =
+               cudaCreateChannelDesc(32, 0, 0, 0,
+                                     cudaChannelFormatKindFloat);
+    cudaArray* cuArray;
+    cudaMallocArray(&cuArray, &channelDesc, width, height);
+
+    // Copy to device memory some data located at address h_data
+    // in host memory 
+    cudaMemcpyToArray(cuArray, 0, 0, h_data, size,
+                      cudaMemcpyHostToDevice);
+
+    // Set texture reference parameters
+    texRef.addressMode[0] = cudaAddressModeWrap;
+    texRef.addressMode[1] = cudaAddressModeWrap;
+    texRef.filterMode     = cudaFilterModeLinear;
+    texRef.normalized     = true;
+
+    // Bind the array to the texture reference
+    cudaBindTextureToArray(texRef, cuArray, channelDesc);
+
+    // Allocate result of transformation in device memory
+    float* output;
+    cudaMalloc(&output, width * height * sizeof(float));
+
+    // Invoke kernel
+    dim3 dimBlock(16, 16);
+    dim3 dimGrid((width  + dimBlock.x - 1) / dimBlock.x,
+                 (height + dimBlock.y - 1) / dimBlock.y);
+    transformKernel<<<dimGrid, dimBlock>>>(output, width, height,
+                                           angle);
+
+    // Free device memory
+    cudaFreeArray(cuArray);
+    cudaFree(output);
+
+    return 0;
+}
+```
+
+16-Bit Floating-Point Textures
+
+CUDA数组支持的16位浮点或半格式与IEEE 754-2008 binary2格式相同。
+
+CUDA C不支持匹配的数据类型，但提供了通过无符号短类型转换为32位浮点格式的内部函数：\_\_ fllo2half\_rn（float）和\_\_half2float（unsigned short）。 这些功能仅在设备代码中受支持。 例如，可以在OpenEXR库中找到主机代码的等效函数。
+
+在执行任何过滤之前，在纹理获取期间，16位浮点组件被提升为32位浮点数。
+
+可以通过调用cudaCreateChannelDescHalf \*（）函数之一来创建16位浮点格式的通道描述。
+
+Layered Textures
+
+一维或二维分层纹理（在Direct3D中也称为纹理数组和OpenGL中的数组纹理）是由一系列图层组成的纹理，所有图层都是具有相同维度，大小和数据类型的常规纹理 。
+
+使用整数索引和浮点纹理坐标来寻址一维分层纹理; 索引表示序列中的层，坐标表示该层内的纹素。 使用整数索引和两个浮点纹理坐标来寻址二维分层纹理; 索引表示序列中的一个层，坐标表示该层内的一个纹素。
+
+通过使用cudaArrayLayered标志调用cudaMalloc3DArray（）（一维分层纹理的高度为零），分层纹理只能是CUDA数组。
+
+使用tex1DLayered\(\)，tex1DLayered\(\)，tex2DLayered\(\)和tex2DLayered\(\)中描述的设备函数获取分层纹理。 纹理过滤（请参见纹理提取）仅在图层内完成，而不是跨层。
+
+分层纹理仅在计算能力2.0及更高版本的设备上受支持。
+
+ Cubemap Textures
+
+ 立方体贴图纹理是一种特殊类型的二维分层纹理，有六层表示立方体的面:
+
+层的宽度等于它的高度。
+
+立方体贴图使用三个纹理坐标x、y和z来寻址，这三个坐标被解释为从立方体的中心发出的方向向量，指向立方体的一个面和对应于该面的层内的纹理元素。更具体地，通过具有最大幅度m的坐标来选择面，并且使用坐标\(s/m+1\)/2和\(t/m+1\)/2来寻址相应的层，其中s和t在表1中定义。
+
+![](../../../.gitbook/assets/image%20%2854%29.png)
+
+通过使用cudaArrayCubemap标志调用cudaMalloc3DArray\(\)，分层纹理只能是CUDA数组。
+
+使用texCubemap\(\)和texCubemap\(\)中描述的设备函数获取立方体贴图纹理。
+
+仅在计算能力2.0及更高版本的设备上支持立方体贴图纹理。
+
+Cubemap Layered Textures
+
+立方体贴图分层纹理是一种分层纹理，其图层是相同维度的立方体贴图。
+
+使用整数索引和三个浮点纹理坐标来寻址立方体贴图分层纹理; 索引表示序列中的立方体贴图，坐标表示该立方体贴图中的纹理像素。
+
+通过使用cudaArrayLayered和cudaArrayCubemap标志调用cudaMalloc3DArray\(\)，分层纹理只能是CUDA数组。
+
+使用texCubemapLayered\(\)和texCubemapLayered\(\)中描述的设备函数获取立方体贴图分层纹理。 纹理过滤（请参见纹理提取）仅在图层内完成，而不是跨层。
+
+仅在计算能力2.0及更高版本的设备上支持Cubemap分层纹理。
+
+Texture Gather
+
+纹理聚集是一种特殊的纹理提取，仅适用于二维纹理。 它由tex2Dgather\(\)函数执行，该函数与tex2D\(\)具有相同的参数，另外还有一个等于0,1,2或3的comp参数（参见tex2Dgather\(\)和tex2Dgather\(\)）。 它返回四个32位数字，这些数字对应于在常规纹理提取期间用于双线性滤波的四个纹素的每一个的分量comp的值。 例如，如果这些纹素具有值（253,20,31,255），（250,25,29,254），（249,16,37,253），（251,22,30,250），以及 comp为2，tex2Dgather\(\)返回（31,29,37,30）。
+
+请注意，纹理坐标仅使用8位小数精度计算。 因此tex2Dgather（）可能会返回意外的结果，因为tex2D（）将使用1.0作为其权重之一（α或β，请参见线性过滤）。 例如，x纹理坐标为2.49805：xB = x-0.5 = 1.99805，但xB的小数部分以8位定点格式存储。 由于0.99805接近256.f / 256.f而不是255.f / 256.f，因此xB的值为2.因此，在这种情况下，tex2Dgather（）将返回x中的索引2和3，而不是索引 1和2。
+
+纹理聚集仅支持使用cudaArrayTextureGather标志创建的CUDA数组，其宽度和高度小于表14中为纹理聚集指定的最大值，该值小于常规纹理提取。
+
+纹理聚集仅在计算能力2.0及更高版本的设备上受支持。
 
 _Surface Memory_
 
+对于计算能力为2.0或更高的设备，可以使用surface函数中描述的函数，通过surface对象或surface引用，读取和写入使用cudaArraySurfaceLoadStore标志创建的CUDA数组\(在立方体贴图曲面中描述\)。
+
+表14列出了取决于器件计算能力的最大表面宽度、高度和深度。
+
+Surface Object API
+
+ 表面对象是使用cudaCreateSurfaceObject\(\)从结构类型cudaResourceDesc的资源描述中创建的。
+
+下面的代码示例将一些简单的转换内核应用于纹理。
+
+```c
+// Simple copy kernel
+__global__ void copyKernel(cudaSurfaceObject_t inputSurfObj,
+                           cudaSurfaceObject_t outputSurfObj,
+                           int width, int height) 
+{
+    // Calculate surface coordinates
+    unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x < width && y < height) {
+        uchar4 data;
+        // Read from input surface
+        surf2Dread(&data,  inputSurfObj, x * 4, y);
+        // Write to output surface
+        surf2Dwrite(data, outputSurfObj, x * 4, y);
+    }
+}
+
+// Host code
+int main()
+{
+    // Allocate CUDA arrays in device memory
+    cudaChannelFormatDesc channelDesc =
+             cudaCreateChannelDesc(8, 8, 8, 8,
+                                   cudaChannelFormatKindUnsigned);
+    cudaArray* cuInputArray;
+    cudaMallocArray(&cuInputArray, &channelDesc, width, height,
+                    cudaArraySurfaceLoadStore);
+    cudaArray* cuOutputArray;
+    cudaMallocArray(&cuOutputArray, &channelDesc, width, height,
+                    cudaArraySurfaceLoadStore);
+
+    // Copy to device memory some data located at address h_data
+    // in host memory 
+    cudaMemcpyToArray(cuInputArray, 0, 0, h_data, size,
+                      cudaMemcpyHostToDevice);
+
+    // Specify surface
+    struct cudaResourceDesc resDesc;
+    memset(&resDesc, 0, sizeof(resDesc));
+    resDesc.resType = cudaResourceTypeArray;
+
+    // Create the surface objects
+    resDesc.res.array.array = cuInputArray;
+    cudaSurfaceObject_t inputSurfObj = 0;
+    cudaCreateSurfaceObject(&inputSurfObj, &resDesc);
+    resDesc.res.array.array = cuOutputArray;
+    cudaSurfaceObject_t outputSurfObj = 0;
+    cudaCreateSurfaceObject(&outputSurfObj, &resDesc);
+
+    // Invoke kernel
+    dim3 dimBlock(16, 16);
+    dim3 dimGrid((width  + dimBlock.x - 1) / dimBlock.x,
+                 (height + dimBlock.y - 1) / dimBlock.y);
+    copyKernel<<<dimGrid, dimBlock>>>(inputSurfObj,
+                                      outputSurfObj,
+                                      width, height);
+
+
+    // Destroy surface objects
+    cudaDestroySurfaceObject(inputSurfObj);
+    cudaDestroySurfaceObject(outputSurfObj);
+
+    // Free device memory
+    cudaFreeArray(cuInputArray);
+    cudaFreeArray(cuOutputArray);
+
+    return 0;
+}
+```
+
+Surface Reference API
+
+表面引用在文件范围内声明为surface类型的变量
+
+```c
+surface<void, Type> surfRef;
+```
+
+其中类型指定曲面参照的类型，并等于cudaSurfaceType1D、cudaSurfaceType2D、cudaSurfaceType3D、cudaSurfaceTypeCubemap、cudaSurfaceType1D分层、cudaSurfaceType2D分层或CuDaSurfacetypeCubemap分层；类型是一个可选参数，默认为cudaSurfaceType1D。表面引用只能声明为静态全局变量，不能作为参数传递给函数。
+
+在内核可以使用表面引用来访问CUDA数组之前，必须使用cudaBindSurfaceToArray\(\)将表面引用绑定到CUDA数组。
+
+以下代码示例将表面引用绑定到CUDA数组cuArray:
+
+* Using the low-level API:
+
+```c
+surface<void, cudaSurfaceType2D> surfRef;
+surfaceReference* surfRefPtr;
+cudaGetSurfaceReference(&surfRefPtr, "surfRef");
+cudaChannelFormatDesc channelDesc;
+cudaGetChannelDesc(&channelDesc, cuArray);
+cudaBindSurfaceToArray(surfRef, cuArray, &channelDesc);
+```
+
+* Using the high-level API:
+
+```c
+surface<void, cudaSurfaceType2D> surfRef;
+cudaBindSurfaceToArray(surfRef, cuArray);
+```
+
+必须使用匹配维度和类型的表面函数以及匹配维度的表面参考来读取和写入CUDA数组; 否则，读取和写入CUDA数组的结果是不确定的。
+
+与纹理内存不同，表面内存使用字节寻址。 这意味着用于通过纹理函数访问纹理元素的x坐标需要乘以元素的字节大小，以通过表面函数访问同一元素。 例如，通过texRef使用tex1d\(texRef，x\)读取绑定到纹理参考texRef和表面参考surfRef的一维浮点CUDA数组的纹理坐标x处的元素，但是surf1Dread\(surfRef，4 \* x\) ）通过surfRef。 类似地，通过texRef使用tex2d\(texRef，x，y\)访问绑定到纹理参考texRef和表面参考surfRef的二维浮点CUDA数组的纹理坐标x和y处的元素，但是surf2Dread\(\)urfRef， 4 \* x，y）通过surfRef（y坐标的字节偏移在内部根据CUDA阵列的基线间距计算）。
+
+以下代码示例将一些简单的转换内核应用于纹理。
+
+```c
+// 2D surfaces
+surface<void, 2> inputSurfRef;
+surface<void, 2> outputSurfRef;
+            
+// Simple copy kernel
+__global__ void copyKernel(int width, int height) 
+{
+    // Calculate surface coordinates
+    unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x < width && y < height) {
+        uchar4 data;
+        // Read from input surface
+        surf2Dread(&data,  inputSurfRef, x * 4, y);
+        // Write to output surface
+        surf2Dwrite(data, outputSurfRef, x * 4, y);
+    }
+}
+
+// Host code
+int main()
+{
+    // Allocate CUDA arrays in device memory
+    cudaChannelFormatDesc channelDesc =
+             cudaCreateChannelDesc(8, 8, 8, 8,
+                                   cudaChannelFormatKindUnsigned);
+    cudaArray* cuInputArray;
+    cudaMallocArray(&cuInputArray, &channelDesc, width, height,
+                    cudaArraySurfaceLoadStore);
+    cudaArray* cuOutputArray;
+    cudaMallocArray(&cuOutputArray, &channelDesc, width, height,
+                    cudaArraySurfaceLoadStore);
+
+    // Copy to device memory some data located at address h_data
+    // in host memory 
+    cudaMemcpyToArray(cuInputArray, 0, 0, h_data, size,
+                      cudaMemcpyHostToDevice);
+
+    // Bind the arrays to the surface references
+    cudaBindSurfaceToArray(inputSurfRef, cuInputArray);
+    cudaBindSurfaceToArray(outputSurfRef, cuOutputArray);
+
+    // Invoke kernel
+    dim3 dimBlock(16, 16);
+    dim3 dimGrid((width  + dimBlock.x - 1) / dimBlock.x,
+                 (height + dimBlock.y - 1) / dimBlock.y);
+    copyKernel<<<dimGrid, dimBlock>>>(width, height);
+
+
+    // Free device memory
+    cudaFreeArray(cuInputArray);
+    cudaFreeArray(cuOutputArray);
+
+    return 0;
+```
+
+Cubemap Surfaces
+
+使用thesurfCubemapread\(\)和surfCubemapwrite\(\)（surfCubemapread和surfCubemapwrite）作为二维分层表面访问立方体贴图表面，即使用表示面的整数索引和两个浮点纹理坐标来寻址对应于此面的图层内的纹理元素 。 面如表1所示。
+
+Cubemap Layered Surfaces
+
+使用surfCubemapLayeredread\(\)和surfCubemapLayeredwrite\(\)（surfCubemapLayeredread\(\)和surfCubemapLayeredwrite\(\)）作为二维分层表面访问Cubemap分层曲面，即使用表示其中一个立方体贴图和两个浮点纹理的面的整数索引 寻找对应于该面部的层内的纹理元素的坐标。 面如表1所示排序，因此索引（（2 \* 6）+ 3）例如访问第三个立方体贴图的第四个面。
+
+#### CUDA Arrays
+
+CUDA数组是不透明的内存布局，针对纹理提取进行了优化。 它们是一维的，二维的或三维的，由元素组成，每个元素都有1,2或4个分量，可以是有符号或无符号的8位，16位或32位整数，16位浮点数， 或32位浮点数。 CUDA数组只能由内核通过纹理获取访问，如纹理存储器中所述，或表面读取和写入，如表面存储器中所述。
+
+#### Read/Write Coherency
+
+纹理和表面存储器被缓存（参见设备存储器访问）并且在相同的内核调用中，缓存在全局存储器写入和表面存储器写入方面不保持一致，因此任何纹理提取或表面读取到已经存在的地址 通过全局写入或表面写入写入同一内​​核调用返回未定义的数据。 换句话说，只有当先前的内核调用或内存副本更新了此内存位置时，线程才能安全地读取某些纹理或表面内存位置，但如果先前已由相同线程或其他线程更新 内核调用。
+
 ### Graphics Interoperability
+
+来自OpenGL和Direct3D的一些资源可以被映射到CUDA的地址空间，以使CUDA能够读取由OpenGL或Direct3D写入的数据，或者使CUDA能够写入供OpenGL或Direct3D消费的数据。
+
+在使用OpenGL互操作性和Direct3D互操作性中提到的函数映射资源之前，必须将资源注册到CUDA。这些函数返回一个指向结构化CUDA图形资源的指针。注册资源的开销可能很高，因此通常每个资源只调用一次。使用CUDA图形资源注销CUDA图形资源注销资源\(\)。每个打算使用该资源的CUDA上下文都需要单独注册。
+
+一旦资源注册到CUDA，就可以使用CUDA映射资源\(\)和CUDA映射取消映射资源\(\)。可以调用CUDA驱动程序来指定CUDA驱动程序可以用来优化资源管理的使用提示\(只读、只读\)。
+
+内核可以使用cudagraphicsresourceGetMappedpointer\(\)为缓冲区返回的设备内存地址和cudagraphicsSubreSourceGetPartarray\(\)为CUDA数组返回的设备内存地址来读取或写入映射的资源。
+
+在映射资源时，通过OpenGL、Direct3D或另一CUDA上下文访问资源会产生未定义的结果。OpenGL互操作性和Direct3D互操作性给出了每个图形应用编程接口和一些代码示例的细节。SLI互操作性给出了系统何时处于SLI模式的细节。
+
+#### OpenGL Interoperability
+
+可以映射到CUDA地址空间的OpenGL资源是OpenGL缓冲区、纹理和渲染缓冲区对象。
+
+缓冲区对象是使用cudaGraphicsGLRegisterBuffer\(\)注册的。在CUDA中，它表现为一个设备指针，因此可以由内核或通过cudaMemcpy\(\)调用读写。
+
+纹理或渲染缓冲区对象使用cudaGraphicsGLRegisterImage\(\)注册。在CUDA中，它显示为CUDA数组。内核可以通过将数组绑定到纹理或表面引用来读取数组。如果资源已经用CudagraphicsRegisterflagsSuffacealoadStore标志注册，它们也可以通过表面写函数写入。数组也可以通过cudaMemcpy2D\(\)调用读写。cudaGraphicsGLRegisterImage\(\)支持所有具有1、2或4个组件和内部类型浮点\(如GL\_RGBA\_FLOAT32\)、归一化整数\(如GL\_RGBA8、GL \_ INTENSITY16\)和非归一化整数\(如GL\_RGBA8UI\)的纹理格式\(请注意，由于非归一化整数格式需要OpenGL 3.0，它们只能由着色器编写，不能由固定函数管道编写\)。
+
+共享资源的OpenGL上下文必须对进行任何OpenGL互操作性应用编程接口调用的主机线程是最新的。
+
+请注意:当OpenGL纹理变成无绑定时\(例如，通过使用GlgetTerreHandle \*/GlgetimageHandle \* APIs请求图像或纹理句柄\)，它不能在CUDA中注册。在请求图像或纹理句柄之前，应用程序需要为interop注册纹理。
+
+下面的代码示例使用内核动态修改存储在顶点缓冲对象中的顶点的2D宽×高网格:
+
+```c
+GLuint positionsVBO;
+struct cudaGraphicsResource* positionsVBO_CUDA;
+
+int main()
+{
+    // Initialize OpenGL and GLUT for device 0
+    // and make the OpenGL context current
+    ...
+    glutDisplayFunc(display);
+
+    // Explicitly set device 0
+    cudaSetDevice(0);
+
+    // Create buffer object and register it with CUDA
+    glGenBuffers(1, &positionsVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);
+    unsigned int size = width * height * 4 * sizeof(float);
+    glBufferData(GL_ARRAY_BUFFER, size, 0, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    cudaGraphicsGLRegisterBuffer(&positionsVBO_CUDA,
+                                 positionsVBO,
+                                 cudaGraphicsMapFlagsWriteDiscard);
+
+    // Launch rendering loop
+    glutMainLoop();
+
+    ...
+}
+
+void display()
+{
+    // Map buffer object for writing from CUDA
+    float4* positions;
+    cudaGraphicsMapResources(1, &positionsVBO_CUDA, 0);
+    size_t num_bytes; 
+    cudaGraphicsResourceGetMappedPointer((void**)&positions,
+                                         &num_bytes,  
+                                         positionsVBO_CUDA));
+
+    // Execute kernel
+    dim3 dimBlock(16, 16, 1);
+    dim3 dimGrid(width / dimBlock.x, height / dimBlock.y, 1);
+    createVertices<<<dimGrid, dimBlock>>>(positions, time,
+                                          width, height);
+
+    // Unmap buffer object
+    cudaGraphicsUnmapResources(1, &positionsVBO_CUDA, 0);
+
+    // Render from buffer object
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);
+    glVertexPointer(4, GL_FLOAT, 0, 0);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glDrawArrays(GL_POINTS, 0, width * height);
+    glDisableClientState(GL_VERTEX_ARRAY);
+
+    // Swap buffers
+    glutSwapBuffers();
+    glutPostRedisplay();
+}
+```
+
+```c
+void deleteVBO()
+{
+    cudaGraphicsUnregisterResource(positionsVBO_CUDA);
+    glDeleteBuffers(1, &positionsVBO);
+}
+
+__global__ void createVertices(float4* positions, float time,
+                               unsigned int width, unsigned int height)
+{
+    unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
+
+    // Calculate uv coordinates
+    float u = x / (float)width;
+    float v = y / (float)height;
+    u = u * 2.0f - 1.0f;
+    v = v * 2.0f - 1.0f;
+
+    // calculate simple sine wave pattern
+    float freq = 4.0f;
+    float w = sinf(u * freq + time)
+            * cosf(v * freq + time) * 0.5f;
+
+    // Write positions
+    positions[y * width + x] = make_float4(u, w, v, 1.0f);
+}
+```
+
+在Windows和Quadro GPU上，cudaWGLGetDevice\(\)可用于检索与wglEnumGpusNV\(\)返回的句柄相关联的CUDA设备。 Quadro GPU在多GPU配置中提供比GeForce和Tesla GPU更高的性能OpenGL互操作性，其中OpenGL渲染在Quadro GPU上执行，CUDA计算在系统中的其他GPU上执行。
+
+#### Direct3D Interoperability
+
+Direct3D 9Ex、Direct3D 10和Direct3D 11支持Direct3D互操作性。
+
+CUDA上下文只能与满足以下标准的Direct3D设备进行互操作:创建Direct3D 9Ex设备时，设备类型必须设置为D3DDEVTYPE\_HAL，行为标志必须设置为D3DCREATE \_硬件\_ VERTEXPROCESSING标志；Direct3D 10和Direct3D 11设备必须使用设置为D3D驱动程序类型硬件的驱动程序类型创建。
+
+可以映射到CUDA地址空间的直接3D资源是直接3D缓冲区、纹理和表面。这些资源是使用cudagraphicsd3d 9 RegisterReSource\(\)、cudagraphicsd3d 10 RegisterReSource\(\)和cudagraphicsd3d 11 RegisterReSource\(\)注册的。
+
+下面的代码示例使用内核动态修改存储在顶点缓冲对象中的顶点的2D宽×高网格
+
+```c
+ID3D11Device* device;
+struct CUSTOMVERTEX {
+    FLOAT x, y, z;
+    DWORD color;
+};
+ID3D11Buffer* positionsVB;
+struct cudaGraphicsResource* positionsVB_CUDA;
+
+int main()
+{
+    int dev;
+    // Get a CUDA-enabled adapter
+    IDXGIFactory* factory;
+    CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
+    IDXGIAdapter* adapter = 0;
+    for (unsigned int i = 0; !adapter; ++i) {
+        if (FAILED(factory->EnumAdapters(i, &adapter))
+            break;
+        if (cudaD3D11GetDevice(&dev, adapter) == cudaSuccess)
+            break;
+        adapter->Release();
+    }
+    factory->Release();
+
+    // Create swap chain and device
+    ...
+    sFnPtr_D3D11CreateDeviceAndSwapChain(adapter, 
+                                         D3D11_DRIVER_TYPE_HARDWARE,
+                                         0, 
+                                         D3D11_CREATE_DEVICE_DEBUG,
+                                         featureLevels, 3,
+                                         D3D11_SDK_VERSION, 
+                                         &swapChainDesc, &swapChain,
+                                         &device,
+                                         &featureLevel,
+                                         &deviceContext);
+    adapter->Release();
+
+    // Use the same device
+    cudaSetDevice(dev);
+
+    // Create vertex buffer and register it with CUDA
+    unsigned int size = width * height * sizeof(CUSTOMVERTEX);
+    D3D11_BUFFER_DESC bufferDesc;
+    bufferDesc.Usage          = D3D11_USAGE_DEFAULT;
+    bufferDesc.ByteWidth      = size;
+    bufferDesc.BindFlags      = D3D11_BIND_VERTEX_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+    bufferDesc.MiscFlags      = 0;
+    device->CreateBuffer(&bufferDesc, 0, &positionsVB);
+    cudaGraphicsD3D11RegisterResource(&positionsVB_CUDA,
+                                      positionsVB,
+                                      cudaGraphicsRegisterFlagsNone);
+    cudaGraphicsResourceSetMapFlags(positionsVB_CUDA,
+                                    cudaGraphicsMapFlagsWriteDiscard);
+
+    // Launch rendering loop
+    while (...) {
+        ...
+        Render();
+        ...
+    }
+    ...
+}
+```
+
+```c
+void Render()
+{
+    // Map vertex buffer for writing from CUDA
+    float4* positions;
+    cudaGraphicsMapResources(1, &positionsVB_CUDA, 0);
+    size_t num_bytes; 
+    cudaGraphicsResourceGetMappedPointer((void**)&positions,
+                                         &num_bytes,  
+                                         positionsVB_CUDA));
+
+    // Execute kernel
+    dim3 dimBlock(16, 16, 1);
+    dim3 dimGrid(width / dimBlock.x, height / dimBlock.y, 1);
+    createVertices<<<dimGrid, dimBlock>>>(positions, time,
+                                          width, height);
+
+    // Unmap vertex buffer
+    cudaGraphicsUnmapResources(1, &positionsVB_CUDA, 0);
+
+    // Draw and present
+    ...
+}
+
+void releaseVB()
+{
+    cudaGraphicsUnregisterResource(positionsVB_CUDA);
+    positionsVB->Release();
+}
+
+    __global__ void createVertices(float4* positions, float time,
+                          unsigned int width, unsigned int height)
+{
+    unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
+
+// Calculate uv coordinates
+    float u = x / (float)width;
+    float v = y / (float)height;
+    u = u * 2.0f - 1.0f;
+    v = v * 2.0f - 1.0f;
+
+    // Calculate simple sine wave pattern
+    float freq = 4.0f;
+    float w = sinf(u * freq + time)
+            * cosf(v * freq + time) * 0.5f;
+
+    // Write positions
+    positions[y * width + x] =
+                make_float4(u, w, v, __int_as_float(0xff00ff00));
+}
+```
+
+#### SLI Interoperability
+
+ 在具有多个GPU的系统中，所有支持CUDA的GPU都可以通过CUDA驱动程序和运行时作为单独的设备访问。 但是，当系统处于SLI模式时，有如下所述的特殊注意事项。
+
+首先，在一个GPU上的一个CUDA设备中的分配将消耗作为Direct3D或OpenGL设备的SLI配置的一部分的其他GPU上的存储器。 因此，分配可能会比预期的更早失败。
+
+其次，应用程序应创建多个CUDA上下文，SLI配置中的每个GPU都有一个。 虽然这不是严格的要求，但它避免了设备之间不必要的数据传输。 应用程序可以使用用于Direct3D的cudaD3D \[9 \| 10 \| 11\] GetDevices（）和用于OpenGL调用的cudaGLGetDevices（）来识别正在执行当前渲染的设备的CUDA设备句柄 和下一帧。 鉴于此信息，当deviceList参数设置为cudaD3D时，应用程序通常会选择适当的设备并将Direct3D或OpenGL资源映射到cudaD3D \[9 \| 10 \| 11\] GetDevices（）或cudaGLGetDevices（）返回的CUDA设备\[9 \| 10\] \| 11\] DeviceListCurrentFrame或cudaGLDeviceListCurrentFrame。
+
+请注意，从cudaGraphicsD9D \[9 \| 10 \| 11\] RegisterResource和cudaGraphicsGLRegister \[Buffer \| Image\]返回的资源必须仅在注册发生的设备上使用。 因此，在SLI配置上，当在不同的CUDA设备上计算不同帧的数据时，必须分别为每个设备注册资源。
+
+有关CUDA运行时如何与Direct3D和OpenGL进行互操作的详细信息，请参阅Direct3D互操作性和OpenGL互操作性。
 
 ## Versioning and Compatibility
 
@@ -1166,7 +1859,7 @@ _Surface Memory_
 
 Figure 13. The Driver API Is Backward but Not Forward Compatible
 
-![](../../../.gitbook/assets/image%20%28175%29.png)
+![](../../../.gitbook/assets/image%20%28176%29.png)
 
 ## Compute Modes
 

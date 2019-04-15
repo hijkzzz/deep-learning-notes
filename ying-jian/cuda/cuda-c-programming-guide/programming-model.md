@@ -114,7 +114,7 @@ CUDA线程可以在执行期间从多个内存空间访问数据，如图7所示
 
 Figure 7. Memory Hierarchy
 
-![](../../../.gitbook/assets/image%20%28236%29.png)
+![](../../../.gitbook/assets/image%20%28237%29.png)
 
 ### Heterogeneous Programming
 

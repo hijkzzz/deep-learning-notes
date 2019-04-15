@@ -14,15 +14,15 @@ Gatys等人最近引入了一种神经算法，以另一幅图像的风格渲染
 
 与BN层不同，这里 $$μ(x)$$ 和 $$σ(x)$$ 在每个样本的每个通道上独立地跨空间维度进行计算：
 
-![](../../.gitbook/assets/image%20%28111%29.png)
+![](../../.gitbook/assets/image%20%28112%29.png)
 
-![](../../.gitbook/assets/image%20%28110%29.png)
+![](../../.gitbook/assets/image%20%28111%29.png)
 
 ### Conditional Instance Normalization
 
 Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 $$s$$ 学习一组不同的参数$$\gamma^s$$ 和 $$\beta^s$$ ，而不是只学习一组仿射参数 $$\gamma$$ 和 $$\beta$$ 。令人惊讶的是，网络可以通过使用相同的卷积参数生成不完全不同风格的图像但IN层中的不同参数。
 
-![](../../.gitbook/assets/image%20%28174%29.png)
+![](../../.gitbook/assets/image%20%28175%29.png)
 
 与没有归一化层的网络相比，具有CIN层的网络需要 $$2FS$$ 个附加参数，其中 $$F$$ 是网络中特征图的总数。由于附加参数的数量与样式的数量成线性比例，因此扩展它们的方法来对大量样式\(例如数万个\)建模是一个挑战。此外，如果不重新训练网络，他们的方法无法适应新的风格。
 
@@ -48,13 +48,13 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 
 ### Experimental Setup
 
-![](../../.gitbook/assets/image%20%28228%29.png)
+![](../../.gitbook/assets/image%20%28229%29.png)
 
 #### Loss Function
 
 整体损失氛围内容损失和风格损失
 
-![](../../.gitbook/assets/image%20%2882%29.png)
+![](../../.gitbook/assets/image%20%2883%29.png)
 
 内容损失是目标特征和输出图像特征之间的欧几里德距离。我们使用AdaIN输出内容目标，而不是常用的内容图像的特征响应。我们发现这导致了稍微更快的收敛，并且没有反转AdaIN输出的目标
 
@@ -62,13 +62,13 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 
 由于我们的AdaIN图层仅传递样式特征的均值和标准偏差，因此我们的样式丢失仅匹配这些统计信息。虽然我们发现常用的Gram矩阵损失可以产生类似的结果，但我们对IN统计数据进行了匹配，因为它在概念上更清晰：
 
-![](../../.gitbook/assets/image%20%28201%29.png)
+![](../../.gitbook/assets/image%20%28202%29.png)
 
 其中每个φ标识VGG-19中的一层，用于计算样式损失
 
 ## 效果
 
-![](../../.gitbook/assets/image%20%28154%29.png)
+![](../../.gitbook/assets/image%20%28155%29.png)
 
 
 

@@ -12,7 +12,7 @@
 
 最先进的网络，如Xception \[3\]和ResNeXt \[40\]，将高效的深度可分离卷积或群组卷积引入构建块，以在表示能力和计算成本之间取得良好的折衷。但是，我们注意到两种设计都没有完全采用 考虑到1×1对称（也称为pointwise convolutionsin \[12\]），这需要相当大的计算。
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2862%29.png)
 
 为了解决这个问题，一个简单的解决方案是：如果我们允许组卷积从不同组获得输入数据（如图1（b）所示），输入和输出通道将完全相关，同时降低了计算量。
 
@@ -26,9 +26,9 @@
 
 建议的网络主要由一组分为三个阶段的ShuffleNet单元组成。
 
-![](../../.gitbook/assets/image%20%28226%29.png)
+![](../../.gitbook/assets/image%20%28227%29.png)
 
 ## 实验
 
-![](../../.gitbook/assets/image%20%28171%29.png)
+![](../../.gitbook/assets/image%20%28172%29.png)
 
