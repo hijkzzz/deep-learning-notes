@@ -105,7 +105,6 @@
     * [Programming Model](ying-jian/cuda/cuda-c-programming-guide/programming-model.md)
     * [Programming Interface](ying-jian/cuda/cuda-c-programming-guide/programming-interface.md)
     * [Hardware Implementation](ying-jian/cuda/cuda-c-programming-guide/hardware-implementation.md)
-    * [Performance Guidelines](ying-jian/cuda/cuda-c-programming-guide/performance-guidelines.md)
   * [Tiled Matrix Multiplication](ying-jian/cuda/tiled-matrix-multiplication.md)
 * [分布式训练](ying-jian/fen-bu-shi-xun-lian/README.md)
   * [Ring All Reduce](ying-jian/fen-bu-shi-xun-lian/ring-all-reduce.md)
