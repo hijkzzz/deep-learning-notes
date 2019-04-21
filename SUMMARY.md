@@ -23,6 +23,7 @@
   * [Layer Normalization](you-hua/zheng-ze-hua/layer-normalization.md)
   * [Weight Normalization](you-hua/zheng-ze-hua/weight-normalization.md)
 * [超参数](you-hua/chao-can-shu/README.md)
+  * [Xavier](you-hua/chao-can-shu/xavier.md)
   * [On Large-Batch Training for Deep Learning: Generalization Gap and Sharp Minima](you-hua/chao-can-shu/on-large-batch-training-for-deep-learning-generalization-gap-and-sharp-minima.md)
 
 ## 卷积网络
