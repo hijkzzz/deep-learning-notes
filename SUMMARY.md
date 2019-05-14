@@ -96,6 +96,7 @@
 
 * [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/README.md)
   * [Neural Architecture Search With Reinforcement Learning](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/neural-architecture-search-with-reinforcement-learning.md)
+  * [DARTS: Differentiable Architecture Search](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/darts-differentiable-architecture-search.md)
 * [超参数](zi-dong-ji-qi-xue-xi/chao-can-shu/README.md)
   * [Population based training of neural networks](zi-dong-ji-qi-xue-xi/chao-can-shu/population-based-training-of-neural-networks.md)
 
