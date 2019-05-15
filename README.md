@@ -1,6 +1,8 @@
-# 介绍
+---
+description: '@gitbook'
+---
 
-> [gitbook-cli 编译](https://www.npmjs.com/package/gitbook-cli)
+# 介绍
 
 ![](.gitbook/assets/image%20%2827%29.png)
 
