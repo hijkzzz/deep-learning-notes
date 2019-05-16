@@ -95,6 +95,7 @@
 ## 元学习
 
 * [Fine-tune](yuan-xue-xi/fine-tune/README.md)
+  * [On First-Order Meta-Learning Algorithms](yuan-xue-xi/fine-tune/on-first-order-meta-learning-algorithms.md)
   * [MAML](yuan-xue-xi/fine-tune/maml.md)
 
 ## 自动机器学习
