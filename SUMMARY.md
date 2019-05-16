@@ -2,14 +2,14 @@
 
 * [介绍](README.md)
 
-## 机器学习
+## 统计学习
 
-* [线性模型](ji-qi-xue-xi/xian-xing-mo-xing/README.md)
-  * [Factorization Machine](ji-qi-xue-xi/xian-xing-mo-xing/factorization-machine.md)
-* [集成学习](ji-qi-xue-xi/ji-cheng-xue-xi/README.md)
-  * [XGBoost](ji-qi-xue-xi/ji-cheng-xue-xi/xgboost.md)
-* [概率图模型](ji-qi-xue-xi/gai-lv-tu-mo-xing/README.md)
-  * [Conditional Random Field](ji-qi-xue-xi/gai-lv-tu-mo-xing/conditional-random-field.md)
+* [线性模型](tong-ji-xue-xi/xian-xing-mo-xing/README.md)
+  * [Factorization Machine](tong-ji-xue-xi/xian-xing-mo-xing/factorization-machine.md)
+* [集成学习](tong-ji-xue-xi/ji-cheng-xue-xi/README.md)
+  * [XGBoost](tong-ji-xue-xi/ji-cheng-xue-xi/xgboost.md)
+* [概率图模型](tong-ji-xue-xi/gai-lv-tu-mo-xing/README.md)
+  * [Conditional Random Field](tong-ji-xue-xi/gai-lv-tu-mo-xing/conditional-random-field.md)
 
 ## 优化
 
@@ -91,6 +91,11 @@
   * [Visualizing and Understanding Convolutional Networks](shen-ru-li-jie/juan-ji-wang-luo/visualizing-and-understanding-convolutional-networks.md)
 * [模型蒸馏](shen-ru-li-jie/zhi-shi-zheng-liu/README.md)
   * [Distilling the knowledge in a neural network](shen-ru-li-jie/zhi-shi-zheng-liu/distilling-the-knowledge-in-a-neural-network.md)
+
+## 元学习
+
+* [Fine-tune](yuan-xue-xi/fine-tune/README.md)
+  * [MAML](yuan-xue-xi/fine-tune/maml.md)
 
 ## 自动机器学习
 
