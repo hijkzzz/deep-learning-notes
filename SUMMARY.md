@@ -30,6 +30,7 @@
 ## 卷积网络
 
 * [卷积网络架构](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/README.md)
+  * [Deconvolutional Networks](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/deconvolutional-networks.md)
   * [Spatial transformer network](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/spatial-transformer-network.md)
   * [ResNet](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/resnet.md)
   * [Xception](juan-ji-wang-luo/juan-ji-wang-luo-jia-gou/xception.md)
