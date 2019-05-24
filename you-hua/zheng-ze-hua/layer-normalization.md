@@ -1,6 +1,6 @@
 # Layer Normalization
 
-## 介绍
+
 
 > [Layer Normalization](https://arxiv.org/pdf/1607.06450.pdf)
 

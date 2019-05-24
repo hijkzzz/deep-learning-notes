@@ -1,6 +1,6 @@
 # Weight Normalization
 
-## 介绍
+
 
 > [Weight Normalization: A Simple Reparameterization to Accelerate Training of Deep Neural Networks](https://arxiv.org/pdf/1602.07868.pdf)
 

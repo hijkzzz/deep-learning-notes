@@ -1,6 +1,6 @@
 # Deep Face Recognition
 
-## 介绍
+
 
 > [Deep Face Recognition](https://www.robots.ox.ac.uk/~vgg/publications/2015/Parkhi15/parkhi15.pdf)
 

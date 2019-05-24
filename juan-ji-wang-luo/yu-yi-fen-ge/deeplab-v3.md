@@ -1,6 +1,6 @@
 # DeepLab V3+
 
-## 介绍
+
 
 > [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](https://arxiv.org/pdf/1802.02611v3.pdf)
 

@@ -1,6 +1,6 @@
 # A Neural Algorithm of Artistic Style
 
-## 介绍
+
 
 > [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576)
 

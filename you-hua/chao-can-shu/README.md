@@ -1,6 +1,6 @@
 # 超参数
 
-## 介绍
+
 
 > [ON LARGE-BATCH TRAINING FOR DEEP LEARNING: GENERALIZATION GAP AND SHARP MINIMA](https://arxiv.org/pdf/1609.04836.pdf)
 

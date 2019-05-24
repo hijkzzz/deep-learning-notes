@@ -1,6 +1,6 @@
 # Deconvolutional Networks
 
-## 介绍
+
 
 > [Deconvolutional Networks](https://www.matthewzeiler.com/mattzeiler/deconvolutionalnetworks.pdf)
 

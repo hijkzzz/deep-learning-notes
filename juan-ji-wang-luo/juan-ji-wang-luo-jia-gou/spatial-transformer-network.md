@@ -1,6 +1,6 @@
 # Spatial transformer network
 
-## 介绍
+
 
 > [Spatial transformer network](http://papers.nips.cc/paper/5854-spatial-transformer-networks.pdf)
 
