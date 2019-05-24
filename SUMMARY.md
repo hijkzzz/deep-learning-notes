@@ -103,6 +103,7 @@
 
 * [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/README.md)
   * [Neural Architecture Search With Reinforcement Learning](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/neural-architecture-search-with-reinforcement-learning.md)
+  * [Learning Transferable Architectures for Scalable Image Recognition](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/learning-transferable-architectures-for-scalable-image-recognition.md)
   * [DARTS: Differentiable Architecture Search](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/darts-differentiable-architecture-search.md)
   * [AMC](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/amc.md)
 * [超参数](zi-dong-ji-qi-xue-xi/chao-can-shu/README.md)
