@@ -1,4 +1,4 @@
 # Bayesian Optimization
 
-> [贝叶斯优化](https://zhuanlan.zhihu.com/p/29779000)
+> [贝叶斯优化](https://www.jiqizhixin.com/articles/2017-08-18-5)
 
