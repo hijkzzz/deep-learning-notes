@@ -1,7 +1,5 @@
 # Mask R-CNN
 
-
-
 > [Mask R-CNN](https://arxiv.org/pdf/1703.06870.pdf)
 
 我们为对象实例分割提供了概念上简单，灵活和通用的框架。 我们能够有效地检测图像中的对象，同时为每个实例生成高质量的分割掩码。该方法称为Mask R-CNN，通过添加一个分支来扩展FasterR-CNN，该分支用于预测与现有分支并行的对象掩码以进行边界框识别。Mask R-CNN很容易训练，只增加了一个小头来加速R-CNN，运行速度为5 fps。此外，Mask R-CNN很容易推广到其他任务，例如，让我们在同一框架中估计人体姿势。我们在COCO挑战套件的所有三个轨道中显示最佳结果，包括实例分割，边界框 对象检测和人员关键点检测。没有花哨的装饰，Mask R-CNN在每项任务中都优于所有现有的单一模型参赛作品，包括2016年CSO挑战赛冠军。我们希望我们简单有效的方法将成为一个坚实的基线，并有助于未来在实例级认可方面的研究。[https://github.com/facebookresearch/Detectron](https://github.com/facebookresearch/Detectron)
@@ -31,6 +29,4 @@ RoIPool 是用于从每个RoI提取小特征映射（例如，7×7）的标准�
 ## 测试
 
 ![](../../.gitbook/assets/image%20%28173%29.png)
-
-
 

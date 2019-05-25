@@ -1,7 +1,5 @@
 # XGBoost
 
-
-
 > [XGBoost: A Scalable Tree Boosting System](https://arxiv.org/abs/1603.02754)
 
 Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中，我们描述了一个可扩展的端到端树推进系统XGBoost，它被数据科学家广泛使用，以在许多机器学习挑战中实现最先进的结果。我们提出了一种新的稀疏数据稀疏算法和近似树学习的加权量化框架。更重要的是，我们提供了有关缓存访问模式，数据压缩和分片的见解，以构建可扩展的树提升系统。通过结合这些见解，XGBoost使用比现有系统少得多的资源来扩展数十亿个示例。
@@ -38,7 +36,7 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 ![](../../.gitbook/assets/image%20%2896%29.png)
 
-其中 $$g_{i}=\partial_{\hat{y}^(t-1)} l\left(y_{i}, \hat{y}^{(t-1)}\right) \text { and } h_{i}=\partial_{\hat{y}^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)$$ 
+其中 $$g_{i}=\partial_{\hat{y}^(t-1)} l\left(y_{i}, \hat{y}^{(t-1)}\right) \text { and } h_{i}=\partial_{\hat{y}^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)$$
 
 去除常量
 
@@ -57,8 +55,6 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 ![](../../.gitbook/assets/image%20%286%29.png)
 
 等式\(6\)可用作衡量树形结构质量的评分函数q。这个分数就像评估决策树的不纯分数，除了它是为更广泛的目标函数而衍生的。图2举例说明了如何计算这个分数。
-
-
 
 ![](../../.gitbook/assets/image%20%2881%29.png)
 
@@ -140,6 +136,4 @@ Tree boosting是一种高效且广泛使用的机器学习方法。 在本文中
 
 * **Block Compression** 我们使用的第一种技术是块压缩。 该块由列压缩，并在加载到主存储器时由独立的线程在运行中解压缩。
 * **Block Sharding** 第二种技术是以另一种方式将数据分割到多个磁盘上。预提取线程被分配给每个磁盘，并将数据提取到内存缓冲区中。
-
-
 

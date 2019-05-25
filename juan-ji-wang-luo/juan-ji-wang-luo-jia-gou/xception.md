@@ -1,7 +1,5 @@
 # Xception
 
-
-
 > [Xception: Deep Learning with Depthwise Separable Convolutions](https://www.baidu.com/link?url=LXVqg4iAvDm3N36pK0w5nfJmb59T-85tuTk2JWTu8WEgiHvmSaX9HjsZc1OA77Sd&wd=&eqid=ea21ca210002d7cf000000065ca042b9)
 
 我们将卷积神经网络中的Inception模块解释为常规卷积和深度可分卷积操作之间的中间步骤（深度可分离卷积后跟逐点卷积）。在这种情况下，深度分离卷积可以理解为具有最大数量塔的Inception模块。这一观察结果提出了一种新颖的深度卷积神经网络体系结构，其灵感来自于Inception，其中Inception模块已被深度可分离卷积所取代。我们展示了这个被称为Xception的体系结构，在ImageNet数据集（设计版本为V3）上略微优于Inception V3，并且在包含3.5亿个图像和17,000个类的更大图像分类数据集上显着优于Inception V3。由于Inception体系结构与Inception V3具有相同数量的参数，因此性能增益不是增加容量，而是更有效地使用模型参数。

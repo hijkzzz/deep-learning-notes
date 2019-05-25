@@ -1,7 +1,5 @@
 # DeepLab V3+
 
-
-
 > [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](https://arxiv.org/pdf/1802.02611v3.pdf)
 
 空间金字塔池模块或编码 - 解码器结构用于深度神经网络中的语义分割任务。 通过以多个速率和多个有效视野进行过滤器或池化操作来探测传入特征，然后后者网络可以通过逐渐恢复空间信息来捕获更清晰的对象边界，从而能够编码多尺度上下文信息。在这项工作中，我们建议结合两种方法的优点。 具体来说，我们提出的模型DeepLabv3 +通过添加一个简单但有效的解码器模块来扩展DeepLabv3，以便特别是沿着对象边界细化分割结果。我们进一步探索Xception模型，并将深度可分离卷积应用于Atrous Spatial Pyramid Pooling和解码器模块，从而产生更快更强的编码器 - 解码器网络。我们在PASCAL VOC 2012和city scapes数据集上验证了该模型的有效性，无需任何后处理，测试集性能分别达到89.0 %和82.1 %。[https://github.com/tensorflow/models/tree/master/research/deeplab](https://github.com/tensorflow/models/tree/master/research/deeplab)
@@ -14,7 +12,7 @@
 
 #### Atrous convolution
 
-Atrous卷积是一种强大的工具，它允许我们明确地控制深度卷积神经网络计算的特征的分辨率，并调整滤波器的视场以捕获多尺度信息，推广标准卷积运算。在二维信号的情况下，对于每个位置 $$i$$ ，输出特征图 $$ y$$ 和卷积滤波器 $$w$$ ，在输入特征图上应用atrous卷积如下：
+Atrous卷积是一种强大的工具，它允许我们明确地控制深度卷积神经网络计算的特征的分辨率，并调整滤波器的视场以捕获多尺度信息，推广标准卷积运算。在二维信号的情况下，对于每个位置 $$i$$ ，输出特征图 $$y$$ 和卷积滤波器 $$w$$ ，在输入特征图上应用atrous卷积如下：
 
 $$
 \boldsymbol{y}[i]=\sum_{\boldsymbol{k}} \boldsymbol{x}[i+r \cdot \boldsymbol{k}] \boldsymbol{w}[\boldsymbol{k}]
@@ -36,8 +34,6 @@ DeepLabv3 \[23\]采用atrous卷积\[69,70,8,71\]来提取在任意分辨率下�
 
 DeepLabv3的编码器通常在输出步幅= 16的情况下进行计算。在\[23\]的工作中，这些特征是双线性上采样的16倍，这可以被认为是一个简单的解码器模块。然而，这个简单的解码器模块可能无法成功恢复对象分割细节。因此，我们提出了一个简单而有效的解码器模块，如图2所示。
 
-
-
 ![](../../.gitbook/assets/image%20%2897%29.png)
 
 ### Modified Aligned Xception
@@ -55,6 +51,4 @@ Xception模型\[26\]在ImageNet \[74\]上展示了具有快速计算能力的图
 ### Xception
 
 ![](../../.gitbook/assets/image%20%2870%29.png)
-
-
 

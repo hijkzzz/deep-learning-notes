@@ -1,7 +1,5 @@
 # ShuffleNet
 
-
-
 [ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices](https://arxiv.org/pdf/1707.01083.pdf)
 
 我们提出了一个名为ShuffleNet的极其计算效率的CNN架构，该架构专为具有非常有限的计算能力（例如，10-150 MFLOP）的移动设备而设计。新的体系结构采用了两种新的运算，逐点群卷积和信道洗牌，在保持精确性的同时大大降低了计算成本。ImageNet分类和MSCOCO对象检测的实验证明了ShuffleNet优于其他结构的性能，例如： 在40-MFLOPs的计算预算下，在Ima-geNet分类任务中，最近的MobileNet \[12\]比较低的top-1error（绝对7.8％）。在基于ARM的移动设备上，ShuffleNet实现〜13倍于AlexNet的实际加速，同时保持了相当的准确性。

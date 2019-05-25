@@ -1,7 +1,5 @@
 # Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization
 
-
-
 > [Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization](https://arxiv.org/abs/1703.06868)
 
 Gatys等人最近引入了一种神经算法，以另一幅图像的风格渲染内容图像，实现所谓的风格转换。然而，他们的框架需要一个缓慢的迭代优化过程，这限制了它的实际应用。已经提出了具有前馈神经网络的近似值以加速神经类型转移。不幸的是，速度提升需要付出代价：网络通常与固定的样式相关联，并且无法适应任意新的样式。 在本文中，我们提出了一种简单而有效的方法，它首次实现了任意样式传输。我们方法的核心是一个新颖的自适应实例规范化（AdaIN）层，它将内容特征的均值和方差与样式特征的均值和方差对齐。我们的方法实现了与现有最快方法相当的速度，而没有对预定义样式集的限制。另外，我们的方法允许灵活的用户控制，例如内容式权衡，样式插值，颜色和空间控制，所有这些都使用单个前馈神经网络。
@@ -69,6 +67,4 @@ Dumoulinet提出了一种条件实例正则化（CIN）层，它为每种样式 
 ## 效果
 
 ![](../../.gitbook/assets/image%20%28155%29.png)
-
-
 

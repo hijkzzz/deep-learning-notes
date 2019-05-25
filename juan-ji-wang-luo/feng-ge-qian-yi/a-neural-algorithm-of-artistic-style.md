@@ -1,7 +1,5 @@
 # A Neural Algorithm of Artistic Style
 
-
-
 > [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576)
 
 在美术领域，尤其是绘画领域，人类已经掌握了通过在一幅图像的内容和风格之间构成复杂的相互作用来创造独特视觉体验的技能。到目前为止，这一过程的算法基础尚不清楚，也不存在具有类似能力的人工系统。然而，在视觉感知的其他关键领域，例如物体和面部识别，最近一类被称为深度神经网络的生物启发视觉模型证明了接近人类的表现。这里我们介绍一个基于深度神经网络的人工系统，它可以创建高感知质量的艺术图像。该系统利用神经表示分离和重组任意图像的内容和风格，为艺术图像的创作提供神经算法。此外，鉴于性能优化的人工神经网络和生物视觉之间的惊人相似性，我们的工作提供了一条通向人类如何创造和感知艺术意象的算法基础的道路。
@@ -52,15 +50,13 @@ $$
 \mathcal{L}_{s t y l e}(\vec{a}, \vec{x})=\sum_{l=0}^{L} w_{l} E_{l}
 $$
 
-其中$$l$$为使用的卷积层，即：conv1\_1’, ‘conv2\_1’, ‘conv3\_1’, ‘conv4\_1’ and ‘conv5\_1， $$w_l=1/5$$ 
+其中$$l$$为使用的卷积层，即：conv1\_1’, ‘conv2\_1’, ‘conv3\_1’, ‘conv4\_1’ and ‘conv5\_1， $$w_l=1/5$$
 
 对应的梯度
 
 $$
 \frac{\partial E_{l}}{\partial F_{i j}^{l}}=\left\{\begin{array}{ll}{\frac{1}{N_{t}^{2} M_{t}^{2}}\left(\left(F^{l}\right)^{\mathrm{T}}\left(G^{l}-A^{l}\right)\right)_{j i}} & {\text { if } F_{i j}^{l}>0} \\ {0} & {\text { if } F_{i j}^{l}<0}\end{array}\right.
 $$
-
-
 
 #### 整体损失
 
@@ -75,6 +71,4 @@ $$
 ## 效果
 
 ![](../../.gitbook/assets/image%20%28186%29.png)
-
-
 

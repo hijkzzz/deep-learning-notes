@@ -1,7 +1,5 @@
 # BERT
 
-
-
 > [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
 
 我们引入了一种名为BER的新语言表示模型，它代表来自变换器的双向编码器表示。与最近的语言表示模型\(Peters et al., 2018; Radfordet al., 2018）不同，BERT旨在通过在所有层中的左右上下文中联合调节来预先训练双向表示。因此，预训练的BERT表示可以通过一个附加输出层进行微调，以创建适用于各种任务的最先进模型，例如问答和语言推断，而无需特定任务的特定结构修改。
@@ -38,7 +36,7 @@ BERT的模型架构是一个多层双向Transformer编码器，基于Vaswani等�
 
 ### Pre-training Tasks
 
-与Peters等人不同。 （2018年）和Radford等人（2018年），我们不使用传统的从左到右或从右到左的语言模型预训练BERT。相反，我们使用两个新的非预测预测任务预训练BERT。 
+与Peters等人不同。 （2018年）和Radford等人（2018年），我们不使用传统的从左到右或从右到左的语言模型预训练BERT。相反，我们使用两个新的非预测预测任务预训练BERT。
 
 #### Task \#1: Masked LM
 

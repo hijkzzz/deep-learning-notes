@@ -1,7 +1,5 @@
 # Tiled Matrix Multiplication
 
-
-
 > [Tiled Matrix Multiplication](https://www.fz-juelich.de/SharedDocs/Downloads/IAS/JSC/EN/slides/cuda/10-cuda-dgemm-tiled.pdf?__blob=publicationFile)
 
 本文讨论CUDA实现高效的矩阵乘法。如图，对于普通的矩阵乘法，每次运算需要传递 $$2 * n$$个 $$tile$$ ，如果矩阵的规模非常大，这将会导致数据传递、内存开销很大。
@@ -47,12 +45,4 @@
 Steams的工作原理和CPU流水线类似
 
 ![](../../.gitbook/assets/image%20%2839%29.png)
-
-
-
-
-
-
-
-
 

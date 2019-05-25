@@ -1,7 +1,5 @@
 # Visualizing and Understanding Convolutional Networks
 
-
-
 > [Visualizing and Understanding Convolutional Networks](https://arxiv.org/pdf/1311.2901.pdf)
 
 大型卷积网络模型最近在ImageNet基准测试中表现出了令人印象深刻的分类性能（Krizhevsky等，2012）。但是，他们对于为什么它们如此良好地表现或者如何改进它们并不清楚。 在本文中，我们解决了这两个问题。我们介绍了一种新颖的可视化技术，可以深入了解中间特征层的功能和分类器的操作。 这些可视化用于诊断角色，使我们能够找到比ImageNet分类基准更优于Krizhevskyet的模型架构。 我们还进行消融研究，以发现不同模型层的性能贡献。 我们展示了我们的ImageNet模型能够很好地推广到其他数据集：当softmax分类器被重新训练时，它令人信服地胜过了当前最先进的结果:Caltech-101和Caltech-256数据集。
@@ -32,8 +30,6 @@ convnet使用学习的filter来与前一层的特征图卷积。为了反转这�
 
 我们将显示前9个激活，而不是显示给定特征图的单个最强激活。将每个单独投影到像素空间显示激发特征图的不同结构，从而显示其对输入变形的不变性。
 
-
-
 ![](../../.gitbook/assets/image%20%28119%29.png)
 
 ![](../../.gitbook/assets/image%20%28142%29.png)
@@ -63,6 +59,4 @@ convnet使用学习的filter来与前一层的特征图卷积。为了反转这�
 较低的输出值变化表示由掩蔽操作导致的变化的一致性较高，因此不同图像中相同对象部分之间的对应关系更紧密\(即，遮挡左眼以一致的方式改变特征表示\)。
 
 ![](../../.gitbook/assets/image%20%2874%29.png)
-
-
 

@@ -1,7 +1,5 @@
 # DeepFace
 
-
-
 > [DeepFace: Closing the gap to human-level performance in face verification](http://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Taigman_DeepFace_Closing_the_2014_CVPR_paper.pdf)
 
 在现代人脸识别中，传统的流水线由四个阶段组成:检测、对齐、表示、分类。为了应用分段仿射变换，我们利用显式的三维人脸模型，重新研究了人脸的对齐步骤和表示步骤，并从一个九层的深度神经网络中得到了人脸的再现。这个深层网络涉及超过1.2亿个参数，使用几个本地连接的层，而不是标准的卷积层。因此，我们对迄今为止最大的面部数据集进行了训练，这是一个标识为400万个面部图像的数据集，属于4,000多个身份。将基于模型的精确比对与大型人脸数据库相结合的学习表征方法，可以很好地推广到无约束环境下的人脸识别中，即使是使用简单的分类器。我们的方法对野外\(LFW\)数据集的贴标签面精度达到97.35%，将当前技术状态的误差降低了27%以上，接近人类水平的性能。

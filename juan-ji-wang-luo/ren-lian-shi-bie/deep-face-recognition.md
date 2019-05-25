@@ -1,7 +1,5 @@
 # Deep Face Recognition
 
-
-
 > [Deep Face Recognition](https://www.robots.ox.ac.uk/~vgg/publications/2015/Parkhi15/parkhi15.pdf)
 
 本文的目标是人脸识别 - 来自单张照片或视频中跟踪的一组脸部。 该领域的最新进展归因于两个因素：（i）使用卷积神经网络（CNN）的任务的端到端学习，以及（ii）非常大规模的训练数据集的可用性。
@@ -41,8 +39,4 @@
 ## 实验
 
 ![](../../.gitbook/assets/image%20%2820%29.png)
-
-
-
-
 
