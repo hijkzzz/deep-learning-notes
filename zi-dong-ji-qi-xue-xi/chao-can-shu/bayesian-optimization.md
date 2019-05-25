@@ -1,4 +1,6 @@
 # Bayesian Optimization
 
-> [贝叶斯优化](https://www.jiqizhixin.com/articles/2017-08-18-5)
+> [A Tutorial on Bayesian Optimization](https://arxiv.org/pdf/1807.02811.pdf)
+
+
 
