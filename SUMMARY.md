@@ -25,7 +25,7 @@
   * [Weight Normalization](you-hua/zheng-ze-hua/weight-normalization.md)
 * [超参数](you-hua/chao-can-shu/README.md)
   * [Xavier](you-hua/chao-can-shu/xavier.md)
-  * [On Large-Batch Training for Deep Learning: Generalization Gap and Sharp Minima](you-hua/chao-can-shu/on-large-batch-training-for-deep-learning-generalization-gap-and-sharp-minima.md)
+  * [Sharp Minima](you-hua/chao-can-shu/on-large-batch-training-for-deep-learning-generalization-gap-and-sharp-minima.md)
 
 ## 卷积网络
 
@@ -49,7 +49,7 @@
 * [风格迁移](juan-ji-wang-luo/feng-ge-qian-yi/README.md)
   * [A Neural Algorithm of Artistic Style](juan-ji-wang-luo/feng-ge-qian-yi/a-neural-algorithm-of-artistic-style.md)
   * [Deep Photo Style Transfer](juan-ji-wang-luo/feng-ge-qian-yi/deep-photo-style-transfer.md)
-  * [Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization](juan-ji-wang-luo/feng-ge-qian-yi/arbitrary-style-transfer-in-real-time-with-adaptive-instance-normalization.md)
+  * [Adaptive Instance Normalization](juan-ji-wang-luo/feng-ge-qian-yi/arbitrary-style-transfer-in-real-time-with-adaptive-instance-normalization.md)
   * [Fast Face-swap](juan-ji-wang-luo/feng-ge-qian-yi/deepfake.md)
 * [人脸识别](juan-ji-wang-luo/ren-lian-shi-bie/README.md)
   * [DeepFace](juan-ji-wang-luo/ren-lian-shi-bie/deepface.md)
@@ -61,17 +61,17 @@
   * [Word2Vec](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/glove.md)
   * [BERT](xun-huan-he-di-gui-wang-luo/ci-xiang-liang/bert.md)
 * [机器翻译](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/README.md)
-  * [Neural Machine Translation by Jointly Learning to Align and Translate](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/neural-machine-translation-by-jointly-learning-to-align-and-translate.md)
-  * [Google's neural machine translation system: Bridging the gap between human and machine translation](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/googles-neural-machine-translation-system-bridging-the-gap-between-human-and-machine-translation.md)
+  * [Neural Machine Translation](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/neural-machine-translation-by-jointly-learning-to-align-and-translate.md)
+  * [Google's neural machine translation system](xun-huan-he-di-gui-wang-luo/ji-qi-fan-yi/googles-neural-machine-translation-system-bridging-the-gap-between-human-and-machine-translation.md)
 * [注意力机制](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/README.md)
   * [Transformer](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/transformer.md)
   * [Pointer Network](xun-huan-he-di-gui-wang-luo/zhu-yi-li-ji-zhi/pointer-network.md)
 * [文本分类](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/README.md)
-  * [Convolutional neural networks for sentence classification](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/convolutional-neural-networks-for-sentence-classification.md)
-  * [Recurrent Convolutional Neural Networks for Text Classification](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/recurrent-convolutional-neural-networks-for-text-classification.md)
+  * [CNN](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/convolutional-neural-networks-for-sentence-classification.md)
+  * [RCNN](xun-huan-he-di-gui-wang-luo/qing-gan-fen-xi/recurrent-convolutional-neural-networks-for-text-classification.md)
 * [神经图灵机](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/README.md)
   * [Neural turing machines](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/neural-turing-machines.md)
-  * [Hybrid computing using a neural network with dynamic external memory](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/hybrid-computing-using-a-neural-network-with-dynamic-external-memory.md)
+  * [Dynamic External Memory](xun-huan-he-di-gui-wang-luo/shen-jing-tu-ling-ji/hybrid-computing-using-a-neural-network-with-dynamic-external-memory.md)
 
 ## 生成模型/无监督
 
@@ -103,11 +103,11 @@
 
 * [超参数](zi-dong-ji-qi-xue-xi/chao-can-shu/README.md)
   * [Bayesian Optimization](zi-dong-ji-qi-xue-xi/chao-can-shu/bayesian-optimization.md)
-  * [Population based training of neural networks](zi-dong-ji-qi-xue-xi/chao-can-shu/population-based-training-of-neural-networks.md)
+  * [PBT](zi-dong-ji-qi-xue-xi/chao-can-shu/population-based-training-of-neural-networks.md)
 * [神经架构搜索](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/README.md)
-  * [Neural Architecture Search With Reinforcement Learning](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/neural-architecture-search-with-reinforcement-learning.md)
-  * [Learning Transferable Architectures for Scalable Image Recognition](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/learning-transferable-architectures-for-scalable-image-recognition.md)
-  * [DARTS: Differentiable Architecture Search](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/darts-differentiable-architecture-search.md)
+  * [NAS](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/neural-architecture-search-with-reinforcement-learning.md)
+  * [NASNet](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/learning-transferable-architectures-for-scalable-image-recognition.md)
+  * [DARTS](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/darts-differentiable-architecture-search.md)
   * [AMC](zi-dong-ji-qi-xue-xi/shen-jing-jia-gou-sou-suo/amc.md)
 
 ## 硬件
@@ -117,7 +117,6 @@
     * [Introduction](ying-jian/cuda/cuda-c-programming-guide/introduction.md)
     * [Programming Model](ying-jian/cuda/cuda-c-programming-guide/programming-model.md)
     * [Programming Interface](ying-jian/cuda/cuda-c-programming-guide/programming-interface.md)
-  * [Tiled Matrix Multiplication](ying-jian/cuda/tiled-matrix-multiplication.md)
 * [分布式训练](ying-jian/fen-bu-shi-xun-lian/README.md)
   * [Ring All Reduce](ying-jian/fen-bu-shi-xun-lian/ring-all-reduce.md)
 

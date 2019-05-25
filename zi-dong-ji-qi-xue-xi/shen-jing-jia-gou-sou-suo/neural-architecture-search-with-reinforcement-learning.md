@@ -1,4 +1,4 @@
-# Neural Architecture Search With Reinforcement Learning
+# NAS
 
 > [Neural Architecture Search With Reinforcement Learning](https://arxiv.org/pdf/1611.01578.pdf)
 
