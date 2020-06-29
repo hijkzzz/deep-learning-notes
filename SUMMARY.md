@@ -81,10 +81,6 @@
 * [自编码器](sheng-cheng-mo-xing-wu-jian-du/zi-bian-ma-qi/README.md)
   * [Auto-encoding variational Bayes](sheng-cheng-mo-xing-wu-jian-du/zi-bian-ma-qi/auto-encoding-variational-bayes.md)
 
-## 强化学习
-
-* [深度强化学习](https://hujian.gitbook.io/deep-reinforcement-learning/)
-
 ## 深入理解
 
 * [卷积网络](shen-ru-li-jie/juan-ji-wang-luo/README.md)
